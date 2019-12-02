@@ -54,13 +54,11 @@ TODO: add your files here and give a short description
 
 ## Game
 
-TODO: describe your work
-
-"Create a short document that describes how your coursework handles these requirements." Ja erikseen maininta sitten että pitää selvittää miten se softa ajetaan.
+![Gameview picture](game_view.jpg)
 
 ## Management view
 
-TODO: describe your work
+![Management-view picture](management_view.jpg)
 
 ## Tests and documentation
 
