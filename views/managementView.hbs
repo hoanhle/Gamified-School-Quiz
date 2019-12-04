@@ -1,0 +1,21 @@
+<head>
+    <script type="text/javascript" src="/js/toggle.js"> </script>
+</head>
+<div class="questionaires"> 
+    <ul>
+            {{>questionaire_listing value=1}}    
+            {{>questionaire_listing value=2}}    
+            {{>questionaire_listing value=3}}    
+            {{>questionaire_listing value=4}}    
+    </ul>
+
+</div>
+
+
+<div class="editing_view">
+    {{#if first_time}}
+    <h1> First time</h1>
+    {{else}}
+    <h1> Edit: </h1>
+    {{/if}} 
+</div>

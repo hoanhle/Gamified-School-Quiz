@@ -78,3 +78,24 @@
 textarea {
     resize: none;
 }
+
+/*      
+    Added afterwards
+    To enable the visibility toggle
+ */
+
+.submenu {
+	display: none;
+}
+
+.questionaires {
+    float: left;
+    width: 25%;
+}
+
+
+.editing_view {
+    float: right;
+    text-align: center;
+    widht: 75%;
+}

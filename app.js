@@ -47,12 +47,22 @@ app.set('trust proxy', true);
 // view engine setup
 app.set('view engine', 'hbs');
 
+var vis = false;
 // configure the view engine
 app.engine(
     'hbs',
     hbs({
         extname: 'hbs',
-        helpers: hbsHelpers,
+        helpers: { 
+          hbsHelpers: hbsHelpers,
+          visible: function (value) {
+            return vis;
+          },
+          toggleVisible: function (){
+            if (vis) vis = false;
+            vis = true;
+          }
+        },
         defaultLayout: 'default',
         layoutsDir: path.join(__dirname, '/views/layouts/'),
         partialsDir: path.join(__dirname, '/views/partials/')
