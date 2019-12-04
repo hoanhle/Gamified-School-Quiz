@@ -43,6 +43,7 @@ const inputSchema = {
             return 'Email is required and it must right format';
         }),
     password: Joi.string()
+        .min(schemaDefaults.password.minLength)
         .max(schemaDefaults.password.maxLength)
         .error(() => {
             return `Password must be at least ${schemaDefaults.password.minLength} chars.`;
@@ -65,6 +66,21 @@ const inputSchema = {
     _csrf: csrfTokenSchema
 };
 
+const loginInputSchema = {
+    email: Joi.string()
+        .trim()
+        .normalize()
+        .email()
+        .error(() => {
+            return 'Email is required and it must right format';
+        }),
+    password: Joi.string()
+        .min(1)
+        .max(schemaDefaults.password.maxLength)
+        .error(() => {
+            return `Password must be at least ${schemaDefaults.password.minLength} chars.`;
+        })
+};
 
 const userSchema = new Schema({
     name: {
@@ -92,31 +108,49 @@ const userSchema = new Schema({
             if (!password || password.length === 0) return password;
             // transparently encrypt password when setting it using:
             // setter must be synchronous or errors will happen
-            // TODO: hash password here with bcrypt, use length of 10,
-            return //TODO: here;
+            const hashedPass = bcrypt.hashSync(password, 10);
+            return hashedPass;
         }
     },
-    //TODO: add role, trim, lowercase, and it should enumerate possible schemaDefults.role.values, and default to defaultValues
+    role: {
+        type: String,
+        trim: true,
+        lowercase: true,
+        enum: schemaDefaults.role.values,
+        default: schemaDefaults.role.defaultValue
+    }
 });
 
 userSchema.virtual('isAdmin').get(function() {
     // eslint-disable-next-line babel/no-invalid-this
-    //TODO: add the admin check for the role of this object
     // the helper function should return either true of false
+    if (this.role === 'admin'){
+        return true;
+    } else {
+        return false;
+    }
 });
 
 userSchema.virtual('isTeacher').get(function() {
     // eslint-disable-next-line babel/no-invalid-this
-    //TODO: add the teacher check for the role of this object
     // Note that admin can be anything
     // the helper function should return either true of false
+    if (this.role === 'teacher' || this.role === 'admin') {
+        return true;
+    } else {
+        return false;
+    }
 });
 
 userSchema.virtual('isStudent').get(function() {
     // eslint-disable-next-line babel/no-invalid-this
-    //TODO: add the teacher check for the role of this object
     //Note that admin can be anything
     // the helper function should return either true of false
+    if (this.role === 'student' || this.role === 'admin') {
+        return true;
+    } else {
+        return false;
+    }
 });
 
 userSchema.statics.getAvailableRoles = function() {
@@ -149,7 +183,7 @@ userSchema.statics.validateRole = function(data) {
 
 userSchema.statics.validateLogin = function(data) {
     // validate user input for login
-    const { email, password } = inputSchema;
+    const { email, password } = loginInputSchema;
     const loginValidationSchema = {
         email: email.required(),
         password: password.min(1).required()

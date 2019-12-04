@@ -28,8 +28,13 @@ const db = require('./models/db');
 db.connectDB(dbConfig);
 
 // setup admin user
-// TODO: pass config with the right key to add admin user
-require('./setup/createusers') /*TODO: add here;*/;
+const adminConfig = {
+  name: process.env.ADMIN_NAME,
+  email: process.env.ADMIN_EMAIL,
+  password: process.env.ADMIN_PASS,
+  role: 'admin'
+}
+require('./setup/createusers')(adminConfig);
 
 if (app.get('env') === 'development') {
     app.use(logger('dev'));
