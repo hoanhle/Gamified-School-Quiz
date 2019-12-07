@@ -1,7 +1,8 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 'use strict';
 
-const Questionnaire = require('../../models/questionnaire');
+const Questionnaire = require('../models/questionnaire');
+const db = require('../models/db');
 
 module.exports = {
 	/**
@@ -9,7 +10,9 @@ module.exports = {
 	 * @params {String} title is the title of the questionare to get
 	 */
 	async getQuestionnaire(title) {
-		const Questionnaire = await Questionnaire.findOne({title: title});
+		const Questionnaire = await Questionnaire.findOne({title: title}, function(err) {
+			if (err) db.handleCriticalError(err);
+		});
 		return Questionnaire
 	}
 
@@ -17,7 +20,9 @@ module.exports = {
 	 * Get all Questionnaires from the database
 	 */
 	async getAllQuestionnaires() {
-		const Questionnaires = await Questionnaire.find();
+		const Questionnaires = await Questionnaire.find({}, function (err) {
+			if (err) db.handleCriticalError(err);
+		});
 		return Questionnaires
 	}
 	/**
@@ -25,8 +30,8 @@ module.exports = {
 	 * @params {Object} Questionnaire is the JSON object containing Questionnaire info
 	 */
 	async addQuestionnaire(questionnaire) {
-		await Questionnaire.create({questionnaire}, function (err, awesome_instance) {
-			if (err) return handleError(err);
+		await Questionnaire.create({questionnaire}, function (err) {
+			if (err) db.handleCriticalError(err);
 		});
 	}
 	/**
@@ -40,7 +45,7 @@ module.exports = {
 			questionnaire,
 			{upsert: true},
 			function(err) {
-				iff (err) return handleError(err);
+				if (err) db.handleCriticalError(err);
 			}
 		);
 	}
@@ -50,7 +55,7 @@ module.exports = {
 	 */
 	async deleteQuestionnaire(title) {
 		await Questionnaire.deleteOne({title: title}, function(err){
-			if (err) return handleError(err);
+			if (err) db.handleCriticalError(err);
 		});
 	}
 	/**
@@ -58,7 +63,7 @@ module.exports = {
 	 */
 	async deleteAllQuestionnaires() {
 		await Questionnaire.deleteMany({}, function(err){
-			if (err) return handleError(err);
+			if (err) db.handleCriticalError(err);
 		});
 	}
 }
