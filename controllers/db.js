@@ -9,21 +9,21 @@ module.exports = {
 	 * Get a Questionnaire corresponding to a given title
 	 * @params {String} title is the title of the questionare to get
 	 */
-	async getQuestionnaire(title) {
-		const Questionnaire = await Questionnaire.findOne({title: title}, function(err) {
+	getQuestionnaire(title) {
+		Questionnaire.findOne({title: title}, function(err, questionnaire) {
 			if (err) db.handleCriticalError(err);
+			return questionnaire
 		});
-		return Questionnaire
 	}
 
 	/**
 	 * Get all Questionnaires from the database
 	 */
-	async getAllQuestionnaires() {
-		const Questionnaires = await Questionnaire.find({}, function (err) {
+	getAllQuestionnaires() {
+		Questionnaire.find({}, function (err, allQuestionnaires) {
 			if (err) db.handleCriticalError(err);
+			return allQuestionnaires
 		});
-		return Questionnaires
 	}
 	/**
 	 * Add a Questionnaire to the database
