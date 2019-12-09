@@ -85,10 +85,13 @@ textarea {
  */
 
 .submenu {
-	display: none;
+    display: none;
+    overflow: auto;
+    white-space: nowrap;
 }
 
 .questionaires {
+    align-items: left;
     float: left;
     width: 25%;
 }
@@ -96,6 +99,32 @@ textarea {
 
 .editing_view {
     float: right;
+    height: 80%;
     text-align: center;
-    widht: 75%;
+    width: 75%;
 }
+
+.questionaires.ul {
+    position: absolute;
+    top: 13%;
+    bottom: 3%;
+    left: 3%;
+    overflow-y: scroll;
+    list-style-type: square;
+    border: 2px;
+    margin: 0;
+    padding: 0;
+}
+
+.questionaires.li {
+    white-space: nowrap;
+    margin: 0;
+    padding: 0;
+}
+
+.questionaires_search {
+    float: left;
+    margin: 0 auto;
+    width: 100%;
+}
+

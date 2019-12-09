@@ -2,11 +2,12 @@
     <script type="text/javascript" src="/js/toggle.js"> </script>
 </head>
 <div class="questionaires"> 
-    <ul>
-            {{>questionaire_listing value=1}}    
-            {{>questionaire_listing value=2}}    
-            {{>questionaire_listing value=3}}    
-            {{>questionaire_listing value=4}}    
+    <input type="text" class="questionaires_search" placeholder="Search...">
+    <ul class="questionaires ul">
+        {{>questionaire_listing value=1 name="Questinaire1"}}    
+        {{>questionaire_listing value=2 name="Questinaire2"}}    
+        {{>questionaire_listing value=3 name="Questinaire3"}}    
+        {{>questionaire_listing value=4 name="Questinaire4"}}    
     </ul>
 
 </div>
@@ -16,6 +17,6 @@
     {{#if first_time}}
     <h1> First time</h1>
     {{else}}
-    <h1> Edit: </h1>
+    {{>editView}}
     {{/if}} 
 </div>
