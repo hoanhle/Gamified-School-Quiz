@@ -32,4 +32,4 @@ function disconnectDB(){
 }
 
 
-module.exports = {connectDB, disconnectDB};
+module.exports = {connectDB, disconnectDB, handleCriticalError};
