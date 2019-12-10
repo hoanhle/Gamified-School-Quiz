@@ -51,22 +51,24 @@ describe('Config', function () {
 
         it('must be able to store data', async function () {
             const number = 1;
-            const data = generateData(4);
-
-            // delete old entries and from the database
-            dbController.deleteAllQuestionnaires(); //TODO - reconsider
-            // then add sample data to database
+            const questionnaireTitle = "Some title";
+            const data = generateData(questionnaireTitle, 4);
+            // count number of questionnaires in the database
             const prevNum = await Questionnaire.countDocuments({});
             expect(prevNum).to.exist;
-            // ask the count before and after, the delta should be NUMBER_OF_QUESTIONS
+            // add sample questionnaire to db
             await dbController.addQuestionnaire(data[0]);
+            // count number of questionnaires in the database afterwards
             const nextNum = await Questionnaire.countDocuments({});
             expect(nextNum).to.exist;
+
+            // compare before & after
             expect(nextNum).to.equal(number)
             expect(nextNum).to.equal(prevNum + number)
+            await Questionnaire.deleteOne({title: questionnaireTitle})
         });
 
-        it('must be able to read all data', async function() {
+        it('must be able to read all questionnaires', async function() {
             const numAll = await Questionnaire.countDocuments({});
             const allQuestionnaires = await dbController.getAllQuestionnaires();
             const numAllReceived = allQuestionnaires.length;
@@ -75,14 +77,24 @@ describe('Config', function () {
             expect(numAll).to.equal(numAllReceived)
         })
 
+        it('must be able to read one questionnaire', async function() {
+            const questionnaireTitle = "Some title";
+            const data = generateData(questionnaireTitle, 4);
+            await dbController.addQuestionnaire(data[0]);
+            const questionnaire = await dbController.getQuestionnaire(questionnaireTitle);
+            expect(questionnaire).to.exist;
+            expect(data[0].title).to.equal(questionnaire.title)
+            await Questionnaire.deleteOne({title: questionnaireTitle})
+        })
+
     });
 });
 
 /* TODO: use this instead of the .json file, needs some more debugging, options not unique? */
-function generateData(NUMBER_OF_OPTIONS) {
+function generateData(questionnaireTitle, NUMBER_OF_OPTIONS) {
     // eslint-disable-next-line sonarjs/prefer-object-literal
     const data = {};
-    data.title = 'Count from the fall';
+    data.title = questionnaireTitle;
     data.submissions = '100';
     data.questions = [];
 

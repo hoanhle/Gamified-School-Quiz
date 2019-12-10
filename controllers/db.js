@@ -12,7 +12,7 @@ module.exports = {
 	async getQuestionnaire(title) {
 		try {
 			const questionnaire = await Questionnaire.findOne({title: title});
-			return allQuestionnaires;
+			return questionnaire;
 		} catch(err) {
 			db.handleCriticalError(err);
 		}
