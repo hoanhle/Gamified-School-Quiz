@@ -29,20 +29,20 @@ db.connectDB(dbConfig);
 
 // setup admin user
 const adminConfig = {
-  name: process.env.ADMIN_NAME,
-  email: process.env.ADMIN_EMAIL,
-  password: process.env.ADMIN_PASS,
-  role: 'admin'
-}
+	name: process.env.ADMIN_NAME,
+	email: process.env.ADMIN_EMAIL,
+	password: process.env.ADMIN_PASS,
+	role: 'admin'
+};
 require('./setup/createusers')(adminConfig);
 
 if (app.get('env') === 'development') {
-    app.use(logger('dev'));
+	app.use(logger('dev'));
 
-    // insert sample data to database
-    require('./setup/createdata')().then((msg) => {
-        debug(msg);
-    });
+	// insert sample data to database
+	require('./setup/createdata')().then((msg) => {
+		debug(msg);
+	});
 }
 
 // trust reverse proxy headers
@@ -55,37 +55,40 @@ app.set('view engine', 'hbs');
 var vis = false;
 // configure the view engine
 app.engine(
-    'hbs',
-    hbs({
-        extname: 'hbs',
-        helpers: { 
-          hbsHelpers: hbsHelpers,
-          visible: function (value) {
-            return vis;
-          },
-          toggleVisible: function (){
-            if (vis) vis = false;
-            vis = true;
-          }
-        },
-        defaultLayout: 'default',
-        layoutsDir: path.join(__dirname, '/views/layouts/'),
-        partialsDir: path.join(__dirname, '/views/partials/')
-    })
+	'hbs',
+	hbs({
+		extname: 'hbs',
+		helpers: {
+			hbsHelpers: hbsHelpers,
+			visible: function(value) {
+				return vis;
+			},
+			toggleVisible: function() {
+				if (vis) vis = false;
+				vis = true;
+			}
+		},
+		defaultLayout: 'default',
+		layoutsDir: path.join(__dirname, '/views/layouts/'),
+		partialsDir: path.join(__dirname, '/views/partials/')
+	})
 );
 
 // configure views path
 app.set('views', path.join(__dirname, '/views'));
 
+// set images folder to app
+app.use('/public/img', express.static(__dirname + '/public/img'));
+
 // helmet middleware
 app.use(helmet());
 
 const staticFileOptions = {
-    dotfiles: 'ignore',
-    etag: true,
-    fallthrough: true,
-    lastModified: true,
-    maxAge: app.get('env') === 'development' ? '1m' : '2d'
+	dotfiles: 'ignore',
+	etag: true,
+	fallthrough: true,
+	lastModified: true,
+	maxAge: app.get('env') === 'development' ? '1m' : '2d'
 };
 
 const distDir = path.resolve(`${__dirname}/`, 'dist');
@@ -105,32 +108,32 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use((request, response, next) => {
-    // set auhentication and role related variables to a views
-    response.locals.isAuthenticated = request.isAuthenticated();
-    response.locals.isAdmin = false;
-    response.locals.isTeacher = false;
-    response.locals.isStudent = false;
+	// set auhentication and role related variables to a views
+	response.locals.isAuthenticated = request.isAuthenticated();
+	response.locals.isAdmin = false;
+	response.locals.isTeacher = false;
+	response.locals.isStudent = false;
 
-    if (request.isAuthenticated()) {
-        response.locals.isAdmin = request.user.isAdmin;
-        response.locals.isTeacher = request.user.isTeacher;
-        response.locals.isStudent = request.user.isStudent;
-        response.locals.username = request.user.name;
-        response.locals.userId = request.user.id;
-    }
+	if (request.isAuthenticated()) {
+		response.locals.isAdmin = request.user.isAdmin;
+		response.locals.isTeacher = request.user.isTeacher;
+		response.locals.isStudent = request.user.isStudent;
+		response.locals.username = request.user.name;
+		response.locals.userId = request.user.id;
+	}
 
-    next();
+	next();
 });
 
 // flash messages
 app.use(flash());
 app.use((request, response, next) => {
-    // pass flash messages to view variables
-    response.locals.successMessage = request.flash('successMessage');
-    response.locals.errorMessage = request.flash('errorMessage');
-    response.locals.error = request.flash('error');
-    response.locals.success = request.flash('success');
-    next();
+	// pass flash messages to view variables
+	response.locals.successMessage = request.flash('successMessage');
+	response.locals.errorMessage = request.flash('errorMessage');
+	response.locals.error = request.flash('error');
+	response.locals.success = request.flash('success');
+	next();
 });
 
 app.use(express.json());
@@ -142,26 +145,25 @@ require('./router.js')(app);
 // catch 404 and forward to error handler
 // NOTE: this middleware must be defined after all other routes
 app.use(function(request, response, next) {
-    next(createError(404));
+	next(createError(404));
 });
 
 // error handler
 app.use(function(error, request, response, next) {
-    // set locals, only providing error in development
-    response.locals.message = error.message;
-    response.locals.error =
-        request.app.get('env') === 'development' ? error : {};
-    response.locals.title = `${error.status || 500} ${error.message}`;
-    response.locals.heading = `${request.method} ${request.url}`;
+	// set locals, only providing error in development
+	response.locals.message = error.message;
+	response.locals.error = request.app.get('env') === 'development' ? error : {};
+	response.locals.title = `${error.status || 500} ${error.message}`;
+	response.locals.heading = `${request.method} ${request.url}`;
 
-    // send response
-    response.status(error.status || 500);
-    if (request.baseUrl !== '/api') return response.render('error');
+	// send response
+	response.status(error.status || 500);
+	if (request.baseUrl !== '/api') return response.render('error');
 
-    response.json({
-        message: response.locals.message,
-        error: response.locals.error
-    });
+	response.json({
+		message: response.locals.message,
+		error: response.locals.error
+	});
 });
 
 module.exports = app;

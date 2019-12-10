@@ -1,7 +1,11 @@
 'use strict';
 
 module.exports = {
-    startGame(request, response) {
-        response.render('game');
-    }
+	showStartGame(request, response) {
+		response.render('game');
+	},
+
+	showRules(request, response) {
+		response.render('rules');
+	}
 };
