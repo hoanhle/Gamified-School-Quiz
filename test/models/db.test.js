@@ -57,7 +57,7 @@ describe('Config', function () {
             const prevNum = await Questionnaire.countDocuments({});
             expect(prevNum).to.exist;
             // add sample questionnaire to db
-            await dbController.addQuestionnaire(data[0]);
+            await dbController.addQuestionnaire(data);
             // count number of questionnaires in the database afterwards
             const nextNum = await Questionnaire.countDocuments({});
             expect(nextNum).to.exist;
@@ -80,10 +80,27 @@ describe('Config', function () {
         it('must be able to read one questionnaire', async function() {
             const questionnaireTitle = "Some title";
             const data = generateData(questionnaireTitle, 4);
-            await dbController.addQuestionnaire(data[0]);
+            await dbController.addQuestionnaire(data);
             const questionnaire = await dbController.getQuestionnaire(questionnaireTitle);
             expect(questionnaire).to.exist;
-            expect(data[0].title).to.equal(questionnaire.title)
+            expect(data.title).to.equal(questionnaire.title)
+            await Questionnaire.deleteOne({title: questionnaireTitle})
+        })
+
+        it('must be able to update existing questionnaire with the same title', async function() {
+            const questionnaireTitle = "Some title";
+            const oldOptionsNum = 4;
+            const data = generateData(questionnaireTitle, oldOptionsNum);
+            await dbController.addQuestionnaire(data);
+
+            const newOptionsNum = 3;
+            const newData = generateData(questionnaireTitle, newOptionsNum);
+            await dbController.updateQuestionnaire(questionnaireTitle, newData)
+
+            const receivedQuestionnaire = await dbController.getQuestionnaire(questionnaireTitle);
+            expect(receivedQuestionnaire).to.exist;
+            expect(receivedQuestionnaire.title).to.equal(questionnaireTitle)
+            expect(receivedQuestionnaire.questions[0].options.length).to.equal(newOptionsNum)
             await Questionnaire.deleteOne({title: questionnaireTitle})
         })
 
@@ -101,7 +118,7 @@ function generateData(questionnaireTitle, NUMBER_OF_OPTIONS) {
     const endResult = getRandomInt(60);    //TODO: more "AI" version, if the endResult is generated based on the person's previous results
     data.questions.push(getQuestion(endResult, NUMBER_OF_OPTIONS));
 
-    return [data];
+    return data;
 }
 
 function getQuestion(endResult, NUMBER_OF_OPTIONS) {
