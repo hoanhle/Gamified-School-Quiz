@@ -20,19 +20,21 @@ describe('Database funcitonalities', function() {
         const dbController = require('../../controllers/db')
         const Questionnaire = require('../../models/questionnaire');
 
-        before(function() {
+        before(async function() {
             const dbConfig = config.get('mongo');
             // connect to database
             db.connectDB(dbConfig);
-        })
+            await dbController.deleteAllQuestionnaires();
+        });
 
         after(function() {
             db.disconnectDB();
-        })
+        });
 
         it('must be able to add a questionnaire', async function () {
             const number = 1;
             const questionnaireTitle = "Some title";
+            await dbController.deleteQuestionnaire(questionnaireTitle);
             const data = generateData(questionnaireTitle, 4);
             // count number of questionnaires in the database
             const prevNum = await Questionnaire.countDocuments({});
@@ -41,32 +43,50 @@ describe('Database funcitonalities', function() {
             await dbController.addQuestionnaire(data);
             // count number of questionnaires in the database afterwards
             const nextNum = await Questionnaire.countDocuments({});
+            await dbController.deleteQuestionnaire(questionnaireTitle);
+
             expect(nextNum).to.exist;
 
             // compare before & after
             expect(nextNum).to.equal(number)
             expect(nextNum).to.equal(prevNum + number)
-            await Questionnaire.deleteOne({title: questionnaireTitle})
+            
         });
 
         it('must be able to read all questionnaires', async function() {
+            const title1 = "Title 1";
+            const title2 = "Title 2";
+            const title3 = "Title 3";
+            const optionsNum = 4;
+            const data1 = generateData(title1, optionsNum);
+            const data2 = generateData(title2, optionsNum);
+            const data3 = generateData(title3, optionsNum);
+            await dbController.addQuestionnaire(data1);
+            await dbController.addQuestionnaire(data2);
+            await dbController.addQuestionnaire(data3);
+
             const numAll = await Questionnaire.countDocuments({});
             const allQuestionnaires = await dbController.getAllQuestionnaires();
             const numAllReceived = allQuestionnaires.length;
+
+            await dbController.deleteAllQuestionnaires();
+
             expect(numAll).to.exist;
             expect(numAllReceived).to.exist;
-            expect(numAll).to.equal(numAllReceived)
-        })
+            expect(numAllReceived).to.equal(numAll)
+            expect(numAllReceived).to.equal(3)
+        });
 
         it('must be able to read one questionnaire', async function() {
             const questionnaireTitle = "Some title";
             const data = generateData(questionnaireTitle, 4);
             await dbController.addQuestionnaire(data);
             const questionnaire = await dbController.getQuestionnaire(questionnaireTitle);
+            await dbController.deleteQuestionnaire(questionnaireTitle);
+
             expect(questionnaire).to.exist;
             expect(data.title).to.equal(questionnaire.title)
-            await Questionnaire.deleteOne({title: questionnaireTitle})
-        })
+        });
 
         it('must be able to update existing questionnaire with the same title', async function() {
             const questionnaireTitle = "Some title";
@@ -79,11 +99,54 @@ describe('Database funcitonalities', function() {
             await dbController.updateQuestionnaire(questionnaireTitle, newData)
 
             const receivedQuestionnaire = await dbController.getQuestionnaire(questionnaireTitle);
+            
+            await dbController.deleteQuestionnaire(questionnaireTitle);
+
             expect(receivedQuestionnaire).to.exist;
             expect(receivedQuestionnaire.title).to.equal(questionnaireTitle)
             expect(receivedQuestionnaire.questions[0].options.length).to.equal(newOptionsNum)
-            await Questionnaire.deleteOne({title: questionnaireTitle})
-        })
+        });
+
+        it('must be able to delete one questionnaire', async function() {
+            const questionnaireTitle = "Some title";
+            const optionsNum = 4;
+            const data = generateData(questionnaireTitle, optionsNum);
+            await dbController.addQuestionnaire(data);
+            const prevNum = await Questionnaire.countDocuments({});
+
+            await dbController.deleteQuestionnaire(questionnaireTitle);
+            const newNum = await Questionnaire.countDocuments({});
+
+            await dbController.deleteQuestionnaire(questionnaireTitle);
+
+            expect(prevNum).to.exist;
+            expect(newNum).to.exist;
+            expect(newNum).to.equal(prevNum - 1);
+        });
+
+        it('must be able to delete all questionnaires', async function() {
+            const title1 = "Title 1";
+            const title2 = "Title 2";
+            const title3 = "Title 3";
+            const optionsNum = 4;
+            const data1 = generateData(title1, optionsNum);
+            const data2 = generateData(title2, optionsNum);
+            const data3 = generateData(title3, optionsNum);
+            await dbController.addQuestionnaire(data1);
+            await dbController.addQuestionnaire(data2);
+            await dbController.addQuestionnaire(data3);
+            const prevNum = await Questionnaire.countDocuments({});
+
+            await dbController.deleteAllQuestionnaires();
+            const newNum = await Questionnaire.countDocuments({});
+
+            await dbController.deleteAllQuestionnaires();
+
+            expect(prevNum).to.exist;
+            expect(prevNum).to.equal(3);
+            expect(newNum).to.exist;
+            expect(newNum).to.equal(0);
+        });
 
     });
 });
@@ -127,6 +190,7 @@ function getOptions(rndEndResult, number) {
         // questions.push(JSON.stringify(getOption(rndEndResult, rndCalcType)));
         const option = getOption(rndEndResult, rndCalcType);
         if (titles.includes(option[0]) || option[0]==null) continue;
+        titles.push(option[0]);
         options.push({option:option[0], correctness:option[1]});
     }
     return options;
