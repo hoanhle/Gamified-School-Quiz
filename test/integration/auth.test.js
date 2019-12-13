@@ -13,8 +13,8 @@ const registerUrl = '/users/register';
 const port = 3333;
 
 require('dotenv').config();
-// const config = require('config');
-// const admin = config.get('admin');
+const config = require('config');
+const admin = config.get('admin');
 const User = require('../../models/user');
 
 
