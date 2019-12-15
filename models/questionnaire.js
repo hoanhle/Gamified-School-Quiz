@@ -1,4 +1,4 @@
-/* eslint-disable no-invalid-this */
+/* eslint-disable babel/no-invalid-this */
 'use strict';
 
 const mongoose = require('mongoose');

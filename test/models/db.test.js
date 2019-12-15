@@ -55,7 +55,7 @@ describe('Config', function() {
             // then add sample data to database
             //TODO: ask the count before and after, the delta should be NUMBER_OF_QUESTIONS
             await Questionnaire.create(data);
-
+            
             db.disconnectDB();
 
         });
