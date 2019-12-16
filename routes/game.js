@@ -8,10 +8,13 @@ const auth = require('../middleware/auth');
 // Show start game menu
 router.get('/', auth.ensureAuthenticated, gameController.showStartGame);
 
+// Grade answer
+router.post('/start', auth.ensureAuthenticated, gameController.gradeAnswer);
+
 // Instruction rules page
-router.post('/rules', auth.ensureAuthenticated, gameController.showRules);
+router.get('/rules', auth.ensureAuthenticated, gameController.showRules);
 
 // Start the game
-router.post('/start', auth.ensureAuthenticated, gameController.startGame);
+router.get('/start', auth.ensureAuthenticated, gameController.startGame);
 
 module.exports = router;
