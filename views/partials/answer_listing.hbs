@@ -1,11 +1,9 @@
 {{#if this.options}}
-{{#withGroup this.options 4}}
 <div class="card-deck mt-3">
     {{#each this.options as |option index|}}
     {{>answer_info option}}
     {{/each}}
 </div>
-{{/withGroup}}
 {{else}}
 <div class="alert alert-danger">
     <p>No answers found.</p>
