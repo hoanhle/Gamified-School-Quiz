@@ -1,5 +1,7 @@
 'use strict';
 
+const Questionnaire = require('../models/questionnaire');
+
 module.exports = {
 	async showStartGame(request, response) {
 		response.render('game');
@@ -10,26 +12,9 @@ module.exports = {
 	},
 
 	async startGame(request, response) {
-		response.render('gameView', {
-			title: 'this is a questions',
-			options: [
-				{
-					option: '25 + 15',
-					correctness: true
-				},
-				{
-					option: '10 + 25',
-					correctness: false
-				},
-				{
-					option: '66 - 26',
-					correctness: false
-				},
-				{
-					option: '27 + 23',
-					correctness: false
-				}
-			]
-		});
+		const numQuestions = await Questionnaire.countDocuments({});
+		const randomNumber = Math.floor(Math.random() * numQuestions);
+		const randomQuestion = await Questionnaire.find().limit(1).skip(randomNumber);
+		response.render('gameView', { randomQuestion });
 	}
 };
