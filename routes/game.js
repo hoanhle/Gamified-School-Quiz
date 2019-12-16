@@ -11,4 +11,7 @@ router.get('/', auth.ensureAuthenticated, gameController.showStartGame);
 // Instruction rules page
 router.post('/rules', auth.ensureAuthenticated, gameController.showRules);
 
+// Start the game
+router.post('/start', auth.ensureAuthenticated, gameController.startGame);
+
 module.exports = router;
