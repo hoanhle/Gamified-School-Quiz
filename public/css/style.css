@@ -117,7 +117,7 @@ textarea {
     height: 85vh;
     width: 100%;
     overflow-y: auto;
-    list-style-type: square;
+    list-style-type: none;
     border: 2px solid green;
     margin: 0;
     padding: 0;
