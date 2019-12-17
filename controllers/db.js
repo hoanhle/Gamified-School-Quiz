@@ -11,7 +11,7 @@ module.exports = {
 	 */
 	async getQuestionnaire(id) {
 		try {
-			const questionnaire = await Questionnaire.findById({_id: id});
+			const questionnaire = await Questionnaire.findById(id);
 			return questionnaire;
 		} catch(err) {
 			db.handleCriticalError(err);
@@ -45,12 +45,11 @@ module.exports = {
 	 * @params {String} title is the title of the questionare that needs to be updated
 	 * @params {Object} Questionnaire is the JSON object containing new Questionnaire info
 	 */
-	async updateQuestionnaire(title, questionnaire) {
+	async updateQuestionnaire(id, questionnaire) {
 		try {
-			await Questionnaire.replaceOne(
-				{title: title},
+			await Questionnaire.findByIdAndUpdate(
+				id,
 				questionnaire,
-				{upsert: true},
 			);
 		} catch(err) {
 			db.handleCriticalError(err);
@@ -60,9 +59,9 @@ module.exports = {
 	 * Delete a Questionnaire corresponding to a given title
 	 * @params {String} title of the questionare to be deleted
 	 */
-	async deleteQuestionnaire(title) {
+	async deleteQuestionnaire(id) {
 		try {
-			await Questionnaire.deleteOne({title: title});
+			await Questionnaire.findByIdAndDelete(id);
 		} catch(err) {
 			db.handleCriticalError(err);
 		}
