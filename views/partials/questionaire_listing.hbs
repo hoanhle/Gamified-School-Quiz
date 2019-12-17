@@ -1,5 +1,7 @@
 <li><a href="#" onclick="toggle({{value}});" >{{name}}</a>
     <ul class="submenu">
-        {{>question_listing name="question"}}
+        {{#each questions}}
+            {{>question_listing name=this.title}}
+        {{/each}}
     </ul>
 </li>

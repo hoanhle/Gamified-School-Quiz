@@ -124,9 +124,11 @@ textarea {
 }
 
 .questionaires.li {
-	white-space: nowrap;
-	margin: 0;
-	padding: 0;
+    white-space: nowrap;
+    list-style-type: none;
+    overflow: auto;
+    margin: 0;
+    padding: 0;
 }
 
 .questionaires_search {

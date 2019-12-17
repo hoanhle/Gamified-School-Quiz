@@ -1,26 +1,21 @@
 
 <div class="container" id="display_question">
     <div class="row">
-        <h3> Question </h3>
+        <h3> {{{name}}} </h3>
         <button> Delete</button>
         <button> Edit </button>
     </div>
     <div class="row">
     </div>
+
     <div class="row">
-        <div class="col-sm">
-            <strong>This is supposed to be a suuper long asnwer to question </strong>
-        </div>
-        <div class="col-sm">
-            <strong> Answer2 </strong>
-        </div>
+        <h3> {{question.title}} </h3>
     </div>
-    <div class="row">
-        <div class="col-sm">
-            <strong> Answer3 </strong>
-        </div>
-        <div class="col-sm">
-            <strong> Answer4 </strong>
-        </div>
+        <div class="row">
+        {{#each question.options}}
+            <div class="col-sm-5">
+                <strong> {{this.option}} </strong>
+            </div>
+        {{/each}}
     </div>
 </div>

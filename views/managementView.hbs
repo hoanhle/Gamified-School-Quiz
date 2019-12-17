@@ -9,90 +9,13 @@
         </div>
         <div class="row">
             <ul class="questionaires ul">
-                {{>questionaire_listing value=1 name="Questinaire1 with a suuuuuper long name"}}    
-                {{>questionaire_listing value=2 name="Questinaire2"}}    
-                {{>questionaire_listing value=3 name="Questinaire3"}}    
-                {{>questionaire_listing value=4 name="Questinaire4"}}    
-                {{>questionaire_listing value=1 name="Questinaire1"}}    
-                {{>questionaire_listing value=2 name="Questinaire2"}}    
-                {{>questionaire_listing value=3 name="Questinaire3"}}    
-                {{>questionaire_listing value=4 name="Questinaire4"}}    
-                {{>questionaire_listing value=1 name="Questinaire1"}}    
-                {{>questionaire_listing value=2 name="Questinaire2"}}    
-                {{>questionaire_listing value=3 name="Questinaire3"}}    
-                {{>questionaire_listing value=4 name="Questinaire4"}}    
-                {{>questionaire_listing value=1 name="Questinaire1"}}    
-                {{>questionaire_listing value=2 name="Questinaire2"}}    
-                {{>questionaire_listing value=3 name="Questinaire3"}}    
-                {{>questionaire_listing value=4 name="Questinaire4"}}    
-                {{>questionaire_listing value=1 name="Questinaire1"}}    
-                {{>questionaire_listing value=2 name="Questinaire2"}}    
-                {{>questionaire_listing value=3 name="Questinaire3"}}    
-                {{>questionaire_listing value=4 name="Questinaire4"}}    
-                {{>questionaire_listing value=1 name="Questinaire1"}}    
-                {{>questionaire_listing value=2 name="Questinaire2"}}    
-                {{>questionaire_listing value=3 name="Questinaire3"}}    
-                {{>questionaire_listing value=4 name="Questinaire4"}}    
-                {{>questionaire_listing value=1 name="Questinaire1"}}    
-                {{>questionaire_listing value=2 name="Questinaire2"}}    
-                {{>questionaire_listing value=3 name="Questinaire3"}}    
-                {{>questionaire_listing value=4 name="Questinaire4"}}    
-                {{>questionaire_listing value=1 name="Questinaire1"}}    
-                {{>questionaire_listing value=1 name="Questinaire1"}}    
-                {{>questionaire_listing value=2 name="Questinaire2"}}    
-                {{>questionaire_listing value=3 name="Questinaire3"}}    
-                {{>questionaire_listing value=4 name="Questinaire4"}}    
-                {{>questionaire_listing value=1 name="Questinaire1"}}    
-                {{>questionaire_listing value=2 name="Questinaire2"}}    
-                {{>questionaire_listing value=3 name="Questinaire3"}}    
-                {{>questionaire_listing value=4 name="Questinaire4"}}    
-                {{>questionaire_listing value=1 name="Questinaire1"}}    
-                {{>questionaire_listing value=2 name="Questinaire2"}}    
-                {{>questionaire_listing value=3 name="Questinaire3"}}    
-                {{>questionaire_listing value=4 name="Questinaire4"}}    
-                {{>questionaire_listing value=1 name="Questinaire1"}}    
-                {{>questionaire_listing value=2 name="Questinaire2"}}    
-                {{>questionaire_listing value=3 name="Questinaire3"}}    
-                {{>questionaire_listing value=4 name="Questinaire4"}}    
-                {{>questionaire_listing value=1 name="Questinaire1"}}    
-                {{>questionaire_listing value=2 name="Questinaire2"}}    
-                {{>questionaire_listing value=3 name="Questinaire3"}}    
-                {{>questionaire_listing value=4 name="Questinaire4"}}    
-                {{>questionaire_listing value=1 name="Questinaire1"}}    
-                {{>questionaire_listing value=2 name="Questinaire2"}}    
-                {{>questionaire_listing value=3 name="Questinaire3"}}    
-                {{>questionaire_listing value=4 name="Questinaire4"}}    
-                {{>questionaire_listing value=1 name="Questinaire1"}}    
-                {{>questionaire_listing value=2 name="Questinaire2"}}    
-                {{>questionaire_listing value=3 name="Questinaire3"}}    
-                {{>questionaire_listing value=4 name="Questinaire4"}}    
-                {{>questionaire_listing value=2 name="Questinaire2"}}    
-                {{>questionaire_listing value=3 name="Questinaire3"}}    
-                {{>questionaire_listing value=4 name="Questinaire4"}}    
-                {{>questionaire_listing value=1 name="Questinaire1"}}    
-                {{>questionaire_listing value=2 name="Questinaire2"}}    
-                {{>questionaire_listing value=3 name="Questinaire3"}}    
-                {{>questionaire_listing value=4 name="Questinaire4"}}    
-                {{>questionaire_listing value=1 name="Questinaire1"}}    
-                {{>questionaire_listing value=2 name="Questinaire2"}}    
-                {{>questionaire_listing value=3 name="Questinaire3"}}    
-                {{>questionaire_listing value=4 name="Questinaire4"}}    
-                {{>questionaire_listing value=1 name="Questinaire1"}}    
-                {{>questionaire_listing value=2 name="Questinaire2"}}    
-                {{>questionaire_listing value=3 name="Questinaire3"}}    
-                {{>questionaire_listing value=4 name="Questinaire4"}}    
-                {{>questionaire_listing value=1 name="Questinaire1"}}    
-                {{>questionaire_listing value=2 name="Questinaire2"}}    
-                {{>questionaire_listing value=3 name="Questinaire3"}}    
-                {{>questionaire_listing value=4 name="Questinaire4"}}    
-                {{>questionaire_listing value=1 name="Questinaire1"}}    
-                {{>questionaire_listing value=2 name="Questinaire2"}}    
-                {{>questionaire_listing value=3 name="Questinaire3"}}    
-                {{>questionaire_listing value=4 name="Questinaire4"}}    
-                {{>questionaire_listing value=1 name="Questinaire1"}}    
-                {{>questionaire_listing value=2 name="Questinaire2"}}    
-                {{>questionaire_listing value=3 name="Questinaire3"}}    
-                {{>questionaire_listing value=4 name="Questinaire4"}}    
+            {{#if this}}
+                {{#each this}}
+                    {{>questionaire_listing value=@index name=this.title questions=this.questions}}
+                {{/each}}
+            {{else}} 
+                   <li> empty </li>
+            {{/if}}
             </ul>
         </div>
     </div>
@@ -101,8 +24,12 @@
 
 <div class="editing_view" class="container">
     {{#if first_time}}
-    <h1> First time</h1>
+        <h1> First time</h1>
     {{else}}
-    {{>editView name="Questionaire"}}
+        {{#if this.[1]}}
+            {{>editView name=this.1.title questions=this.1.questions}}
+        {{else}}
+            {{>editView name="Questionaire"}}
+        {{/if}}
     {{/if}} 
 </div>

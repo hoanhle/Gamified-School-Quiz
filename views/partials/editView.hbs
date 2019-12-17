@@ -25,10 +25,11 @@
 
 </form>
 <div class="container">
-    {{>display_question}}
-    {{>display_question}}
-    {{>display_question}}
-    {{>display_question}}
-    {{>display_question}}
-    {{>display_question}}
+    {{#if questions}}
+        {{#each questions}}
+            {{>display_question question=this}} 
+        {{/each}}
+    {{else}}
+        <h3> Empty! Go make some questions </h3>
+    {{/if}}
 </div>
