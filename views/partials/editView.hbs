@@ -1,6 +1,34 @@
 
-<h1> Editing questions. </h1>
+<h2> {{name}}</h2>
 
-<input type="text">
-<input type="text">
-<input type="text">
+<form id="edit_form">
+    <div class="row">
+        <label for="question">Question: </label>
+        <input type="text" id="Question">
+    </div>
+    <div class="row">
+        <label for="Answer1">Answer: </label>
+        <input type="text" id="Answer1">
+        <label for="Answer2">Answer: </label>
+        <input type="text" id="Answer2"> 
+    </div>
+    <div class="row">
+        <label for="Answer3">Answer: </label>
+        <input type="text" id="Answer3"> 
+        <label for="Answer4">Answer: </label>
+        <input type="text" id="Answer4"> 
+    </div>
+    <div class="row">
+        <button type="submit">Add question </button>
+        <button type="reset">Clear </button>
+    </div>
+
+</form>
+<div class="container">
+    {{>display_question}}
+    {{>display_question}}
+    {{>display_question}}
+    {{>display_question}}
+    {{>display_question}}
+    {{>display_question}}
+</div>
