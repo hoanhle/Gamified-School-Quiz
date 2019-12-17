@@ -1,93 +1,98 @@
 #assignment {
-    font-weight: bold;
-    font-size: 1.3rem;
-    width: 675px;
-    padding: 5px;
-    margin: 15px auto;
+	font-weight: bold;
+	font-size: 1.3rem;
+	width: 675px;
+	padding: 5px;
+	margin: 15px auto;
 }
 
 #container {
-    display: flex;
-    flex-flow: row wrap;
-    width: 675px;
-    min-height: 64px;
-    padding: 5px;
-    margin: 15px auto;
-    border: 2px solid black;
+	display: flex;
+	flex-flow: row wrap;
+	width: 675px;
+	min-height: 64px;
+	padding: 5px;
+	margin: 15px auto;
+	border: 2px solid black;
 }
 
 #container div {
-    color: black;
-    font-size: 30px;
-    font-weight: bold;
-    text-align: center;
-    padding: 10px;
-    border: 2px solid black;
-    border-radius: 10px;
-    margin: 5px;
+	color: black;
+	font-size: 30px;
+	font-weight: bold;
+	text-align: center;
+	padding: 10px;
+	border: 2px solid black;
+	border-radius: 10px;
+	margin: 5px;
+}
+
+#quiz {
+	border: 2px solid #428bca;
+	border-radius: 10px;
 }
 
 #bubbles div:hover,
 #container div:hover {
-    color: aquamarine;
+	color: aquamarine;
 }
 
 #bubbles {
-    width: 620px;
-    min-height: 700px;
-    padding: 10px;
-    position: relative;
-    border: 2px solid black;
-    margin: 15px auto;
+	width: 620px;
+	min-height: 700px;
+	padding: 10px;
+	position: relative;
+	border: 2px solid black;
+	margin: 15px auto;
 }
 
 .bubble {
-    color: black;
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
-    padding: 5px;
-    border: 2px solid black;
-    border-radius: 10px;
-    margin: 5px;
-    position: absolute;
-    max-width: 185px;
+	color: black;
+	font-size: 20px;
+	font-weight: bold;
+	text-align: center;
+	padding: 5px;
+	border: 2px solid black;
+	border-radius: 10px;
+	margin: 5px;
+	position: absolute;
+	max-width: 185px;
 }
 
 .red {
-    background: red;
+	background: red;
 }
 
 .yellow {
-    background: yellow;
+	background: yellow;
 }
 
 .blue {
-    /* background: blue; */
-    background: lightskyblue;
+	/* background: blue; */
+	background: lightskyblue;
 }
 
 .green {
-    background: green;
+	background: green;
 }
 
 .hidden {
-    display: none;
+	display: none;
 }
 
 textarea {
-    resize: none;
+	resize: none;
 }
 
-/*      
+/*
     Added afterwards
     To enable the visibility toggle
  */
 
 .submenu {
-    display: none;
-    overflow: auto;
-    white-space: nowrap;
+	display: none;
+	overflow: auto;
+	white-space: nowrap;
 }
 
 #questionaires {
@@ -96,7 +101,6 @@ textarea {
     border: 1px solid blue;
     height: 100%;
 }
-
 
 .editing_view {
     float: right;
@@ -120,9 +124,9 @@ textarea {
 }
 
 .questionaires.li {
-    white-space: nowrap;
-    margin: 0;
-    padding: 0;
+	white-space: nowrap;
+	margin: 0;
+	padding: 0;
 }
 
 .questionaires_search {
@@ -154,4 +158,13 @@ textarea {
 
 #display_question div [class="col-sm"]{
     padding: 5px 5px 5px 5px;
+    float: left;
+    margin: 0 auto;
+    width: 100%;
+}
+
+button[name = "option"] {
+	padding: 10px 20px;
+	margin-bottom: 10px;
+	width: 20px;
 }

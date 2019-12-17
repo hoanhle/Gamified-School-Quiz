@@ -122,7 +122,7 @@ const userSchema = new Schema({
 });
 
 userSchema.virtual('isAdmin').get(function() {
-    // eslint-disable-next-line babel/no-invalid-this
+    // eslint-disable-next-line no-invalid-this
     // the helper function should return either true of false
     if (this.role === 'admin'){
         return true;
@@ -132,7 +132,7 @@ userSchema.virtual('isAdmin').get(function() {
 });
 
 userSchema.virtual('isTeacher').get(function() {
-    // eslint-disable-next-line babel/no-invalid-this
+    // eslint-disable-next-line no-invalid-this
     // Note that admin can be anything
     // the helper function should return either true of false
     if (this.role === 'teacher' || this.role === 'admin') {
@@ -143,7 +143,7 @@ userSchema.virtual('isTeacher').get(function() {
 });
 
 userSchema.virtual('isStudent').get(function() {
-    // eslint-disable-next-line babel/no-invalid-this
+    // eslint-disable-next-line no-invalid-this
     //Note that admin can be anything
     // the helper function should return either true of false
     if (this.role === 'student' || this.role === 'admin') {

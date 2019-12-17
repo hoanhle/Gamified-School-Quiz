@@ -1,0 +1,11 @@
+{{#if this.options}}
+<div class="card-deck mt-3 justify-content-around">
+    {{#each this.options as |option index|}}
+    {{>answer_info option}}
+    {{/each}}
+</div>
+{{else}}
+<div class="alert alert-danger">
+    <p>No answers found.</p>
+</div>
+{{/if}}
