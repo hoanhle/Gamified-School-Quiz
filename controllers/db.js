@@ -9,9 +9,9 @@ module.exports = {
 	 * Get a Questionnaire corresponding to a given title
 	 * @params {String} title is the title of the questionare to get
 	 */
-	async getQuestionnaire(title) {
+	async getQuestionnaire(id) {
 		try {
-			const questionnaire = await Questionnaire.findOne({title: title});
+			const questionnaire = await Questionnaire.findById({_id: id});
 			return questionnaire;
 		} catch(err) {
 			db.handleCriticalError(err);
