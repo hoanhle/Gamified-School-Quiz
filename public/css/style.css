@@ -27,11 +27,6 @@
 	margin: 5px;
 }
 
-#quiz {
-	border: 2px solid #428bca;
-	border-radius: 10px;
-}
-
 #bubbles div:hover,
 #container div:hover {
 	color: aquamarine;
