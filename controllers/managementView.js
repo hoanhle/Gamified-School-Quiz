@@ -1,22 +1,19 @@
 'use strict';
 
 const managementView= require('../models/managementView');
+const db = require('../controllers/db')
 
 module.exports = {
     /**
-     * Prints exercise page
+     * Prints managemenView page
      * @param {Object} request is express request object
      * @param {Object} response is express response object
      */
-    showManagementView(request, response) {
-        // currently we use only the default exercise here
-        response.render('managementView');
+    async showManagementView(request, response) {
+      let questionaires = await db.getAllQuestionnaires() 
+      console.log(questionaires)
+      response.render('managementView', questionaires)
     },
 
-    /**
-     * gradeExercise returns a grade for answer
-     * @param {Object} request is express request object
-     * @param {Object} response is express response object
-     */
 
 };

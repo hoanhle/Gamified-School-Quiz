@@ -90,41 +90,74 @@ textarea {
 	white-space: nowrap;
 }
 
-.questionaires {
-	align-items: left;
-	float: left;
-	width: 25%;
+#questionaires {
+    float: left;
+    width: 25%;
+    border: 1px solid blue;
+    height: 100%;
 }
 
 .editing_view {
-	float: right;
-	height: 80%;
-	text-align: center;
-	width: 75%;
+    float: right;
+    height: 80%;
+    text-align: center;
+    width: 75%;
+    border: 1px solid red;
+    height: 93vh;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .questionaires.ul {
-	position: absolute;
-	top: 13%;
-	bottom: 3%;
-	left: 3%;
-	overflow-y: scroll;
-	list-style-type: square;
-	border: 2px;
-	margin: 0;
-	padding: 0;
+    height: 85vh;
+    width: 100%;
+    overflow-y: auto;
+    list-style-type: square;
+    border: 2px solid green;
+    margin: 0;
+    padding: 0;
 }
 
 .questionaires.li {
-	white-space: nowrap;
-	margin: 0;
-	padding: 0;
+    white-space: nowrap;
+    list-style-type: none;
+    overflow: auto;
+    margin: 0;
+    padding: 0;
 }
 
 .questionaires_search {
-	float: left;
-	margin: 0 auto;
-	width: 100%;
+    float: left;
+    margin: 0 auto;
+    width: 85%;
+    height: 5%;
+}
+
+#questionaires_add {
+    width: 15%;
+    float: right;
+}
+
+#edit_form {
+    float: none;
+    border: 2px solid pink;
+    padding: 10px 10px 10px 30px;
+}
+
+#edit_form div{
+    padding: 5px 5px 5px 5px;
+}
+
+#edit_form label {
+    padding-right: 1%;
+    padding-left: 5px;
+}
+
+#display_question div [class="col-sm"]{
+    padding: 5px 5px 5px 5px;
+    float: left;
+    margin: 0 auto;
+    width: 100%;
 }
 
 button[name = "option"] {

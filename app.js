@@ -60,13 +60,6 @@ app.engine(
 		extname: 'hbs',
 		helpers: {
 			hbsHelpers: hbsHelpers,
-			visible: function(value) {
-				return vis;
-			},
-			toggleVisible: function() {
-				if (vis) vis = false;
-				vis = true;
-			}
 		},
 		defaultLayout: 'default',
 		layoutsDir: path.join(__dirname, '/views/layouts/'),
