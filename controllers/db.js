@@ -75,7 +75,7 @@ module.exports = {
 		} catch(err) {
 			db.handleCriticalError(err);
 		}
-	}
+	},
 
 	async addQuestion(questionnaireId, questionTitle, options) {
 		try {
@@ -90,7 +90,7 @@ module.exports = {
 		} catch(err) {
 			db.handleCriticalError(err);
 		}
-	}
+	},
 
 	async deleteQuestion(questionnaireID, questionTitle) {
 		try {
