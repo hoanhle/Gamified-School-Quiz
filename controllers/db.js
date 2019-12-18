@@ -81,13 +81,15 @@ module.exports = {
 	 * @params {String} questionnaireId: id of the existing questionnaire
 	 *         {String} questionTitle: title of the question to be added
 	 *		   {Array} options: array containing options of the question
+	 *		   {Int} maxPoints: maximum number of points that player can get 
+	 *                          from the question
 	 */
-	async addQuestion(questionnaireId, questionTitle, options) {
+	async addQuestion(questionnaireId, questionTitle, options, maxPoints) {
 		try {
 			let questionnaire = await module.exports.getQuestionnaire(questionnaireId);
 			let question = {
 				title: questionTitle,
-				maxPoints: 1,
+				maxPoints: maxPoints,
 				options: options
 			};
 			questionnaire.questions.push(question);
@@ -117,16 +119,19 @@ module.exports = {
 	 * Update a question in an existing questionnaire
 	 * @params {String} questionnaireId: id of the existing questionnaire
 	 *         {String} questionId: id of the question to be updated
-	 *		   {String} title: the (possibly new) title of the question
+	 *		   {String} questionTitle: the (possibly new) title of the question
 	 *         {Array} options: the (possibly new) options of the question
+	 *		   {Int} maxPoints: (possibly new) maximum number of points that player 
+	 *                          can get from the question
 	 */
-	async updateQuestion(questionnaireID, questionID, title, options) {
+	async updateQuestion(questionnaireID, questionID, questionTitle, options, maxPoints) {
 		try {
 			let questionnaire = await module.exports.getQuestionnaire(questionnaireId);
 
 			let updateIndex = questionnaire.questions.findIndex(question => question._id === questionID);
-			questionnaire.questions[updateIndex].title = title;
+			questionnaire.questions[updateIndex].questionTitle = questionTitle;
 			questionnaire.questions[updateIndex].options = options;
+			questionnaire.questions[updateIndex].maxPoints = maxPoints;
 
 			await module.exports.updateQuestionnaire(questionnaireId, questionnaire);
 		} catch(err) {
