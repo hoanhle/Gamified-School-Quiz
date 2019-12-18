@@ -54,7 +54,7 @@ module.exports = {
 				points: request.session.points
 			});
 		} else {
-			const points = 2;
+			const points = request.session.points;
 			response.render('endGame', { points });
 		}
 	}
