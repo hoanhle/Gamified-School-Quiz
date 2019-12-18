@@ -20,55 +20,80 @@ for high-school students, especially for the domains of mathematics and computer
 
 ```
 .
-├── app.js                  --> express app
-├── index.js                --> bwa app
-├── package.json            --> app info and dependencies
-├── controllers             --> controllers (handle e.g. routing)
-│   ├──  ...                -->   ...
-│   └── hello.js            --> the same as "minimal viable grader"
-├── models                  --> models that reflect the db schemes
-│                               and take care of storing data
-├── public                  --> location for public (static) files
-│   ├── img                 --> for images
-│   ├── js                  --> for javascript
-│   └── css                 --> for styles
-├── routes                  --> a dir for router modules
-│   ├── hello.js            --> / (root) router
-│   ├──  ...                -->   ...
-│   └── users.js            --> /users router
-├── views                   --> views - visible parts
-│   ├── error.hbs           --> error view
-│   ├── hello.hbs           --> main view - "minimal viable grader"
-│   ├── layouts             --> layouts - handlebar concept
-│   │   └── layout.hbs      --> layout view, "template" to be rendered
-│   └── partials            --> smaller handlebar components to be included in views
-└── test                    --> tests
-│   ├── assignment          --> TODO: your tests here
-│   ├── integration         --> integration tests
-└── └── models              --> unit tests for models
+├── app.js                          --> express app
+├── index.js                        --> bwa app
+├── package.json                    --> app info and dependencies
+├── controllers                     --> controllers (handle e.g. routing)
+│   ├──  ...                        -->   ...
+│   └── hello.js                    --> the same as "minimal viable grader"
+├── models                          --> models that reflect the db schemes
+│                                       and take care of storing data
+├── public                          --> location for public (static) files
+│   ├── img                         --> for images
+│   ├── js                          --> for javascript
+│   └── css                         --> for styles
+├── routes                          --> a dir for router modules
+│   ├── hello.js                    --> / (root) router
+│   ├──  ...                        -->   ...
+│   └── users.js                    --> /users router
+├── views                           --> views - visible parts
+│   ├── error.hbs                   --> error view
+│   ├── hello.hbs                   --> main view - "minimal viable grader"
+│   ├── layouts                     --> layouts - handlebar concept
+│   │   └── layout.hbs              --> layout view, "template" to be rendered
+│   └── partials                    --> smaller handlebar components to be included in views
+└── test                            --> tests
+│   ├── assignment                  --> unit tests written by the group
+│   │   └── dbFunctionalities.js    --> test CRUD operations on questionnaires
+│   ├── integration                 --> integration tests
+└── └── models                      --> unit tests for models
 
 
 ```
 
-TODO: add your files here and give a short description
-
 ## Game
 
-![Gameview picture](game_view.jpg)
+The game is similar to the famous television show "Who wants to be a millionnaire". The student will answer multiple-choice questions one-by-one, from a questionnaire of his/her choice. The game will end as soon as the student answers a question incorrectly, or when the student answers correctly all the questions.
+
+During one gameplay, the student have 3 "helps": 
+  **50/50** - remove 50% of the answers, 
+  **2x** - double the points gained when answers correctly
+  **Hint** - show a hint related to the question, if available. Each help can only be used on during each gameplay.
+
+After the game ended, a pop-up window will appear, prompting the user to submit for grading. When clicking "Submit", the result of the game will be sent to the A+ system.
 
 ## Management view
 
-![Management-view picture](management_view.jpg)
+The management view enables the admin/teacher to perform the 4 CRUD operations: Create, Read, Update and Delete.
 
 ## Tests and documentation
 
-TODO: describe your work
+Apart from the tests already provided by the course in folders test/integration and test/models, our team has written a few more tests in test/assignment to test game functionalities, management view and database communications.
 
 ## Security concerns
 
-TODO: list the security threats represented in the course slides.
-Document how your application protects against the threats.
-You are also free to add more security threats + protection here, if you will.
+Below are some common security threats and how this project work is protected against them.
+
+1. Cross-site scripting (XSS): A method used to injecting client-side scripts into web pages. If hackers can run JavaScript code on your webpage, a lot of damage can be done.
+
+To prevent this threat, we use [Helmet](https://www.npmjs.com/package/helmet), which secures the app by setting various HTTP headers. Regarding XSS, Helmet contains an [XSS Filter](https://helmetjs.github.io/docs/xss-filter/) middleware, which adds some small XSS protections. Helmet contains up to 14 middlewares, which [protect against a wide variety of attacks](https://expressjs.com/en/advanced/best-practice-security.html#use-helmet).
+
+2. CSRF (Cross-Site Request Forgery): A hacker can create an AJAX Button on a form that makes a request against the site from an external site. This can result in data theft.
+
+To prevent this threat, we use CSRF Tokens mechanism:
+  * First, the server sends a client a token.
+  * Client then submit a form with the token. 
+  * If the token is invalid, the server rejects the request.
+
+We use [csurf](https://www.npmjs.com/package/csurf), which is a middleware for CSRF token creation and validation. The token is added into a hidden field in each form, this token is then validated against the visitor's session or csrf cookie.
+
+3. NoSQL Injections: A hacker may try to inject code in an input that, in order to change existing data in the databse or to get restricted access. The common solution is to sanitize the input before using them.
+
+However, for this project, because we use Mongoose with mongoDB, sanitizing the input is not required. Since we defined Mongoose Schema for all types of input (User, Questionnaire), the input will be converted to its corresponding type beforehand, and no damage will be done.
+
+4. Regarding passwords: the password should not be stored as plain text since the database can be hacked.
+
+We use [bcrypt](https://www.npmjs.com/package/bcryptjs) to hash password before storing, and to check the password for authentication. Bcrypt is designed to protect against rainbow table attacks (which is a common way to hack hashed passwords), and it can keep up with Moore's law, therefore it remains resistant to brute-force search attacks even with increasing computation power.
 
 ---
 
