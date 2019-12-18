@@ -76,4 +76,32 @@ module.exports = {
 			db.handleCriticalError(err);
 		}
 	}
+
+	async addQuestion(questionnaireId, questionTitle, options) {
+		try {
+			let questionnaire = await module.exports.getQuestionnaire(questionnaireId);
+			let question = {
+				title: questionTitle,
+				maxPoints: 1,
+				options: options
+			};
+			questionnaire.questions.push(question)
+			await module.exports.updateQuestionnaire(questionnaireId, questionnaire)
+		} catch(err) {
+			db.handleCriticalError(err);
+		}
+	}
+
+	async DeleteQuestion(questionnaireID, questionTitle) {
+		try {
+			let questionnaire = await module.exports.getQuestionnaire(questionnaireId);
+			const newQuestions = questionnaire.questions.filter(
+				question => question.title !== questionTitle
+			);
+			questionnaire.questions = newQuestions;
+			await module.exports.updateQuestionnaire(questionnaireId, questionnaire)
+		} catch(err) {
+			db.handleCriticalError(err);
+		}
+	}
 }
