@@ -18,6 +18,8 @@
         "bcryptjs": "^2.4.3",
         "config": "^3.2.4",
         "connect-flash": "^0.1.1",
+        "cookie-parser": "^1.4.4",
+        "cookieparser": "^0.1.0",
         "csurf": "^1.10.0",
         "debug": "^4.1.1",
         "dotenv": "^8.2.0",
