@@ -56,7 +56,10 @@ TODO: add your files here and give a short description
 
 The game is similar to the famous television show "Who wants to be a millionnaire". The student will answer multiple-choice questions one-by-one, from a questionnaire of his/her choice. The game will end as soon as the student answers a question incorrectly, or when the student answers correctly all the questions.
 
-During one gameplay, the student have 3 "helps": 50/50 - remove 50% of the answers, 2x - double the points gained when answers correctly, and Hint - show a hint related to the question, if available. Each help can only be used on during each gameplay.
+During one gameplay, the student have 3 "helps": 
+  **50/50** - remove 50% of the answers, 
+  **2x** - double the points gained when answers correctly
+  **Hint** - show a hint related to the question, if available. Each help can only be used on during each gameplay.
 
 After the game ended, a pop-up window will appear, prompting the user to submit for grading. When clicking "Submit", the result of the game will be sent to the A+ system.
 
@@ -79,9 +82,9 @@ To prevent this threat, we use [Helmet](https://www.npmjs.com/package/helmet), w
 2. CSRF (Cross-Site Request Forgery): A hacker can create an AJAX Button on a form that makes a request against the site from an external site. This can result in data theft.
 
 To prevent this threat, we use CSRF Tokens mechanism:
-⋅⋅* First, the server sends a client a token.
-⋅⋅* Client then submit a form with the token. 
-⋅⋅* If the token is invalid, the server rejects the request.
+  * First, the server sends a client a token.
+  * Client then submit a form with the token. 
+  * If the token is invalid, the server rejects the request.
 
 We use [csurf](https://www.npmjs.com/package/csurf), which is a middleware for CSRF token creation and validation. The token is added into a hidden field in each form, this token is then validated against the visitor's session or csrf cookie.
 
