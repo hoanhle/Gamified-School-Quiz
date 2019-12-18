@@ -1,29 +1,45 @@
 
 <h2> {{name}}</h2>
 
-<form id="edit_form">
+<div class="form-group">
+<form id="edit_form" method="POST" action="/management/question/add/{{id}}">
     <div class="row">
-        <label for="question">Question: </label>
-        <input type="text" id="Question">
+        <div class="col">
+          <label for="Question">Question: </label>
+          <input type="text" id="Question" name="Question">
+        </div>
+
+        <div class="col">
+          <label for="1">Correct answer: </label>
+          <input type="text" id="1" name="1">
+        </div>
     </div>
-    <div class="row">
-        <label for="Answer1">Answer: </label>
-        <input type="text" id="Answer1">
-        <label for="Answer2">Answer: </label>
-        <input type="text" id="Answer2"> 
+    <h3> Fake answers. Minimum is 3. </h3>
+    <div class="row" id="fake_ans">
+        <div class="col-sm-5">
+          <label for="2">Answer: </label>
+          <input type="text" id="2" name="2"> 
+        </div>
+
+        <div class="col-sm-5">
+          <label for="3">Answer: </label>
+          <input type="text" id="3" name="3"> 
+        </div>
+
+        <div class="col-sm-5">
+          <label for="4">Answer: </label>
+          <input type="text" id="4" name="4"> 
+        </div>
     </div>
+
     <div class="row">
-        <label for="Answer3">Answer: </label>
-        <input type="text" id="Answer3"> 
-        <label for="Answer4">Answer: </label>
-        <input type="text" id="Answer4"> 
-    </div>
-    <div class="row">
-        <button type="submit">Add question </button>
-        <button type="reset">Clear </button>
+        <button type="Submit">Add question </button>
+        <button type="Reset">Clear </button>
+        <input id="add" type="button" value="Add an answer" onclick="addAnswer();" />
     </div>
 
 </form>
+</div>
 <div class="container">
     {{#if questions}}
         {{#each questions}}

@@ -1,0 +1,16 @@
+<div class="col-md-6 m-auto">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Remove quesitionaire: {{name}}</h3>
+        </div>
+
+        <div class="card-footer">
+            <form method="POST" action="/management/delete/{{id}}">
+                <input type="hidden" name="_csrf" value="{{token}}">
+                <button type="submit" class="btn btn-primary">Remove</button>
+            </form>
+
+            <p class="lead mt-4"><a href="/management">Cancel</a></p>
+        </div>
+    </div>
+</div>

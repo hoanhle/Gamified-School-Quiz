@@ -1,6 +1,8 @@
 <head>
     <script type="text/javascript" src="/js/management.js"> </script>
+    <link href="https://cdn.lineicons.com/1.0.1/LineIcons.min.css" rel="stylesheet">
 </head>
+{{>messages}}
 <aside class="questionaires" id="questionaires"> 
     <div class="container">
         <div class="row">
@@ -9,9 +11,11 @@
         </div>
         <div class="row">
             <ul class="questionaires ul">
-            {{#if this}}
-                {{#each this}}
-                    {{>questionaire_listing value=@index name=this.title questions=this.questions}}
+            {{#if questionaires}}
+                {{#each questionaires}}
+                    {{#if this.title}}
+                        {{>questionaire_listing value=@index name=this.title questions=this.questions id=this._id}}
+                    {{/if}}    
                 {{/each}}
             {{else}} 
                    <li> empty </li>
@@ -23,13 +27,9 @@
 
 
 <div class="editing_view" class="container">
-    {{#if first_time}}
-        <h1> First time</h1>
+    {{#if questionaire}}
+        {{>editView name=questionaire.title questions=questionaire.questions id=questionaire.id}}
     {{else}}
-        {{#if this.[1]}}
-            {{>editView name=this.1.title questions=this.1.questions}}
-        {{else}}
-            {{>editView name="Questionaire"}}
-        {{/if}}
+        <h1> First time</h1>
     {{/if}} 
 </div>
