@@ -32,9 +32,11 @@ module.exports = {
 		const randomQuestion = await Game.generateRandomQuestion();
 		const title = randomQuestion.title;
 		const options = await Game.generateOptions(randomQuestion);
+		request.session.points = 0;
 		response.render('gameView', {
 			title: title,
-			options: options
+			options: options,
+			points: request.session.points
 		});
 	},
 
@@ -45,12 +47,12 @@ module.exports = {
 			const randomQuestion = await Game.generateRandomQuestion();
 			const title = randomQuestion.title;
 			const options = await Game.generateOptions(randomQuestion);
+			request.session.points += 1;
 			response.render('gameView', {
 				title: title,
-				options: options
+				options: options,
+				points: request.session.points
 			});
-
-			console.log(request.cookies.point);
 		} else {
 			const points = 2;
 			response.render('endGame', { points });
