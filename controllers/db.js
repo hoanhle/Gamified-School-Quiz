@@ -92,11 +92,11 @@ module.exports = {
 		}
 	},
 
-	async deleteQuestion(questionnaireID, questionTitle) {
+	async deleteQuestion(questionnaireID, questionId) {
 		try {
 			let questionnaire = await module.exports.getQuestionnaire(questionnaireId);
 			const newQuestions = questionnaire.questions.filter(
-				question => question.title !== questionTitle
+				question => question._id !== questionId
 			);
 			questionnaire.questions = newQuestions;
 			await module.exports.updateQuestionnaire(questionnaireId, questionnaire)
