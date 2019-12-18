@@ -76,7 +76,12 @@ module.exports = {
 			db.handleCriticalError(err);
 		}
 	},
-
+	/**
+	 * Add a question to an existing questionnaire
+	 * @params {String} questionnaireId: id of the existing questionnaire
+	 *         {String} questionTitle: title of the question to be added
+	 *		   {Array} options: array containing options of the question
+	 */
 	async addQuestion(questionnaireId, questionTitle, options) {
 		try {
 			let questionnaire = await module.exports.getQuestionnaire(questionnaireId);
@@ -85,13 +90,17 @@ module.exports = {
 				maxPoints: 1,
 				options: options
 			};
-			questionnaire.questions.push(question)
-			await module.exports.updateQuestionnaire(questionnaireId, questionnaire)
+			questionnaire.questions.push(question);
+			await module.exports.updateQuestionnaire(questionnaireId, questionnaire);
 		} catch(err) {
 			db.handleCriticalError(err);
 		}
 	},
-
+	/**
+	 * Delete a question from an existing questionnaire
+	 * @params {String} questionnaireId: id of the existing questionnaire
+	 *         {String} questionId: id of the question to be deleted
+	 */
 	async deleteQuestion(questionnaireID, questionId) {
 		try {
 			let questionnaire = await module.exports.getQuestionnaire(questionnaireId);
@@ -99,7 +108,27 @@ module.exports = {
 				question => question._id !== questionId
 			);
 			questionnaire.questions = newQuestions;
-			await module.exports.updateQuestionnaire(questionnaireId, questionnaire)
+			await module.exports.updateQuestionnaire(questionnaireId, questionnaire);
+		} catch(err) {
+			db.handleCriticalError(err);
+		}
+	},
+	/**
+	 * Update a question in an existing questionnaire
+	 * @params {String} questionnaireId: id of the existing questionnaire
+	 *         {String} questionId: id of the question to be updated
+	 *		   {String} title: the (possibly new) title of the question
+	 *         {Array} options: the (possibly new) options of the question
+	 */
+	async updateQuestion(questionnaireID, questionID, title, options) {
+		try {
+			let questionnaire = await module.exports.getQuestionnaire(questionnaireId);
+
+			let updateIndex = questionnaire.questions.findIndex(question => question._id === questionID);
+			questionnaire.questions[updateIndex].title = title;
+			questionnaire.questions[updateIndex].options = options;
+
+			await module.exports.updateQuestionnaire(questionnaireId, questionnaire);
 		} catch(err) {
 			db.handleCriticalError(err);
 		}
