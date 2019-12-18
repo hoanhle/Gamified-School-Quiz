@@ -6,8 +6,8 @@ const db = require('../models/db');
 
 module.exports = {
 	/**
-	 * Get a Questionnaire corresponding to a given title
-	 * @params {String} title is the title of the questionare to get
+	 * Get a Questionnaire corresponding to a given id
+	 * @params {String} id is the id of the questionare to get
 	 */
 	async getQuestionnaire(id) {
 		try {
@@ -42,7 +42,7 @@ module.exports = {
 	},
 	/**
 	 * Update a Questionnaire by replacing it with a new one
-	 * @params {String} title is the title of the questionare that needs to be updated
+	 * @params {String} id is the id of the questionare that needs to be updated
 	 * @params {Object} Questionnaire is the JSON object containing new Questionnaire info
 	 */
 	async updateQuestionnaire(id, questionnaire) {
@@ -56,8 +56,8 @@ module.exports = {
 		}
 	},
 	/**
-	 * Delete a Questionnaire corresponding to a given title
-	 * @params {String} title of the questionare to be deleted
+	 * Delete a Questionnaire corresponding to a given id
+	 * @params {String} id of the questionare to be deleted
 	 */
 	async deleteQuestionnaire(id) {
 		try {
