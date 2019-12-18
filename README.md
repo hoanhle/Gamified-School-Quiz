@@ -20,37 +20,36 @@ for high-school students, especially for the domains of mathematics and computer
 
 ```
 .
-├── app.js                  --> express app
-├── index.js                --> bwa app
-├── package.json            --> app info and dependencies
-├── controllers             --> controllers (handle e.g. routing)
-│   ├──  ...                -->   ...
-│   └── hello.js            --> the same as "minimal viable grader"
-├── models                  --> models that reflect the db schemes
-│                               and take care of storing data
-├── public                  --> location for public (static) files
-│   ├── img                 --> for images
-│   ├── js                  --> for javascript
-│   └── css                 --> for styles
-├── routes                  --> a dir for router modules
-│   ├── hello.js            --> / (root) router
-│   ├──  ...                -->   ...
-│   └── users.js            --> /users router
-├── views                   --> views - visible parts
-│   ├── error.hbs           --> error view
-│   ├── hello.hbs           --> main view - "minimal viable grader"
-│   ├── layouts             --> layouts - handlebar concept
-│   │   └── layout.hbs      --> layout view, "template" to be rendered
-│   └── partials            --> smaller handlebar components to be included in views
-└── test                    --> tests
-│   ├── assignment          --> unit tests written by the group
-│   ├── integration         --> integration tests
-└── └── models              --> unit tests for models
+├── app.js                          --> express app
+├── index.js                        --> bwa app
+├── package.json                    --> app info and dependencies
+├── controllers                     --> controllers (handle e.g. routing)
+│   ├──  ...                        -->   ...
+│   └── hello.js                    --> the same as "minimal viable grader"
+├── models                          --> models that reflect the db schemes
+│                                       and take care of storing data
+├── public                          --> location for public (static) files
+│   ├── img                         --> for images
+│   ├── js                          --> for javascript
+│   └── css                         --> for styles
+├── routes                          --> a dir for router modules
+│   ├── hello.js                    --> / (root) router
+│   ├──  ...                        -->   ...
+│   └── users.js                    --> /users router
+├── views                           --> views - visible parts
+│   ├── error.hbs                   --> error view
+│   ├── hello.hbs                   --> main view - "minimal viable grader"
+│   ├── layouts                     --> layouts - handlebar concept
+│   │   └── layout.hbs              --> layout view, "template" to be rendered
+│   └── partials                    --> smaller handlebar components to be included in views
+└── test                            --> tests
+│   ├── assignment                  --> unit tests written by the group
+│   │   └── dbFunctionalities.js    --> test CRUD operations on questionnaires
+│   ├── integration                 --> integration tests
+└── └── models                      --> unit tests for models
 
 
 ```
-
-TODO: add your files here and give a short description
 
 ## Game
 
