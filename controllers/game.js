@@ -33,10 +33,18 @@ module.exports = {
 		const title = randomQuestion.title;
 		const options = await Game.generateOptions(randomQuestion);
 		request.session.points = 0;
+		request.session.helpOption1 = true;
+		request.session.helpOption2 = true;
+		request.session.helpOption3 = true;
+		request.session.options = options;
+		request.session.title = title;
 		response.render('gameView', {
 			title: title,
 			options: options,
-			points: request.session.points
+			points: request.session.points,
+			helpOption1: request.session.helpOption1,
+			helpOption2: request.session.helpOption2,
+			helpOption3: request.session.helpOption3
 		});
 	},
 
@@ -53,10 +61,15 @@ module.exports = {
 			const title = randomQuestion.title;
 			const options = await Game.generateOptions(randomQuestion);
 			request.session.points += 1;
+			request.session.options = options;
+			request.session.title = title;
 			response.render('gameView', {
 				title: title,
 				options: options,
-				points: request.session.points
+				points: request.session.points,
+				helpOption1: request.session.helpOption1,
+				helpOption2: request.session.helpOption2,
+				helpOption3: request.session.helpOption3
 			});
 		} else {
 			const points = request.session.points;
@@ -64,8 +77,43 @@ module.exports = {
 		}
 	},
 
-	async helpClicked(request) {
+	async helpClicked(request, response) {
 		const helpOption = request.body.helpOption;
 		console.log(helpOption);
+		if (helpOption == 'skip') {
+			const randomQuestion = await Game.generateRandomQuestion();
+			const title = randomQuestion.title;
+			const options = await Game.generateOptions(randomQuestion);
+			request.session.helpOption3 = false;
+			request.session.title = title;
+			request.session.options = options;
+			response.render('gameView', {
+				title: title,
+				options: options,
+				points: request.session.points,
+				helpOption1: request.session.helpOption1,
+				helpOption2: request.session.helpOption2,
+				helpOption3: request.session.helpOption3
+			});
+		} else if (helpOption == 'half') {
+			const options = await Game.reduceHalfOption(request.session.options);
+			request.session.helpOption1 = false;
+			response.render('gameView', {
+				title: request.session.title,
+				options: options,
+				points: request.session.points,
+				helpOption1: request.session.helpOption1,
+				helpOption2: request.session.helpOption2,
+				helpOption3: request.session.helpOption3
+			});
+		}
+	},
+
+	async handleSubmit(request, response) {
+		if (request.body.option) {
+			module.exports.gradeAnswer(request, response);
+		} else {
+			module.exports.helpClicked(request, response);
+		}
 	}
 };

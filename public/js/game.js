@@ -1,5 +1,5 @@
 /* jshint esversion:6 */
-function toggle(option) {
-	const button = document.querySelector('button[value =' + option + ']');
+function toggle(helpOption) {
+	const button = document.querySelector('button[value =' + helpOption + ']');
 	button.disabled = true;
 }

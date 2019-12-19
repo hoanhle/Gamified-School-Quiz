@@ -102,15 +102,15 @@ module.exports = {
 	 * Delete a question from an existing questionnaire
 	 * @params {String} questionnaireId: id of the existing questionnaire
 	 *         {String} questionId: id of the question to be deleted
-   * TODO Does work not for some reason
 	 */
 	async deleteQuestion(questionnaireId, questionId) {
 		try {
 			let questionnaire = await module.exports.getQuestionnaire(questionnaireId);
-			const newQuestions = questionnaire.questions.filter(
-				question => question._id != questionId
-			);
-			questionnaire.questions = newQuestions;
+			questionnaire.questions.id(questionId).remove();
+			questionnaire.save(function (err) {
+				if (err) return db.handleCriticalError(err);
+				console.log('Question removed');
+			});
 			await module.exports.updateQuestionnaire(questionnaireId, questionnaire);
 		} catch(err) {
 			db.handleCriticalError(err);
@@ -127,14 +127,14 @@ module.exports = {
 	 */
 	async updateQuestion(questionnaireId, questionId, questionTitle, options, maxPoints) {
 		try {
-			let questionnaire = await module.exports.getQuestionnaire(questionnaireId);
-
-			let updateIndex = questionnaire.questions.findIndex(question => question._id == questionId);
-			questionnaire.questions[updateIndex].questionTitle = questionTitle;
-			questionnaire.questions[updateIndex].options = options;
-			questionnaire.questions[updateIndex].maxPoints = maxPoints;
-
-			await module.exports.updateQuestionnaire(questionnaireId, questionnaire);
+			await Questionnaire.findOneAndUpdate(
+				{"_id": questionnaireId, "questions._id": questionId},
+		    	{"$set": {
+		    		"questions.$.title": questionTitle,
+		    		"questions.$.options": options,
+		    		"questions.$.maxPoints": maxPoints
+		    	}}
+		    );
 		} catch(err) {
 			db.handleCriticalError(err);
 		}
