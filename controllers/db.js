@@ -93,7 +93,9 @@ module.exports = {
 				options: options
 			};
 			questionnaire.questions.push(question);
-			await module.exports.updateQuestionnaire(questionnaireId, questionnaire);
+			questionnaire.save(function (err) {
+				if (err) return handleError(err)
+			});
 		} catch(err) {
 			db.handleCriticalError(err);
 		}
@@ -109,7 +111,6 @@ module.exports = {
 			questionnaire.questions.id(questionId).remove();
 			questionnaire.save(function (err) {
 				if (err) return db.handleCriticalError(err);
-				console.log('Question removed');
 			});
 			await module.exports.updateQuestionnaire(questionnaireId, questionnaire);
 		} catch(err) {
