@@ -1,0 +1,11 @@
+{{#if questionaires}}
+<div class="card-deck justify-content-around">
+    {{#each questionaires as |questionaire index|}}
+    {{>questionaire_info questionaire}}
+    {{/each}}
+</div>
+{{else}}
+<div class="alert alert-danger">
+    <p>No questionaires found</p>
+</div>
+{{/if}}

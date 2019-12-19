@@ -23,6 +23,11 @@ module.exports = {
 		response.render('rules');
 	},
 
+	async showQuestionaires(request, response) {
+		const questionaires = await db.getAllQuestionnaires();
+		response.render('chooseQuestionaire', { questionaires });
+	},
+
 	/**
      * Start the game menu
      * @param {Object} request is express request object

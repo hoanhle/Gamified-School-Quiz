@@ -17,4 +17,7 @@ router.get('/start', auth.ensureAuthenticated, gameController.startGame);
 // Help button clicked
 router.post('/start', auth.ensureAuthenticated, gameController.handleSubmit);
 
+// Choose questionaire to start
+router.get('/choose', auth.ensureAuthenticated, gameController.showQuestionaires);
+
 module.exports = router;

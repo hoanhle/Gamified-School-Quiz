@@ -1,0 +1,16 @@
+<div id="startMenu" class="startMenu">
+    <div class="row mt-5">
+        <div class="col-md-6 m-auto">
+            <div class="card card-body">
+                <h3 id="title" class="text-center mb-3">Who wants to be millionaire</h3>
+                <h4 class="instructions text-left mb-2">Choose questionaire</h4>
+                <p>
+                    Choose one of the questionaire options below to start the game!
+                </p>
+                <form method="POST" action="/start">
+                    {{>questionaire_option_listing questionaires=this.questionaires}}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
