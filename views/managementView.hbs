@@ -28,7 +28,7 @@
 
 <div class="editing_view" class="container">
     {{#if questionaire}}
-        {{>editView name=questionaire.title questions=questionaire.questions id=questionaire.id}}
+        {{>editView name=questionaire.title questions=questionaire.questions q_id=questionaire._id}}
     {{else}}
         <h1> First time</h1>
     {{/if}} 

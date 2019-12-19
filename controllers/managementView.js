@@ -61,13 +61,15 @@ module.exports = {
     },
     
     /**
-     * Edit an existing questionaire.
+     * Edit an existing questionaire title.
      * @param {Object} request is express request object
      * @param {Object} response is express response object
-     * TODO
      */
     async edit (request,response){
       if (check(request.body)) {
+        let questionaire = await db.getQuestionnaire(request.params.id);
+        questionaire.title = request.body.title;
+        await db.updateQuestionnaire(request.params.id, questionaire);
         request.flash('successMessage', 'Edit saved');
         return response.redirect('back');
       } 
@@ -78,7 +80,7 @@ module.exports = {
     },
     
     /**
-     * Do the action for actualle deleting a questionaire. 
+     * Do the action for actually deleting a questionaire. 
      * @param {Object} request is express request object
      * @param {Object} response is express response object
      */
@@ -88,6 +90,13 @@ module.exports = {
       response.redirect('/management');
     },
 
+    /**
+     * Add a new questionaire.  
+     * @param {Object} request is express request object
+     * @param {Object} response is express response object
+     * TODO 
+     */
+
     //=====================================================================================
     //            Question management
     //=====================================================================================
@@ -95,15 +104,14 @@ module.exports = {
      * Add a question to the currently active questionaire. 
      * @param {Object} request is express request object
      * @param {Object} response is express response object
-     * TODO
      */
     async addQuestion(request, response){
       if (check(request.body)) {
-        request.flash('successMessage', 'Questionaire was added successfully.');
+        let options = createArrayFromBody(request.body);
+        await db.addQuestion(request.params.id, request.body.Question, options, options.length);
+        request.flash('successMessage', 'Question was added successfully.');
         return response.redirect('back');
       } else {
-        request.flash('errorMessage', "Invalid format for question");
-        return response.redirect('back');
       }
     },
     
@@ -128,17 +136,14 @@ module.exports = {
      * Delete an existing question. 
      * @param {Object} request is express request object
      * @param {Object} response is express response object
-     * TODO
+     * TODO Done but the deleteQuestion does not seem to working
      */
     async deleteQuestion (request,response){
-      if (check(request.body)) {
-        request.flash('successMessage', 'Edit saved');
-        return response.redirect('back');
-      } 
-      else {
-        request.flash('errorMessage', "Invalid format for question");
-        return response.redirect('back');
-      }
+      console.log(request.params.id);
+      console.log(request.params.id_questionaire);
+      await db.deleteQuestion(request.params.id_questionaire, request.params.id);
+      request.flash('successMessage', 'Successfully delete question');
+      return response.redirect('back');
     },
 };
 
@@ -161,7 +166,7 @@ function checkUserInput(input) {
   return false;
 }
   
-  
+// TODO skip points  
 function check(answers) {
   for(let key in answers) {
     if(answers.hasOwnProperty(key)){
@@ -171,4 +176,31 @@ function check(answers) {
     }
   }  
   return true;
+}
+
+
+/**
+  Creates an array from the body of the request that holds the options
+  Assumes: that check has been node to the body.
+*/
+
+function createArrayFromBody(body) {
+  let result = [];
+  if (body.hasOwnProperty('options')){
+    let options = body.options;
+    
+    for (let key in options) {
+      if (check( options[key].option) && check(options[key].hint)){
+        if(options[key].correctness === 'true') {
+          options[key].correctness = true;
+          console.log(options[key]);
+        } else {
+          options[key].correctness = false;
+          console.log(options[key]);
+          result.push(options[key]); 
+           
+        }
+      }
+    }
+  }
 }

@@ -102,8 +102,9 @@ module.exports = {
 	 * Delete a question from an existing questionnaire
 	 * @params {String} questionnaireId: id of the existing questionnaire
 	 *         {String} questionId: id of the question to be deleted
+   * TODO Does work not for some reason
 	 */
-	async deleteQuestion(questionnaireID, questionId) {
+	async deleteQuestion(questionnaireId, questionId) {
 		try {
 			let questionnaire = await module.exports.getQuestionnaire(questionnaireId);
 			const newQuestions = questionnaire.questions.filter(
