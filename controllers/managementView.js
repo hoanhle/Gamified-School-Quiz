@@ -61,13 +61,15 @@ module.exports = {
     },
     
     /**
-     * Edit an existing questionaire.
+     * Edit an existing questionaire title.
      * @param {Object} request is express request object
      * @param {Object} response is express response object
-     * TODO
      */
     async edit (request,response){
       if (check(request.body)) {
+        let questionaire = await db.getQuestionnaire(request.params.id);
+        questionaire.title = request.body.title;
+        await db.updateQuestionnaire(request.params.id, questionaire);
         request.flash('successMessage', 'Edit saved');
         return response.redirect('back');
       } 
@@ -78,7 +80,7 @@ module.exports = {
     },
     
     /**
-     * Do the action for actualle deleting a questionaire. 
+     * Do the action for actually deleting a questionaire. 
      * @param {Object} request is express request object
      * @param {Object} response is express response object
      */
@@ -95,15 +97,14 @@ module.exports = {
      * Add a question to the currently active questionaire. 
      * @param {Object} request is express request object
      * @param {Object} response is express response object
-     * TODO
      */
     async addQuestion(request, response){
       if (check(request.body)) {
-        request.flash('successMessage', 'Questionaire was added successfully.');
+        let options = createArrayFromBody(request.body);
+        await db.addQuestion(request.params.id, request.body.Question, options, options.length);
+        request.flash('successMessage', 'Question was added successfully.');
         return response.redirect('back');
       } else {
-        request.flash('errorMessage', "Invalid format for question");
-        return response.redirect('back');
       }
     },
     
@@ -171,4 +172,30 @@ function check(answers) {
     }
   }  
   return true;
+}
+
+
+/**
+  Creates an array from the body of the request that holds the options
+  Assumes: that check has been node to the body.
+*/
+function createArrayFromBody(body) {
+  let result = [];
+  for (let key in body) {
+    if (key !== 'Question') {
+      if (key === '1')  {
+        result.push({
+          option: body[key],
+          correctness: true
+        });
+      } else {
+        result.push({
+          option: body[key],
+          correctness: false 
+        });
+      }
+    }
+  }
+  return result;
+
 }

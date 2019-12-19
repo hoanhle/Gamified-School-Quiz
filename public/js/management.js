@@ -28,3 +28,13 @@ function addAnswer(){
 
   fakes.append(div);
 }
+
+
+function toggleTitleEdit(){
+  let form = document.getElementById('edit_title');
+  if (form.style.display === 'none'){
+    form.style.display = 'block';
+  } else {
+    form.style.display = 'none';
+  }
+}
