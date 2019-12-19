@@ -94,7 +94,7 @@ module.exports = {
 			};
 			questionnaire.questions.push(question);
 			questionnaire.save(function (err) {
-				if (err) return handleError(err)
+				if (err) return db.handleCriticalError(err);
 			});
 		} catch(err) {
 			db.handleCriticalError(err);
