@@ -43,9 +43,23 @@ module.exports = {
 		return chooseOptions;
 	},
 
-	/**
-     * Generate help for the player
-     * @param {string} helpOption value of the help option
-     */
-	async generateHelp(helpOption) {}
+	async reduceHalfOption(questionOptions) {
+		const options = [ ...questionOptions ];
+		const chooseOptions = [];
+
+		let falseOptionNum = 0;
+		let trueOptionNum = 0;
+		let k = 0;
+		while (falseOptionNum < 1 || trueOptionNum < 1) {
+			chooseOptions.push(options[k]);
+			if (options[k].correctness) {
+				trueOptionNum += 1;
+			} else {
+				falseOptionNum += 1;
+			}
+			k += 1;
+		}
+
+		return chooseOptions;
+	}
 };

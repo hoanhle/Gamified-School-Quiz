@@ -1,35 +1,7 @@
 <head>
     <script type="text/javascript" src="/js/game.js"> </script>
-    <link href="https://cdn.lineicons.com/1.0.1/LineIcons.min.css" rel="stylesheet">
 </head>
 <div class="row">
-    <div class="col-md-10 col-sm-10" id="quiz">
-        <form method="POST">
-            {{>question this}}
-            {{>answer_listing this}}
-        </form>
-    </div>
-
-    <div class="col-md-2 col-sm-2 sideMenu">
-        <p>Points: {{this.points}}</p>
-        <p>Help:</p>
-        <div class="col-md-12 help">
-            <div class="row">
-                <form method="POST" action="/game/help">
-                    <button value="half" onclick="toggle('half');"
-                    class="btn col-md-12 btn-outline-success">
-                        50:50
-                    </button>
-                    <button  value="double" onclick="toggle('double');"
-                    class="btn col-md-12 btn-outline-success">
-                        Hint
-                    </button>
-                    <button type="submit" name="helpOption" value = "skip" onclick="toggle('skip');"
-                    class="btn col-md-12 btn-outline-success">
-                        Skip
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
+    {{>quiz this}}
+    {{>help this}}
 </div>

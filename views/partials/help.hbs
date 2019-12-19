@@ -1,0 +1,37 @@
+<div class="col-md-2 col-sm-2 sideMenu">
+    <p>Points: {{this.points}}</p>
+    <p>Help:</p>
+    <div class="col-md-12 help">
+        <div class="row">
+            <form method="POST" action="/game/start">
+                {{#if this.helpOption1}}
+                <button type="submit" name="helpOption" value="half" class="btn col-md-12 btn-outline-success">
+                    50:50
+                </button>
+                {{else}}
+                <button type="submit" name="helpOption" value="half" class="btn col-md-12 btn-outline-success" disabled>
+                    50:50
+                </button>
+                {{/if}}
+                {{#if this.helpOption2}}
+                <button type="submit" name="helpOption" value = {{this.title}} class="btn col-md-12 btn-outline-success">
+                    Change answer
+                </button>
+                {{else}}
+                <button type="submit" name="helpOption" value= {{this.title}} class="btn col-md-12 btn-outline-success" disabled>
+                    Change answer
+                </button>
+                {{/if}}
+                {{#if this.helpOption3}}
+                <button type="submit" name="helpOption" value="skip" class="btn col-md-12 btn-outline-success">
+                    Skip
+                </button>
+                {{else}}
+                <button type="submit" name="helpOption" value="skip" class="btn col-md-12 btn-outline-success" disabled>
+                    Skip
+                </button>
+                {{/if}}
+            </form>
+        </div>
+    </div>
+</div>

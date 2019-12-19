@@ -14,10 +14,7 @@ router.get('/rules', auth.ensureAuthenticated, gameController.showRules);
 // Start the game
 router.get('/start', auth.ensureAuthenticated, gameController.startGame);
 
-// Grade answer
-router.post('/start', auth.ensureAuthenticated, gameController.gradeAnswer);
-
 // Help button clicked
-router.post('/help', auth.ensureAuthenticated, gameController.helpClicked);
+router.post('/start', auth.ensureAuthenticated, gameController.handleSubmit);
 
 module.exports = router;
