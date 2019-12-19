@@ -41,5 +41,11 @@ module.exports = {
 		}
 
 		return chooseOptions;
-	}
+	},
+
+	/**
+     * Generate help for the player
+     * @param {string} helpOption value of the help option
+     */
+	async generateHelp(helpOption) {}
 };

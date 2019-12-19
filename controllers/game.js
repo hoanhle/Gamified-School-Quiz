@@ -40,6 +40,11 @@ module.exports = {
 		});
 	},
 
+	/**
+     * Grade answer and generate new question if player passed
+     * @param {Object} request is express request object
+     * @param {Object} response is express response object
+     */
 	async gradeAnswer(request, response) {
 		const isCorrect = request.body.option;
 		// if correct, render the next random questions
@@ -57,5 +62,10 @@ module.exports = {
 			const points = request.session.points;
 			response.render('endGame', { points });
 		}
+	},
+
+	async helpClicked(request) {
+		const helpOption = request.body.helpOption;
+		console.log(helpOption);
 	}
 };
