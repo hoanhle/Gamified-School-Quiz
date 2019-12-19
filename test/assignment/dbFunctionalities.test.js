@@ -231,11 +231,14 @@ const DIVISION = 3;
 function getOptions(rndEndResult, number) {
     const options = [];
     const titles = [];
-    for (let i = 0; options.length < number; i++) {
+    let noTrue = true;
+    while (options.length < number || noTrue) {
         const rndCalcType = getRandomInt(4);
         // questions.push(JSON.stringify(getOption(rndEndResult, rndCalcType)));
         const option = getOption(rndEndResult, rndCalcType);
         if (titles.includes(option[0]) || option[0]==null) continue;
+        if (option[1]) noTrue = false;
+        if (options.length === (number - 1) && noTrue) continue; 
         titles.push(option[0]);
         options.push({option:option[0], correctness:option[1]});
     }
