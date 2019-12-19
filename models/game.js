@@ -9,7 +9,7 @@ module.exports = {
      */
 	async generateRandomQuestion() {
 		const questionaire = await Questionnaire.findOne({
-			title: 'Count without a calculator'
+			title: 'Larger questionnaire to check switching questions, max 15'
 		});
 		const numQuestions = questionaire.questions.length;
 		const randomNumber = Math.floor(Math.random() * numQuestions);
@@ -51,15 +51,15 @@ module.exports = {
 		let trueOptionNum = 0;
 		let k = 0;
 		while (falseOptionNum < 1 || trueOptionNum < 1) {
-			chooseOptions.push(options[k]);
-			if (options[k].correctness) {
-				trueOptionNum += 1;
-			} else {
-				falseOptionNum += 1;
+			if (options[k].correctness && trueOptionNum < 1) {
+				chooseOptions.push(options[k]);
+				trueOptionNum = 1;
+			} else if (!options[k].correctness && falseOptionNum < 1) {
+				chooseOptions.push(options[k]);
+				falseOptionNum = 1;
 			}
 			k += 1;
 		}
-
 		return chooseOptions;
 	}
 };
