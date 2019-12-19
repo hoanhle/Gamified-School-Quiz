@@ -32,91 +32,101 @@ describe('Database funcitonalities', function() {
             db.disconnectDB();
         });
 
-        it('must be able to add a questionnaire', async function() {
-            const number = 1;
-            const data = generateData(questionnaireTitle, 4);
-            // count number of questionnaires in the database
-            const prevNum = await Questionnaire.countDocuments({});
-            expect(prevNum).to.exist;
-            // add sample questionnaire to db
-            await dbController.addQuestionnaire(data);
-            // count number of questionnaires in the database afterwards
-            const nextNum = await Questionnaire.countDocuments({});
-            await dbController.deleteQuestionnaire(questionnaireTitle);
+        // it('must be able to add a questionnaire', async function() {
+        //     const number = 1;
+        //     const data = generateData(questionnaireTitle, 4);
+        //     // count number of questionnaires in the database
+        //     const prevNum = await Questionnaire.countDocuments({});
+        //     expect(prevNum).to.exist;
+        //     // add sample questionnaire to db
+        //     await dbController.addQuestionnaire(data);
+        //     // count number of questionnaires in the database afterwards
+        //     const nextNum = await Questionnaire.countDocuments({});
+        //     await dbController.deleteQuestionnaire(questionnaireTitle);
 
-            expect(nextNum).to.exist;
+        //     expect(nextNum).to.exist;
 
-            // compare before & after
-            expect(nextNum).to.equal(number);
-            expect(nextNum).to.equal(prevNum + number);
+        //     // compare before & after
+        //     expect(nextNum).to.equal(number);
+        //     expect(nextNum).to.equal(prevNum + number);
             
-        });
+        // });
 
-        it('must be able to read all questionnaires', async function() {
-            const optionsNum = 4;
-            const data1 = generateData(title1, optionsNum);
-            const data2 = generateData(title2, optionsNum);
-            const data3 = generateData(title3, optionsNum);
-            await dbController.addQuestionnaire(data1);
-            await dbController.addQuestionnaire(data2);
-            await dbController.addQuestionnaire(data3);
+        // it('must be able to read all questionnaires', async function() {
+        //     const optionsNum = 4;
+        //     const data1 = generateData(title1, optionsNum);
+        //     const data2 = generateData(title2, optionsNum);
+        //     const data3 = generateData(title3, optionsNum);
+        //     await dbController.addQuestionnaire(data1);
+        //     await dbController.addQuestionnaire(data2);
+        //     await dbController.addQuestionnaire(data3);
 
-            const numAll = await Questionnaire.countDocuments({});
-            const allQuestionnaires = await dbController.getAllQuestionnaires();
-            const numAllReceived = allQuestionnaires.length;
+        //     const numAll = await Questionnaire.countDocuments({});
+        //     const allQuestionnaires = await dbController.getAllQuestionnaires();
+        //     const numAllReceived = allQuestionnaires.length;
 
-            await dbController.deleteQuestionnaire(title1);
-            await dbController.deleteQuestionnaire(title2);
-            await dbController.deleteQuestionnaire(title3);
+        //     await dbController.deleteQuestionnaire(title1);
+        //     await dbController.deleteQuestionnaire(title2);
+        //     await dbController.deleteQuestionnaire(title3);
 
-            expect(numAll).to.exist;
-            expect(numAllReceived).to.exist;
-            expect(numAllReceived).to.equal(numAll);
-            expect(numAllReceived).to.equal(3);
-        });
+        //     expect(numAll).to.exist;
+        //     expect(numAllReceived).to.exist;
+        //     expect(numAllReceived).to.equal(numAll);
+        //     expect(numAllReceived).to.equal(3);
+        // });
 
-        it('must be able to read one questionnaire', async function() {
-            const data = generateData(questionnaireTitle, 4);
-            await dbController.addQuestionnaire(data);
-            const questionnaire = await dbController.getQuestionnaire(questionnaireTitle);
-            await dbController.deleteQuestionnaire(questionnaireTitle);
+        // it('must be able to read one questionnaire', async function() {
+        //     const data = generateData(questionnaireTitle, 4);
+        //     await dbController.addQuestionnaire(data);
+        //     const questionnaire = await dbController.getQuestionnaire(questionnaireTitle);
+        //     await dbController.deleteQuestionnaire(questionnaireTitle);
 
-            expect(questionnaire).to.exist;
-            expect(data.title).to.equal(questionnaire.title);
-        });
+        //     expect(questionnaire).to.exist;
+        //     expect(data.title).to.equal(questionnaire.title);
+        // });
 
-        it('must be able to update existing questionnaire with the same title', async function() {
-            const oldOptionsNum = 4;
-            const data = generateData(questionnaireTitle, oldOptionsNum);
-            await dbController.addQuestionnaire(data);
+        // it('must be able to update existing questionnaire with the same title', async function() {
+        //     const oldOptionsNum = 4;
+        //     const data = generateData(questionnaireTitle, oldOptionsNum);
+        //     await dbController.addQuestionnaire(data);
 
-            const newOptionsNum = 3;
-            const newData = generateData(questionnaireTitle, newOptionsNum);
-            await dbController.updateQuestionnaire(questionnaireTitle, newData);
+        //     const newOptionsNum = 3;
+        //     const newData = generateData(questionnaireTitle, newOptionsNum);
+        //     await dbController.updateQuestionnaire(questionnaireTitle, newData);
 
-            const receivedQuestionnaire = await dbController.getQuestionnaire(questionnaireTitle);
+        //     const receivedQuestionnaire = await dbController.getQuestionnaire(questionnaireTitle);
             
-            await dbController.deleteQuestionnaire(questionnaireTitle);
+        //     await dbController.deleteQuestionnaire(questionnaireTitle);
 
-            expect(receivedQuestionnaire).to.exist;
-            expect(receivedQuestionnaire.title).to.equal(questionnaireTitle);
-            expect(receivedQuestionnaire.questions[0].options.length).to.equal(newOptionsNum);
-        });
+        //     expect(receivedQuestionnaire).to.exist;
+        //     expect(receivedQuestionnaire.title).to.equal(questionnaireTitle);
+        //     expect(receivedQuestionnaire.questions[0].options.length).to.equal(newOptionsNum);
+        // });
 
-        it('must be able to delete one questionnaire', async function() {
-            const optionsNum = 4;
-            const data = generateData(questionnaireTitle, optionsNum);
-            await dbController.addQuestionnaire(data);
-            const prevNum = await Questionnaire.countDocuments({});
+        // it('must be able to delete one questionnaire', async function() {
+        //     const optionsNum = 4;
+        //     const data = generateData(questionnaireTitle, optionsNum);
+        //     await dbController.addQuestionnaire(data);
+        //     const prevNum = await Questionnaire.countDocuments({});
 
-            await dbController.deleteQuestionnaire(questionnaireTitle);
-            const newNum = await Questionnaire.countDocuments({});
+        //     await dbController.deleteQuestionnaire(questionnaireTitle);
+        //     const newNum = await Questionnaire.countDocuments({});
 
-            await dbController.deleteQuestionnaire(questionnaireTitle);
+        //     await dbController.deleteQuestionnaire(questionnaireTitle);
 
-            expect(prevNum).to.exist;
-            expect(newNum).to.exist;
-            expect(newNum).to.equal(prevNum - 1);
+        //     expect(prevNum).to.exist;
+        //     expect(newNum).to.exist;
+        //     expect(newNum).to.equal(prevNum - 1);
+        // });
+
+        it('must be able to delete one question from an existing questionnaire', async function() {
+            const questionnaireID = "5dfbaa5f49a20a44b190d2d6";
+            const questionID = "5dfbaa5f49a20a44b190d2dd";
+
+            await dbController.deleteQuestion(questionnaireID, questionID);
+
+            const questionnaire = await dbController.getQuestionnaire(questionnaireID, questionID)
+            console.log(questionnaire);
         });
 
     });

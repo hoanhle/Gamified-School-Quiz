@@ -108,7 +108,7 @@ module.exports = {
 		try {
 			let questionnaire = await module.exports.getQuestionnaire(questionnaireId);
 			const newQuestions = questionnaire.questions.filter(
-				question => question._id !== questionId
+				question => question._id != questionId
 			);
 			questionnaire.questions = newQuestions;
 			await module.exports.updateQuestionnaire(questionnaireId, questionnaire);
@@ -125,11 +125,11 @@ module.exports = {
 	 *		   {Int} maxPoints: (possibly new) maximum number of points that player 
 	 *                          can get from the question
 	 */
-	async updateQuestion(questionnaireID, questionID, questionTitle, options, maxPoints) {
+	async updateQuestion(questionnaireId, questionId, questionTitle, options, maxPoints) {
 		try {
 			let questionnaire = await module.exports.getQuestionnaire(questionnaireId);
 
-			let updateIndex = questionnaire.questions.findIndex(question => question._id === questionID);
+			let updateIndex = questionnaire.questions.findIndex(question => question._id == questionId);
 			questionnaire.questions[updateIndex].questionTitle = questionTitle;
 			questionnaire.questions[updateIndex].options = options;
 			questionnaire.questions[updateIndex].maxPoints = maxPoints;
