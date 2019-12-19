@@ -27,5 +27,6 @@ router
 // For questions
 router.post('/question/add/:id([a-f0-9]{24})', auth.ensureTeacher, mngController.addQuestion);
 router.post('/question/edit/:id([a-f0-9]{24})', auth.ensureTeacher, mngController.editQuestion);
-router.post('/question/delete/:id([a-f0-9]{24})', auth.ensureTeacher, mngController.editQuestion);
+// First id is for the questionnaire and the second is for the question
+router.post('/question/delete/:id_questionaire([a-f0-9]{24})/:id([a-f0-9]{24})', auth.ensureTeacher, mngController.deleteQuestion);
 module.exports = router;

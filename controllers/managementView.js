@@ -136,17 +136,14 @@ module.exports = {
      * Delete an existing question. 
      * @param {Object} request is express request object
      * @param {Object} response is express response object
-     * TODO
+     * TODO Done but the deleteQuestion does not seem to working
      */
     async deleteQuestion (request,response){
-      if (check(request.body)) {
-        request.flash('successMessage', 'Edit saved');
-        return response.redirect('back');
-      } 
-      else {
-        request.flash('errorMessage', "Invalid format for question");
-        return response.redirect('back');
-      }
+      console.log(request.params.id);
+      console.log(request.params.id_questionaire);
+      await db.deleteQuestion(request.params.id_questionaire, request.params.id);
+      request.flash('successMessage', 'Successfully delete question');
+      return response.redirect('back');
     },
 };
 
