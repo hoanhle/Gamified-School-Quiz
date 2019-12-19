@@ -90,6 +90,13 @@ module.exports = {
       response.redirect('/management');
     },
 
+    /**
+     * Add a new questionaire.  
+     * @param {Object} request is express request object
+     * @param {Object} response is express response object
+     * TODO 
+     */
+
     //=====================================================================================
     //            Question management
     //=====================================================================================
@@ -162,7 +169,7 @@ function checkUserInput(input) {
   return false;
 }
   
-  
+// TODO skip points  
 function check(answers) {
   for(let key in answers) {
     if(answers.hasOwnProperty(key)){
@@ -179,23 +186,24 @@ function check(answers) {
   Creates an array from the body of the request that holds the options
   Assumes: that check has been node to the body.
 */
+
 function createArrayFromBody(body) {
   let result = [];
-  for (let key in body) {
-    if (key !== 'Question') {
-      if (key === '1')  {
-        result.push({
-          option: body[key],
-          correctness: true
-        });
-      } else {
-        result.push({
-          option: body[key],
-          correctness: false 
-        });
+  if (body.hasOwnProperty('options')){
+    let options = body.options;
+    
+    for (let key in options) {
+      if (check( options[key].option) && check(options[key].hint)){
+        if(options[key].correctness === 'true') {
+          options[key].correctness = true;
+          console.log(options[key]);
+        } else {
+          options[key].correctness = false;
+          console.log(options[key]);
+          result.push(options[key]); 
+           
+        }
       }
     }
   }
-  return result;
-
 }

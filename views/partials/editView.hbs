@@ -1,49 +1,93 @@
 
-<h2 id="q_title"> {{name}} </h2>
-<form id="edit_title" method="POST" style="display:none" action="/management/edit/{{id}}"> 
-    <label for="title"> New title:</label>
-    <input type="text" id="title" name="title">
-    <button type="submit"><i class="lni-save"></i></button>
-</form>
-<button id="title_editable" onclick="toggleTitleEdit()">
-  <i class="lni-pencil"></i>
-</button>
+<div class="row">
+  <div class="col-md-auto">
+    <h2 id="q_title"> {{name}} </h2>
+  </div>
+
+  <div class="col-1">
+    <button id="title_editable" onclick="toggleTitleEdit()">
+      <i class="lni-pencil"></i>
+    </button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-auto">
+    <form id="edit_title" method="POST" style="display:none" action="/management/edit/{{id}}"> 
+      <label for="title"> New title:</label>
+      <input type="text" id="title" name="title">
+      <button type="submit"><i class="lni-save"></i></button>
+    </form>
+  </div>
+</div>
 
 <div class="form-group">
 <form id="edit_form" method="POST" action="/management/question/add/{{id}}">
     <div class="row">
         <div class="col">
           <label for="Question">Question: </label>
-          <input type="text" id="Question" name="Question">
+          <input type="text" id="Question" name="Question" required>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+          <label for="points">Points:</label>
+          <input type="number" id="points" name="points" required>
         </div>
 
         <div class="col">
           <label for="1">Correct answer: </label>
-          <input type="text" id="1" name="1">
+          <input type="text" id="1" name="options[1][option]" required>
+          <input type="hidden" name="options[1][correctness]" value="true" required>
         </div>
+        
+        <div class="col">
+          <label for="hint1">Hint(optional): </label>
+          <input type="text" id="hint1" name="options[1][hint]"> 
+        </div>
+
     </div>
     <h3> Fake answers. Minimum is 3. </h3>
     <div class="row" id="fake_ans">
         <div class="col-sm-5">
           <label for="2">Answer: </label>
-          <input type="text" id="2" name="2"> 
+          <input type="text" id="2" name="options[2][option]" required> 
+        </div>
+
+        <div class="col-sm-5">
+          <label for="hint2">Hint(optional): </label>
+          <input type="text" id="hint2" name="options[2][hint]"> 
+          <input type="hidden" name="options[2][correctness]" value="false" required>
         </div>
 
         <div class="col-sm-5">
           <label for="3">Answer: </label>
-          <input type="text" id="3" name="3"> 
+          <input type="text" id="3" name="options[3][option]" required> 
+        </div>
+
+        <div class="col-sm-5">
+          <label for="hint3">Hint(optional): </label>
+          <input type="text" id="hint3" name="options[3][hint]"> 
+          <input type="hidden" name="options[3][correctness]" value="false" required>
         </div>
 
         <div class="col-sm-5">
           <label for="4">Answer: </label>
-          <input type="text" id="4" name="4"> 
+          <input type="text" id="4" name="options[4][option]" required> 
+        </div>
+
+        <div class="col-sm-5">
+          <label for="hint4">Hint(optional): </label>
+          <input type="text" id="hint4" name="options[4][hint]"> 
+          <input type="hidden" name="options[4][correctness]" value="false" required>
         </div>
     </div>
 
     <div class="row">
         <button type="Submit">Add question </button>
         <button type="Reset">Clear </button>
-        <input id="add" type="button" value="Add an answer" onclick="addAnswer();" />
+        <input id="add" type="button" value="+" onclick="addAnswer();" />
     </div>
 
 </form>
