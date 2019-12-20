@@ -34,7 +34,7 @@ module.exports = {
             questionaire: questionaire
           });
       } else {
-        request.flash('errorMessage', `Questionaire not found (id: ${request.query.id})`);
+        request.flash('errorMessage',`Questionaire not found (id: ${request.query.id})`);
         return response.redirect('/management');
       }
     },
@@ -96,6 +96,11 @@ module.exports = {
      * @param {Object} response is express response object
      * TODO 
      */
+    async add(request, response){
+      request.flash('successMessage', 'Questionaire added successfully.');
+      response.redirect('/management');
+    },
+
 
     //=====================================================================================
     //            Question management
@@ -104,14 +109,30 @@ module.exports = {
      * Add a question to the currently active questionaire. 
      * @param {Object} request is express request object
      * @param {Object} response is express response object
+     * TODO Doesn't work when giving two answers with the same value but
+     * one of them is true and the other isn't.
      */
     async addQuestion(request, response){
       if (check(request.body)) {
+        console.log(request.body);
         let options = createArrayFromBody(request.body);
-        await db.addQuestion(request.params.id, request.body.Question, options, options.length);
-        request.flash('successMessage', 'Question was added successfully.');
-        return response.redirect('back');
+        console.log(options);
+        if (options){
+          try {
+            await db.addQuestion(request.params.id, request.body.Question, options, options.length);
+            request.flash('successMessage', 'Question was added successfully.');
+            return response.redirect('back');
+          } catch (err){
+            request.flash('errorMessage', 'Incorrect question format');
+            return response.redirect('back');
+          }
+        } else {
+          request.flash('errorMessage', 'Incorrect question format');
+          return response.redirect('back');
+        }
       } else {
+        request.flash('errorMessage', 'Incorrect question format');
+        return response.redirect('back');
       }
     },
     
@@ -136,14 +157,18 @@ module.exports = {
      * Delete an existing question. 
      * @param {Object} request is express request object
      * @param {Object} response is express response object
-     * TODO Done but the deleteQuestion does not seem to working
      */
     async deleteQuestion (request,response){
-      console.log(request.params.id);
-      console.log(request.params.id_questionaire);
-      await db.deleteQuestion(request.params.id_questionaire, request.params.id);
-      request.flash('successMessage', 'Successfully delete question');
-      return response.redirect('back');
+      try {
+        console.log(request.params.id);
+        console.log(request.params.id_questionaire);
+        await db.deleteQuestion(request.params.id_questionaire, request.params.id);
+        request.flash('successMessage', 'Successfully delete question');
+        return response.redirect('back');
+      } catch (err){
+        request.flash('errorMessage', 'Questionaire must have atleast one question.');
+        return response.redirect('back');
+      }
     },
 };
 
@@ -166,7 +191,7 @@ function checkUserInput(input) {
   return false;
 }
   
-// TODO skip points  
+// Check that answers and questions have the above regex.k
 function check(answers) {
   for(let key in answers) {
     if(answers.hasOwnProperty(key)){
@@ -182,6 +207,7 @@ function check(answers) {
 /**
   Creates an array from the body of the request that holds the options
   Assumes: that check has been node to the body.
+  // TODO validitation if we can't catch the mongoose validation error'
 */
 
 function createArrayFromBody(body) {
@@ -193,14 +219,16 @@ function createArrayFromBody(body) {
       if (check( options[key].option) && check(options[key].hint)){
         if(options[key].correctness === 'true') {
           options[key].correctness = true;
-          console.log(options[key]);
+          result.push(options[key]); 
         } else {
           options[key].correctness = false;
-          console.log(options[key]);
           result.push(options[key]); 
            
         }
       }
     }
+    return result;
+  } else {
+    return false;  
   }
 }

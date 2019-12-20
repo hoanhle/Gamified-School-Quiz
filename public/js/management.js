@@ -21,16 +21,17 @@ function addAnswer(){
   let labelHint = document.createElement("label");
   
 
+  let n = fakes.children.length / 2 +2;
   //name formating options[4][option]
   // Setting label
-  label.for = fakes.children.length+2;
+  label.for = n;
   label.innerText = "Answer: ";
   // Setting ans
-  ans.id = fakes.children.length+2;
-  ans.name = "options[" + fakes.children.length+2 +"][option]";
+  ans.id = n;
+  ans.name = "options["+ n +"][option]";
   // Setting hint
-  hint.id = "hint" + fakes.children.length+2;
-  hint.name= "options[" + fakes.children.length+2 +"][hint]";
+  hint.id = "hint" + n;
+  hint.name= "options[" + n +"][hint]";
   // Hint label
   labelHint.for = hint.id;
   labelHint.innerText = "Hint(optional): ";
