@@ -132,6 +132,21 @@ module.exports = {
 	},
 
 	/**
+     * Send submission to A* system
+     * @param {Object} request is express request object
+     * @param {Object} response is express response object
+     */
+	async gradeGame(request, response) {
+		response.render('hello-graded', {
+			points: request.session.points,
+			maxPoints: request.session.maxPoints,
+			status: 'graded',
+			description: 'minimal viable grader in the express framework',
+			title: 'A+ greetings'
+		});
+	},
+
+	/**
      * Choose how to handle POST request to games/id
      * @param {Object} request is express request object
      * @param {Object} response is express response object
@@ -141,8 +156,10 @@ module.exports = {
 			module.exports.gradeAnswer(request, response);
 		} else if (request.body.questionaire) {
 			module.exports.startGame(request, response);
-		} else {
+		} else if (request.body.helpOption) {
 			module.exports.helpClicked(request, response);
+		} else {
+			module.exports.gradeGame(request, response);
 		}
 	}
 };
