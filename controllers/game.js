@@ -23,9 +23,13 @@ module.exports = {
 		response.render('rules');
 	},
 
+	/**
+     * Returns interface for players to choose questionaire
+     * @param {Object} request is express request object
+     * @param {Object} response is express response object
+     */
 	async showQuestionaires(request, response) {
 		const questionaires = await db.getAllQuestionnaires();
-		console.log(questionaires);
 		response.render('chooseQuestionaire', { questionaires });
 	},
 
@@ -35,7 +39,6 @@ module.exports = {
      * @param {Object} response is express response object
      */
 	async startGame(request, response) {
-		console.log(request.body.questionaire);
 		const chooseQuestionaire = request.body.questionaire;
 		request.session.questionaire = chooseQuestionaire;
 		const randomQuestion = await Game.generateRandomQuestion(chooseQuestionaire);
@@ -44,7 +47,6 @@ module.exports = {
 		request.session.points = 0;
 		request.session.helpOption1 = true;
 		request.session.helpOption2 = true;
-		request.session.helpOption3 = true;
 		request.session.options = options;
 		request.session.title = title;
 		response.render('gameView', {
@@ -52,8 +54,7 @@ module.exports = {
 			options: options,
 			points: request.session.points,
 			helpOption1: request.session.helpOption1,
-			helpOption2: request.session.helpOption2,
-			helpOption3: request.session.helpOption3
+			helpOption2: request.session.helpOption2
 		});
 	},
 
@@ -77,8 +78,7 @@ module.exports = {
 				options: options,
 				points: request.session.points,
 				helpOption1: request.session.helpOption1,
-				helpOption2: request.session.helpOption2,
-				helpOption3: request.session.helpOption3
+				helpOption2: request.session.helpOption2
 			});
 		} else {
 			const points = request.session.points;
@@ -93,7 +93,7 @@ module.exports = {
 			const randomQuestion = await Game.generateRandomQuestion(request.session.questionaire);
 			const title = randomQuestion.title;
 			const options = await Game.generateOptions(randomQuestion);
-			request.session.helpOption3 = false;
+			request.session.helpOption2 = false;
 			request.session.title = title;
 			request.session.options = options;
 			response.render('gameView', {
@@ -101,8 +101,7 @@ module.exports = {
 				options: options,
 				points: request.session.points,
 				helpOption1: request.session.helpOption1,
-				helpOption2: request.session.helpOption2,
-				helpOption3: request.session.helpOption3
+				helpOption2: request.session.helpOption2
 			});
 		} else if (helpOption == 'half') {
 			const options = await Game.reduceHalfOption(request.session.options);
@@ -112,12 +111,16 @@ module.exports = {
 				options: options,
 				points: request.session.points,
 				helpOption1: request.session.helpOption1,
-				helpOption2: request.session.helpOption2,
-				helpOption3: request.session.helpOption3
+				helpOption2: request.session.helpOption2
 			});
 		}
 	},
 
+	/**
+     * Choose how to handle POST request to games/id
+     * @param {Object} request is express request object
+     * @param {Object} response is express response object
+     */
 	async handleSubmit(request, response) {
 		if (request.body.option) {
 			module.exports.gradeAnswer(request, response);
