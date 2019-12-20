@@ -11,13 +11,10 @@ router.get('/', auth.ensureAuthenticated, gameController.showStartGame);
 // Instruction rules page
 router.get('/rules', auth.ensureAuthenticated, gameController.showRules);
 
-// Start the game
-router.get('/start', auth.ensureAuthenticated, gameController.startGame);
+// Choose questionaire to start
+router.get('/choose', auth.ensureAuthenticated, gameController.showQuestionaires);
 
 // Help button clicked
 router.post('/start', auth.ensureAuthenticated, gameController.handleSubmit);
-
-// Choose questionaire to start
-router.get('/choose', auth.ensureAuthenticated, gameController.showQuestionaires);
 
 module.exports = router;

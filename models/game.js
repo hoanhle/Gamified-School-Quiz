@@ -7,9 +7,9 @@ module.exports = {
 	/**
      * Generate a random question from the questionaire
      */
-	async generateRandomQuestion() {
+	async generateRandomQuestion(questionaireId) {
 		const questionaire = await Questionnaire.findOne({
-			title: 'Larger questionnaire to check switching questions, max 15'
+			_id: questionaireId
 		});
 		const numQuestions = questionaire.questions.length;
 		const randomNumber = Math.floor(Math.random() * numQuestions);

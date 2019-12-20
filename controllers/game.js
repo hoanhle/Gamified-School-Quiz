@@ -25,6 +25,7 @@ module.exports = {
 
 	async showQuestionaires(request, response) {
 		const questionaires = await db.getAllQuestionnaires();
+		console.log(questionaires);
 		response.render('chooseQuestionaire', { questionaires });
 	},
 
@@ -34,7 +35,10 @@ module.exports = {
      * @param {Object} response is express response object
      */
 	async startGame(request, response) {
-		const randomQuestion = await Game.generateRandomQuestion();
+		console.log(request.body.questionaire);
+		const chooseQuestionaire = request.body.questionaire;
+		request.session.questionaire = chooseQuestionaire;
+		const randomQuestion = await Game.generateRandomQuestion(chooseQuestionaire);
 		const title = randomQuestion.title;
 		const options = await Game.generateOptions(randomQuestion);
 		request.session.points = 0;
@@ -62,7 +66,7 @@ module.exports = {
 		const isCorrect = request.body.option;
 		// if correct, render the next random questions
 		if (isCorrect === 'true') {
-			const randomQuestion = await Game.generateRandomQuestion();
+			const randomQuestion = await Game.generateRandomQuestion(request.session.questionaire);
 			const title = randomQuestion.title;
 			const options = await Game.generateOptions(randomQuestion);
 			request.session.points += 1;
@@ -86,7 +90,7 @@ module.exports = {
 		const helpOption = request.body.helpOption;
 		console.log(helpOption);
 		if (helpOption == 'skip') {
-			const randomQuestion = await Game.generateRandomQuestion();
+			const randomQuestion = await Game.generateRandomQuestion(request.session.questionaire);
 			const title = randomQuestion.title;
 			const options = await Game.generateOptions(randomQuestion);
 			request.session.helpOption3 = false;
@@ -117,6 +121,8 @@ module.exports = {
 	async handleSubmit(request, response) {
 		if (request.body.option) {
 			module.exports.gradeAnswer(request, response);
+		} else if (request.body.questionaire) {
+			module.exports.startGame(request, response);
 		} else {
 			module.exports.helpClicked(request, response);
 		}
