@@ -8,9 +8,7 @@ module.exports = {
      * Generate a random question from the questionaire
      */
 	async generateRandomQuestion(questionaireId) {
-		const questionaire = await Questionnaire.findOne({
-			_id: questionaireId
-		});
+		const questionaire = await db.getQuestionnaire(questionaireId);
 		const numQuestions = questionaire.questions.length;
 		const randomNumber = Math.floor(Math.random() * numQuestions);
 		return questionaire.questions[randomNumber];

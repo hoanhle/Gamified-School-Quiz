@@ -40,15 +40,20 @@ module.exports = {
      */
 	async startGame(request, response) {
 		const chooseQuestionaire = request.body.questionaire;
-		request.session.questionaire = chooseQuestionaire;
 		const randomQuestion = await Game.generateRandomQuestion(chooseQuestionaire);
 		const title = randomQuestion.title;
 		const options = await Game.generateOptions(randomQuestion);
+
+		// Set cookies for using later
+		request.session.maxPoint = randomQuestion.maxPoints;
+		request.session.questionaire = chooseQuestionaire;
 		request.session.points = 0;
+		request.session.maxPoints = 0;
 		request.session.helpOption1 = true;
 		request.session.helpOption2 = true;
 		request.session.options = options;
-		request.session.title = title;
+
+		// Render view
 		response.render('gameView', {
 			title: title,
 			options: options,
@@ -65,36 +70,46 @@ module.exports = {
      */
 	async gradeAnswer(request, response) {
 		const isCorrect = request.body.option;
-		// if correct, render the next random questions
+		// if correct, points and maxPoints all increase by question.maxPoints
+		// if not, maxPoints increases by question.maxPoints
 		if (isCorrect === 'true') {
-			const randomQuestion = await Game.generateRandomQuestion(request.session.questionaire);
-			const title = randomQuestion.title;
-			const options = await Game.generateOptions(randomQuestion);
-			request.session.points += 1;
-			request.session.options = options;
-			request.session.title = title;
-			response.render('gameView', {
-				title: title,
-				options: options,
-				points: request.session.points,
-				helpOption1: request.session.helpOption1,
-				helpOption2: request.session.helpOption2
-			});
+			request.session.points += request.session.maxPoint;
+			request.session.maxPoints += request.session.maxPoint;
 		} else {
-			const points = request.session.points;
-			response.render('endGame', { points });
+			request.session.maxPoints += request.session.maxPoint;
 		}
+
+		// Generate new question from the questionaire
+		const randomQuestion = await Game.generateRandomQuestion(request.session.questionaire);
+		const title = randomQuestion.title;
+		const options = await Game.generateOptions(randomQuestion);
+
+		// Update cookies
+		request.session.maxPoint = randomQuestion.maxPoints;
+		request.session.options = options;
+
+		// Render view
+		response.render('gameView', {
+			title: title,
+			options: options,
+			points: request.session.points,
+			helpOption1: request.session.helpOption1,
+			helpOption2: request.session.helpOption2
+		});
 	},
 
+	/**
+     * Process when help buttons clicked
+     * @param {Object} request is express request object
+     * @param {Object} response is express response object
+     */
 	async helpClicked(request, response) {
 		const helpOption = request.body.helpOption;
-		console.log(helpOption);
 		if (helpOption == 'skip') {
 			const randomQuestion = await Game.generateRandomQuestion(request.session.questionaire);
 			const title = randomQuestion.title;
 			const options = await Game.generateOptions(randomQuestion);
 			request.session.helpOption2 = false;
-			request.session.title = title;
 			request.session.options = options;
 			response.render('gameView', {
 				title: title,
