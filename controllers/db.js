@@ -114,7 +114,7 @@ module.exports = {
 			});
 			await module.exports.updateQuestionnaire(questionnaireId, questionnaire);
 		} catch(err) {
-			throw(err);
+			db.handleCriticalError(err);
 		}
 	},
 	/**
