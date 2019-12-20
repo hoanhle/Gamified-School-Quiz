@@ -1,12 +1,21 @@
+/**
+ * Generate a count without calculator questionnaire
+ * @params {String} - questionnaireTitle: title of the questionnaire
+ *         {Int} - number of times you can submit the questionnaire
+ *         {Int} - questionsNum: number of questionsin the questionnaire
+ *         {Int} - questionMaxPoints: maximum points that can be gained from each question
+ *         {Int} - optionsNum: number of options in each question 
+ */
 function generateQuestionnaire(
     questionnaireTitle, 
+    submissions,
     questionsNum, 
     questionMaxPoints,
     optionsNum) {
     // eslint-disable-next-line sonarjs/prefer-object-literal
     const data = {};
     data.title = questionnaireTitle;
-    data.submissions = '100';
+    data.submissions = submissions;
     data.questions = [];
     results = [];
 
@@ -20,6 +29,12 @@ function generateQuestionnaire(
     return data;
 }
 
+/**
+ * Generate a random question for the questionnaire
+ * @params {Int} - endResult: the result of the calculation
+ *         {Int} - questionMaxPoints: maximum points that can be gained from each question
+ *         {Int} - optionsNum: number of options in each question 
+ */
 function getQuestion(endResult, questionMaxPoints, optionsNum) {
     return  {
         title: `Choose calculations whose end result is ${endResult}`,
@@ -28,6 +43,10 @@ function getQuestion(endResult, questionMaxPoints, optionsNum) {
     };
 }
 
+/**
+ * Generate a random number, which will be the end result of the calculation
+ * @params {Int} - maximum limit of the number generated
+ */
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
 }
@@ -37,6 +56,11 @@ const SUBSTRACTION = 1;
 const MULTIPLICATION = 2;
 const DIVISION = 3;
 
+/**
+ * Generate a random question for the questionnaire
+ * @params {Int} - rndEndResult: the result of the calculation
+ *         {Int} - number: maximum points that can be gained from each question
+ */
 function getOptions(rndEndResult, number) {
     const options = [];
     const titles = [];

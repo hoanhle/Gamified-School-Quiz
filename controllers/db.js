@@ -21,7 +21,7 @@ module.exports = {
 	/**
 	 * Get all Questionnaires from the database
 	 */
-	async getAllQuestionnaires() {
+	async getQuestionnaire(id) {
 		try {
 			const allQuestionnaires = await Questionnaire.find({});
 			return allQuestionnaires
