@@ -47,9 +47,11 @@ module.exports = {
 	 */
 	async updateQuestionnaire(id, questionnaire) {
 		try {
+			console.log(questionnaire)
 			await Questionnaire.findByIdAndUpdate(
 				id,
 				questionnaire,
+				{runValidators: true}
 			);
 		} catch(err) {
 			db.handleCriticalError(err);
@@ -61,7 +63,7 @@ module.exports = {
 	 */
 	async deleteQuestionnaire(id) {
 		try {
-			await Questionnaire.findByIdAndDelete(id);
+			await Questionnaire.findByIdAndDelete(id, {runValidators: true});
 		} catch(err) {
 			db.handleCriticalError(err);
 		}
@@ -109,9 +111,6 @@ module.exports = {
 		try {
 			let questionnaire = await module.exports.getQuestionnaire(questionnaireId);
 			questionnaire.questions.id(questionId).remove();
-			questionnaire.save(function (err) {
-				if (err) return db.handleCriticalError(err);
-			});
 			await module.exports.updateQuestionnaire(questionnaireId, questionnaire);
 		} catch(err) {
 			db.handleCriticalError(err);
@@ -134,7 +133,8 @@ module.exports = {
 		    		"questions.$.title": questionTitle,
 		    		"questions.$.options": options,
 		    		"questions.$.maxPoints": maxPoints
-		    	}}
+		    	}},
+		    	{runValidators: true}
 		    );
 		} catch(err) {
 			db.handleCriticalError(err);
