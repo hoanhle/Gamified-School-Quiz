@@ -95,11 +95,9 @@ module.exports = {
 				options: options
 			};
 			questionnaire.questions.push(question);
-			questionnaire.save(function (err) {
-				if (err) throw(err);
-			});
+			await module.exports.updateQuestionnaire(questionnaireId, questionnaire);
 		} catch(err) {
-      throw(err);
+      		throw(err);
 		}
 	},
 	/**
