@@ -96,10 +96,10 @@ module.exports = {
 			};
 			questionnaire.questions.push(question);
 			questionnaire.save(function (err) {
-				if (err) return db.handleCriticalError(err);
+				if (err) throw(err);
 			});
 		} catch(err) {
-			db.handleCriticalError(err);
+      throw(err);
 		}
 	},
 	/**

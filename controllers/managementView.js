@@ -217,7 +217,7 @@ function createArrayFromBody(body) {
     
     for (let key in options) {
       if (check( options[key].option) && check(options[key].hint)){
-        if(options[key].correctness === 'true') {
+        if(options[key].correctness === 'on') {
           options[key].correctness = true;
           result.push(options[key]); 
         } else {

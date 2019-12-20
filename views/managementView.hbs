@@ -32,80 +32,106 @@
     {{#if questionaire}}
         {{>editView name=questionaire.title questions=questionaire.questions q_id=questionaire._id}}
     {{else}}
-        <h1> Add a new questionaire and the first question.</h1>
-    <div class="form-group">
-    <form id="edit_form" method="POST" action="/management/add/{{q_id}}">
-        <div class="row">
-            <div class="col">
-              <label for="Question">Questionaire title: </label>
-              <input type="text" id="Question" name="Question" required>
-            </div>
+  <h4> Here you can create a new questionnaire's and add the first question. </h4>
+  <ul id="instructions" align="left">
+    <li>
+      From the left you can edit existing questionnaire's and questions.
+    </li>
+    <li>
+      There you can also search.
+    </li>
+    <li>
+      Please take note that each question should have atleast one correct answer and atleast
+      4 choices.
+    </li>
+  </ul>
+
+  <form id="edit_form" method="POST" action="/management/question/add/{{q_id}}">
+    <div class="row">
+      <div class="col">
+        <label for="q_title"> Questionnaire title: </label>
+        <input type="text" id="q_title" name="q_title">
+      </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+          <label for="Question">Question: </label>
+          <input type="text" id="Question" name="Question" required>
+        <div class="col">
+          <label for="points">Points:</label>
+          <input type="number" id="points" name="points" required>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">
+        <label>Answer</label>
+      </div>
+
+      <div class="col-sm-4">
+        <label>Hint(optional) </label>
+      </div>
+
+      <div class="col-sm-4">
+        <label>Corrrect </label>
+      </div>
+    </div>
+
+    <div class="row" id="fake_ans">
+        <div class="col-sm-5">
+          <input type="text" id="1" name="options[1][option]" required>
         </div>
-        <div class="row">
-            <div class="col">
-              <label for="Question">Question: </label>
-              <input type="text" id="Question" name="Question" required>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-              <label for="points">Points:</label>
-              <input type="number" id="points" name="points" required>
-            </div>
-
-            <div class="col">
-              <label for="1">Correct answer: </label>
-              <input type="text" id="1" name="options[1][option]" required>
-              <input type="hidden" name="options[1][correctness]" value="true" required>
-            </div>
-            
-            <div class="col">
-              <label for="hint1">Hint(optional): </label>
-              <input type="text" id="hint1" name="options[1][hint]"> 
-            </div>
-
-        </div>
-        <h3> Fake answers. Minimum is 3. </h3>
-        <div class="row" id="fake_ans">
-            <div class="col-sm-5">
-              <label for="2">Answer: </label>
-              <input type="text" id="2" name="options[2][option]" required> 
-            </div>
-
-            <div class="col-sm-5">
-              <label for="hint2">Hint(optional): </label>
-              <input type="text" id="hint2" name="options[2][hint]"> 
-              <input type="hidden" name="options[2][correctness]" value="false" required>
-            </div>
-
-            <div class="col-sm-5">
-              <label for="3">Answer: </label>
-              <input type="text" id="3" name="options[3][option]" required> 
-            </div>
-
-            <div class="col-sm-5">
-              <label for="hint3">Hint(optional): </label>
-              <input type="text" id="hint3" name="options[3][hint]"> 
-              <input type="hidden" name="options[3][correctness]" value="false" required>
-            </div>
-
-            <div class="col-sm-5">
-              <label for="4">Answer: </label>
-              <input type="text" id="4" name="options[4][option]" required> 
-            </div>
-
-            <div class="col-sm-5">
-              <label for="hint4">Hint(optional): </label>
-              <input type="text" id="hint4" name="options[4][hint]"> 
-              <input type="hidden" name="options[4][correctness]" value="false" required>
-            </div>
+        
+        <div class="col-sm-5">
+          <input type="text" id="hint1" name="options[1][hint]"> 
         </div>
 
-        <div class="row">
-            <button type="Submit">Add question </button>
-            <button type="Reset">Clear </button>
-            <input id="add" type="button" value="+" onclick="addAnswer();" />
+        <div class="col-sm">
+          <input type="checkbox" name="options[1][correctness]">
         </div>
+
+        <div class="col-sm-5">
+          <input type="text" id="2" name="options[2][option]" required> 
+        </div>
+
+        <div class="col-sm-5">
+          <input type="text" id="hint2" name="options[2][hint]"> 
+        </div>
+
+        <div class="col-sm">
+          <input type="checkbox" name="options[2][correctness]">
+        </div>
+
+        <div class="col-sm-5">
+          <input type="text" id="3" name="options[3][option]" required> 
+        </div>
+
+        <div class="col-sm-5">
+          <input type="text" id="hint3" name="options[3][hint]"> 
+        </div>
+
+        <div class="col-sm">
+          <input type="checkbox" name="options[3][correctness]">
+        </div>
+
+        <div class="col-sm-5">
+          <input type="text" id="4" name="options[4][option]" required> 
+        </div>
+
+        <div class="col-sm-5">
+          <input type="text" id="hint4" name="options[4][hint]"> 
+        </div>
+
+        <div class="col-sm">
+          <input type="checkbox" name="options[4][correctness]">
+        </div>
+    </div>
+
+    <div class="row">
+        <button type="Submit">Add question </button>
+        <button type="Reset">Clear </button>
+        <input id="add" type="button" value="+" onclick="addAnswer();" />
+    </div>
+  </form>
     {{/if}}
 </div>
