@@ -58,8 +58,8 @@ const DIVISION = 3;
 
 /**
  * Generate a random question for the questionnaire
- * @params {Int} - rndEndResult: the result of the calculation
- *         {Int} - number: maximum points that can be gained from each question
+ * @params {Int} - rndEndResult: the randomized result of the calculation
+ *         {Int} - number: number of options for the question
  */
 function getOptions(rndEndResult, number) {
     const options = [];
@@ -79,6 +79,15 @@ function getOptions(rndEndResult, number) {
 }
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
+/**
+ * Generate a random question for the questionnaire
+ * @params {Int} - endResult: the result of the calculation
+ *         {Int} - rndCalcType: randomized calculation type:
+                    addition = 0
+                    substraction = 1
+                    multiplication = 2
+                    division = 3
+ */
 function getOption(endResult, rndCalcType) {
     //  'options': [{'option': '25 + 15','correctness': true}]
     //
