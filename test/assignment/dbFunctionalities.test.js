@@ -69,6 +69,26 @@ describe('Database functionalities', function() {
             expect(numAllReceived).to.equal(3);
         });
 
+        it('must be able to delete all questionnaires', async function() {
+            const data1 = mathGenerator.generateQuestionnaire(randomStr(), 100, 10, 1, 4);
+            const data2 = mathGenerator.generateQuestionnaire(randomStr(), 100, 10, 1, 4);
+            const data3 = mathGenerator.generateQuestionnaire(randomStr(), 100, 10, 1, 4);
+            await dbController.addQuestionnaire(data1);
+            await dbController.addQuestionnaire(data2);
+            await dbController.addQuestionnaire(data3);
+
+            const numAll = await Questionnaire.countDocuments({});
+            const allQuestionnaires = await dbController.deleteAllQuestionnaires();
+            const numAllReceived = allQuestionnaires ? allQuestionnaires.length : 0;
+
+            await dbController.deleteAllQuestionnaires();
+
+            expect(numAll).to.exist;
+            expect(numAllReceived).to.exist;
+            expect(numAll).to.equal(3);
+            expect(numAllReceived).to.equal(0);
+        });
+
         it('must be able to read one questionnaire', async function() {
             const questionnaireTitle = randomStr();
             const data = mathGenerator.generateQuestionnaire(questionnaireTitle, 100, 10, 1, 4);
