@@ -38,13 +38,13 @@ for high-school students, especially for the domains of mathematics and computer
 │   │   ├── game.js                 -->   
 │   │   └── mathGenerator.js        --> 
 │   └── css                         --> for styles
-├── routes                          --> a dir for router modules
+│─ routes                          --> a dir for router modules
 │   ├── game.js                     --> 
 │   ├── hello.js                    --> / (root) router
 │   ├── managementView.js           -->   ...
 │   ├── questionnaire.js            -->   ...
 │   └── users.js                    --> /users router
-├── views                           --> views - visible parts
+│── views                           --> views - visible parts
 │   ├── chooseQuestionnaire.hbs     --> 
 │   ├── confirmation_message.hbs    --> 
 │   ├── endGame.hbs                 --> 
@@ -75,20 +75,26 @@ for high-school students, especially for the domains of mathematics and computer
 │   │   ├── hello.test.js           --> 
 │   │   ├── questionnaire.test.js   -->  
 │   │   └── user.test.js            --> 
-└── └── setup.test.js               --> 
-
+│── └── setup.test.js               --> 
+└── screenshots                     --> some screenshots of the app interface
 
 ```
 
 ## Game
+First, you have to login. Please register an account if you don't have one yet.
 
-The game is similar to the famous television show "Who wants to be a millionnaire". The student will answer multiple-choice questions one-by-one, from a questionnaire of his/her choice. The game will end as soon as the student answers a question incorrectly, or when the student answers correctly all the questions.
+From the homepage, click on "Who wants to be a millionaire" to access the game.
+
+You can choose to start the game right away, or to read the rules first.
+
+The game is similar to the famous television show "Who wants to be a millionnaire", with a few differences. The student will answer a randomly-generated multiple-choice questions one-by-one, from a questionnaire of his/her choice. Each question will be randomly picked from all questions of the questionnaire, with 4 options to choose from - they are in turn randomly picked from all of the question's options.
 
 During one gameplay, the student have 2 "helps": 
   **50/50** - remove 50% of the answers, 
   **Skip** - skip the current question
+Each of these helps can only be used once in each game.
 
-After the game ended, a pop-up window will appear, prompting the user to submit for grading. When clicking "Submit", the result of the game will be sent to the A+ system.
+The game *will not stop* until the player press "Grade". After pressing the button, the player's answers will be graded, The results will then be displayed. The "maximum points" in this case is the total number of points worth from all the questions generated and displayed.
 
 ## Management view
 

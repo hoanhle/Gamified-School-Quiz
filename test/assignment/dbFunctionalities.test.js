@@ -28,10 +28,6 @@ describe('Database functionalities', function() {
             await dbController.deleteAllQuestionnaires();
         });
 
-        after(function() {
-            db.disconnectDB();
-        });
-
         it('must be able to add a questionnaire', async function() {
             const number = 1;
             const questionnaireTitle = randomStr();
