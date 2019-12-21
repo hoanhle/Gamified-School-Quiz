@@ -98,7 +98,13 @@ The game *will not stop* until the player press "Grade". After pressing the butt
 
 ## Management view
 
-The management view enables the admin/teacher to perform the 4 CRUD operations: Create, Read, Update and Delete.
+The management view enables the admin/teacher to perform the 4 CRUD operations: Create, Read, Update and Delete. To access this view, first, you need to login as an admin/teacher.
+
+From the main window of the management view, you can create a new questionnaire, by filling in the required information in the form. The sidebar lists all existing questionnaires. Clicking on a questionnaire's name will show you the questions' titles in that questionnaire. You can update each questionnaire (by clicking on the pencil icon) or delete it (by clicking on the trash icon).
+
+If you decide to edit a questionnaire, the main window will be updated. The new window will let you add a new question to the questionnaire by filling in a form.
+
+Below that form, you can see a list of all questions in that questionnaire, all options of each question will be listed, as well as the question's maximum points and options' hints. To delete or update a question, click on the trash can icon or the pencil icon, respectively.
 
 ## Tests and documentation
 
