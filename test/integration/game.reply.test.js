@@ -20,6 +20,7 @@ async function auth(browser) {
 
 	// Fill in login information and login
 	browser.fill('email', admin.email);
+
 	browser.fill('password', admin.password);
 	await browser.pressButton('#btnLogin');
 }
@@ -61,7 +62,6 @@ describe('Game reply: A+ protocol', function() {
 		await generateSomeQuestionaires(dbController);
 		const id = await getAnId(dbController);
 		await browser.visit(`/games/${id}`);
-		console.log(browser.document.documentElement.innerHTML);
 		await browser.pressButton('#grade');
 	});
 

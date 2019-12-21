@@ -79,7 +79,6 @@ describe('Game: A+ protocol', function() {
 
 	// TODO: this test currently fails due to unknown reason
 	it('the submit button must have id "grade"', function() {
-		console.log(browser.document.documentElement.innerHTML);
 		browser.assert.element('#grade');
 		browser.assert.element('button#grade');
 	});

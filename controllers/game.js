@@ -11,7 +11,7 @@ module.exports = {
      * @param {Object} response is express response object
      */
 	async showStartGame(request, response) {
-		response.render('game');
+		response.render('game/game');
 	},
 
 	/**
@@ -20,7 +20,7 @@ module.exports = {
      * @param {Object} response is express response object
      */
 	async showRules(request, response) {
-		response.render('rules');
+		response.render('game/rules');
 	},
 
 	/**
@@ -30,7 +30,7 @@ module.exports = {
      */
 	async showQuestionaires(request, response) {
 		const questionaires = await db.getAllQuestionnaires();
-		response.render('chooseQuestionaire', { questionaires });
+		response.render('game/chooseQuestionaire', { questionaires });
 	},
 
 	/**
@@ -55,7 +55,7 @@ module.exports = {
 		request.session.title = title;
 
 		// Render view
-		response.render('gameView', {
+		response.render('game/gameView', {
 			id: request.params.id,
 			title: title,
 			options: options,
@@ -92,7 +92,7 @@ module.exports = {
 		request.session.title = title;
 
 		// Render view
-		response.render('gameView', {
+		response.render('game/gameView', {
 			id: request.params.id,
 			title: title,
 			options: options,
@@ -117,7 +117,7 @@ module.exports = {
 			request.session.options = options;
 			request.session.title = title;
 
-			response.render('gameView', {
+			response.render('game/gameView', {
 				id: request.params.id,
 				title: title,
 				options: options,
@@ -129,7 +129,7 @@ module.exports = {
 			const options = await Game.reduceHalfOption(request.session.options);
 			request.session.helpOption1 = false;
 
-			response.render('gameView', {
+			response.render('game/gameView', {
 				id: request.params.id,
 				title: request.session.title,
 				options: options,
@@ -146,10 +146,11 @@ module.exports = {
      * @param {Object} response is express response object
      */
 	async gradeGame(request, response) {
-		if (!request.session.maxPoints) {
+		if (request.session.maxPoints == null) {
 			request.session.maxPoints = 0;
 		}
-		response.render('hello-graded', {
+		console.log(request.session.maxPoints);
+		response.render('game/endGame', {
 			points: request.session.points,
 			maxPoints: request.session.maxPoints,
 			status: 'graded',
