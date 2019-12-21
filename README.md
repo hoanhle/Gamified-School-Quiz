@@ -108,7 +108,7 @@ Below that form, you can see a list of all questions in that questionnaire, all 
 
 ## Tests and documentation
 
-Apart from the tests already provided by the course in folders test/integration and test/models, our team has written a few more tests in test/assignment to test game functionalities, management view and database communications.
+Apart from the tests already provided by the course in folders test/integration and test/models, our team has written a few more tests in test/assignment to test game functionalities, management view and database communications. Please refer to the project structure to see descriptions of said tests, which are all in ./test/assignment.
 
 ## Security concerns
 
