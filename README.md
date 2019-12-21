@@ -87,7 +87,7 @@ First, you have to login. Please register an account if you don't have one yet.
 </p>
 From the homepage, click on "Who wants to be a millionaire" to access the game.
 <p align="middle">
-    <img src="https://github.com/amadeuspham/drumSeparation/blob/master/plots/police%20H%20spec.png?raw=true" width="400" />
+    <img src="https://course-gitlab.tuni.fi/tie-23516-bwa-2019/65/raw/master/screenshots/logged_in.png" width="400" />
 </p>
 You can choose to start the game rightaway, or to read the rules first.
 <p align="middle">
