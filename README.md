@@ -24,25 +24,23 @@ for high-school students, especially for the domains of mathematics and computer
 ├── index.js                        --> bwa app
 ├── package.json                    --> app info and dependencies
 ├── controllers                     --> controllers (handle e.g. routing)
-│   ├── db.js                       --> 
-│   ├── game.js                     -->   
+│   ├── db.js                       --> functions to directly communicate with db to perform CRUD
+│   ├── game.js                     --> controls the game functionalities & routing
 │   ├── hello.js                    --> the same as "minimal viable grader"
-│   ├── managementView.js           --> 
-│   └── user.js                     --> 
+│   ├── managementView.js           --> controls the management view functionalities
+│   └── user.js                     --> controls the user management functionalities 
 ├── models                          --> models that reflect the db schemes
 │                                       and take care of storing data
 ├── public                          --> location for public (static) files
 │   ├── img                         --> for images
 │   ├── js                          --> for javascript
-│   │   ├── db.js                   --> 
-│   │   ├── game.js                 -->   
-│   │   └── mathGenerator.js        --> 
+│   │   ├── management.js           --> dynamically builds the management view UI based on data
+│   │   └── mathGenerator.js        --> generate random math questionnaire
 │   └── css                         --> for styles
 │─ routes                          --> a dir for router modules
-│   ├── game.js                     --> 
+│   ├── game.js                     --> handle game routing
 │   ├── hello.js                    --> / (root) router
-│   ├── managementView.js           -->   ...
-│   ├── questionnaire.js            -->   ...
+│   ├── managementView.js           --> handle management view routing
 │   └── users.js                    --> /users router
 │── views                           --> views - visible parts
 │   ├── chooseQuestionnaire.hbs     --> 
@@ -51,38 +49,38 @@ for high-school students, especially for the domains of mathematics and computer
 │   ├── error.hbs                   --> error view
 │   ├── game.hbs                    --> 
 │   ├── gameView.hbs                --> 
-│   ├── hello-graded.hbs            --> 
+│   ├── hello-graded.hbs            --> show graded response view
 │   ├── hello.hbs                   --> main view - "minimal viable grader"
 │   ├── layouts                     --> layouts - handlebar concept
 │   │   └── default.hbs             --> layout view, "template" to be rendered
-│   ├── managementView.hbs          --> 
+│   ├── managementView.hbs          --> management view layout
 │   ├── partials                    --> smaller handlebar components to be included in views
 │   ├── rules.hbs                   --> 
-│   └── user                        --> 
+│   └── user                        --> views related to users
 └── test                            --> tests
 │   ├── assignment                  --> unit tests written by the group
 │   │   ├── dbFunctionalities.testjs--> test database communications CRUD functions
-│   │   └── management.test.js      -->  
-│   ├── integration                 --> integration tests
 │   │   ├── game.test.js            --> 
-│   │   ├── hello.reply.test.js     -->  
-│   │   ├── hello.test.js           -->
-│   │   ├── security.test.js        -->  
-│   │   └── users.test.js           --> 
+│   │   └── management.test.js      --> test CRUD functions in management view
+│   ├── integration                 --> integration tests
+│   │   ├── hello.reply.test.js     --> test Hello A+ protocol
+│   │   ├── hello.test.js           --> test Hello view requirement
+│   │   ├── security.test.js        --> test for security issues
+│   │   └── users.test.js           --> test user-related functionalities
 │   ├── mocha.opts                  --> 
 │   ├── models                      --> unit tests for models
-│   │   ├── db.test.js              -->  
-│   │   ├── hello.test.js           --> 
-│   │   ├── questionnaire.test.js   -->  
-│   │   └── user.test.js            --> 
-│── └── setup.test.js               --> 
+│   │   ├── db.test.js              --> test database connection
+│   │   ├── hello.test.js           --> test hello model
+│   │   ├── questionnaire.test.js   --> test questionnaire model
+│   │   └── user.test.js            --> test user model
+│── └── setup.test.js               --> set up all tests
 └── screenshots                     --> some screenshots of the app interface
 
 ```
 
 ## Game
 First, you have to login. Please register an account if you don't have one yet.
- ![Log in please](/screenshots/login.png) <!-- .element height="50%" width="50%" -->
+ ![Log in please](/screenshots/login.png) 
 From the homepage, click on "Who wants to be a millionaire" to access the game.
  ![Logged in as admin](/screenshots/logged_in.png)
 You can choose to start the game rightaway, or to read the rules first.
