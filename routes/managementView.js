@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const mngController = require('../controllers/managementView');
-const auth = require('../middleware/auth')
+const auth = require('../middleware/auth');
 const csurf = require('csurf');
 const csrfProtection = csurf({ cookie: false });
 

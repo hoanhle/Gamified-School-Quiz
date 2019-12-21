@@ -1,8 +1,7 @@
 'use strict';
 
-const managementView= require('../models/managementView');
 const db = require('../controllers/db');
-const url = require('url');
+const root ='root';
 
 module.exports = {
     //=====================================================================================
@@ -25,18 +24,18 @@ module.exports = {
      * @param {Object} response is express response object
      */
     async showQuestionaire(request, response) {
-      if (checkId(request.query.id)){
-        let questionaire = await db.getQuestionnaire(request.query.id); 
-        let questionaires = await db.getAllQuestionnaires();
-        response.render('managementView', 
-          {
-            questionaires: questionaires,
-            questionaire: questionaire
-          });
-      } else {
-        request.flash('errorMessage',`Questionaire not found (id: ${request.query.id})`);
-        return response.redirect('/management');
-      }
+        if (checkId(request.query.id)){
+            const questionaire = await db.getQuestionnaire(request.query.id); 
+            const questionaires = await db.getAllQuestionnaires();
+            response.render('managementView', 
+                {
+                    questionaires: questionaires,
+                    questionaire: questionaire
+                });
+        } else {
+            request.flash('errorMessage', `Questionaire not found (id: ${request.query.id})`);
+            return response.redirect(root);
+        }
     },
 
 
@@ -46,18 +45,18 @@ module.exports = {
      * @param {Object} response is express response object
      */
     async Delete(request, response) {
-      if(checkId(request.params.id)){
-        let questionaire = await db.getQuestionnaire(request.params.id); 
-        response.render('confirmation_message', {
-          token: request.csrfToken(),
-          id: questionaire.id,
-          name: questionaire.title
-        });
+        if(checkId(request.params.id)){
+            const questionaire = await db.getQuestionnaire(request.params.id); 
+            response.render('confirmation_message', {
+                token: request.csrfToken(),
+                id: questionaire.id,
+                name: questionaire.title
+            });
         
-      } else {
-        request.flash('errorMessage',`Questionaire not found (id: ${request.params.id})`);
-        return response.redirect('/management');
-      }
+        } else {
+            request.flash('errorMessage', `Questionaire not found (id: ${request.params.id})`);
+            return response.redirect(root);
+        }
     },
     
     /**
@@ -65,18 +64,17 @@ module.exports = {
      * @param {Object} request is express request object
      * @param {Object} response is express response object
      */
-    async edit (request,response){
-      if (check(request.body)) {
-        let questionaire = await db.getQuestionnaire(request.params.id);
-        questionaire.title = request.body.title;
-        await db.updateQuestionnaire(request.params.id, questionaire);
-        request.flash('successMessage', 'Edit saved');
-        return response.redirect('back');
-      } 
-      else {
-        request.flash('errorMessage', "Invalid format Questionaire");
-        return response.redirect('back');
-      }
+    async edit(request, response){
+        if (check(request.body)) {
+            const questionaire = await db.getQuestionnaire(request.params.id);
+            questionaire.title = request.body.title;
+            await db.updateQuestionnaire(request.params.id, questionaire);
+            request.flash('successMessage', 'Edit saved');
+            return response.redirect('back');
+        } else {
+            request.flash('errorMessage', 'Invalid format Questionaire');
+            return response.redirect('back');
+        }
     },
     
     /**
@@ -85,9 +83,9 @@ module.exports = {
      * @param {Object} response is express response object
      */
     async processDelete(request, response){
-      await db.deleteQuestionnaire(request.params.id);
-      request.flash('successMessage', 'Questionaire removed successfully.');
-      response.redirect('/management');
+        await db.deleteQuestionnaire(request.params.id);
+        request.flash('successMessage', 'Questionaire removed successfully.');
+        response.redirect(root);
     },
 
     /**
@@ -96,19 +94,19 @@ module.exports = {
      * @param {Object} response is express response object
      */
     async add(request, response){
-      response.redirect('/management');
+        response.redirect(root);
     },
 
     async processAdd(request, response){
-      try {
-        let questionaire = createQuestionaire(request.body);
-        await db.addQuestionnaire(questionaire);
-        request.flash('successMessage', 'Questionnaire added successfully.');
-        response.redirect('back');
-      } catch(err) {
-        request.flash('errorMessage', `${err.message}`);
-        response.redirect('back');
-      }
+        try {
+            const questionaire = createQuestionaire(request.body);
+            await db.addQuestionnaire(questionaire);
+            request.flash('successMessage', 'Questionnaire added successfully.');
+            response.redirect('back');
+        } catch(err) {
+            request.flash('errorMessage', `${err.message}`);
+            response.redirect('back');
+        }
     },
 
     //=====================================================================================
@@ -120,25 +118,25 @@ module.exports = {
      * @param {Object} response is express response object
      */
     async addQuestion(request, response){
-      if (check(request.body)) {
-        let options = createArrayFromBody(request.body);
-        if (options){
-          try {
-            await db.addQuestion(request.params.id, request.body.Question, options, options.length);
-            request.flash('successMessage', 'Question was added successfully.');
-            return response.redirect('back');
-          } catch (err){
-            request.flash('errorMessage', `${err.message}`);
-            return response.redirect('back');
-          }
+        if (check(request.body)) {
+            const options = createArrayFromBody(request.body);
+            if (options){
+                try {
+                    await db.addQuestion(request.params.id, request.body.Question, options, options.length);
+                    request.flash('successMessage', 'Question was added successfully.');
+                    return response.redirect('back');
+                } catch (err){
+                    request.flash('errorMessage', `${err.message}`);
+                    return response.redirect('back');
+                }
+            } else {
+                request.flash('errorMessage', 'Incorrect question format');
+                return response.redirect('back');
+            }
         } else {
-          request.flash('errorMessage', 'Incorrect question format');
-          return response.redirect('back');
+            request.flash('errorMessage', 'Incorrect question format');
+            return response.redirect('back');
         }
-      } else {
-        request.flash('errorMessage', 'Incorrect question format');
-        return response.redirect('back');
-      }
     },
     
     /**
@@ -147,15 +145,14 @@ module.exports = {
      * @param {Object} response is express response object
      * TODO
      */
-    async editQuestion (request,response){
-      if (check(request.body)) {
-        request.flash('successMessage', 'Edit saved');
-        return response.redirect('back');
-      } 
-      else {
-        request.flash('errorMessage', "Invalid format for question");
-        return response.redirect('back');
-      }
+    async editQuestion(request, response){
+        if (check(request.body)) {
+            request.flash('successMessage', 'Edit saved');
+            return response.redirect('back');
+        } else {
+            request.flash('errorMessage', 'Invalid format for question');
+            return response.redirect('back');
+        }
     },
 
     /**
@@ -163,23 +160,23 @@ module.exports = {
      * @param {Object} request is express request object
      * @param {Object} response is express response object
      */
-    async deleteQuestion (request,response){
-      try {
-        await db.deleteQuestion(request.params.id_questionaire, request.params.id);
-        request.flash('successMessage', 'Successfully delete question');
-        return response.redirect('back');
-      } catch (err){
-        request.flash('errorMessage', 'Questionaire must have atleast one question.');
-        return response.redirect('back');
-      }
-    },
+    async deleteQuestion(request, response){
+        try {
+            await db.deleteQuestion(request.params.id_questionaire, request.params.id);
+            request.flash('successMessage', 'Successfully delete question');
+            return response.redirect('back');
+        } catch (err){
+            request.flash('errorMessage', 'Questionaire must have atleast one question.');
+            return response.redirect('back');
+        }
+    }
 };
 
 
 function checkId(id){
-  let r = /[a-f0-9]{24}/;
-  if (r.test(id)) return true;
-  return false;
+    const r = /[a-f0-9]{24}/;
+    if (r.test(id)) return true;
+    return false;
 }
 
 
@@ -189,21 +186,20 @@ function checkId(id){
   exclamation mark.
 */
 function checkUserInput(input) {
-  let r = /[a-zA-Z0-9\(\)\[\]\{\}\+\-\/\*\^\%\? ,<>!€=]+/;
-  if (r.test(input)) return true;
-  return false;
+    // Not all of the escapes are unnecessary.
+    const r = /[a-zA-Z0-9\(\)\[\]\{\}\+\-\/\*\^\%\? ,<>!€=]+/;
+    if (r.test(input)) return true;
+    return false;
 }
   
 // Check that answers and questions have the above regex.k
 function check(answers) {
-  for(let key in answers) {
-    if(answers.hasOwnProperty(key)){
-      if (!checkUserInput(answers[key])) {
-        return false; 
-      }
-    }
-  }  
-  return true;
+    for(const key in answers) {
+        if (Object.prototype.hasOwnProperty.call(answers, key) && !checkUserInput(answers[key])) {
+            return false; 
+        }
+    }  
+    return true;
 }
 
 
@@ -213,41 +209,40 @@ function check(answers) {
 */
 
 function createArrayFromBody(body) {
-  let result = [];
-  if (body.hasOwnProperty('options')){
-    let options = body.options;
+    const result = [];
+    if (Object.prototype.hasOwnProperty.call(body, 'options')){
+        const options = body.options;
     
-    for (let key in options) {
-      if (check( options[key].option) && check(options[key].hint)){
-        if(options[key].correctness === 'on') {
-          options[key].correctness = true;
-          result.push(options[key]); 
-        } else {
-          options[key].correctness = false;
-          result.push(options[key]); 
+        for (const key in options) {
+            if (check( options[key].option) && check(options[key].hint)){
+                if(options[key].correctness === 'on') {
+                    options[key].correctness = true;
+                    result.push(options[key]); 
+                } else {
+                    options[key].correctness = false;
+                    result.push(options[key]); 
            
+                }
+            }
         }
-      }
+        return result;
+    } else {
+        return false;  
     }
-    return result;
-  } else {
-    return false;  
-  }
 }
 
 
 function createQuestionaire(body){
-  let options = createArrayFromBody(body);
-  let questionaire = {
-    title:  body.q_title,
-    submissions: 1,
-    questions: [
-      {
-        title: body.Question,
-        maxPoints: body.points,  
-        options: options 
-      }
-    ]
-  };
-  return questionaire;
+    const options = createArrayFromBody(body);
+    return {
+        title:  body.q_title,
+        submissions: 1,
+        questions: [
+            {
+                title: body.Question,
+                maxPoints: body.points,  
+                options: options 
+            }
+        ]
+    };
 }
