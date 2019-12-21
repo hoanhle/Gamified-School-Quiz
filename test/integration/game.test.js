@@ -5,52 +5,81 @@ require('dotenv').config();
 const config = require('config');
 const http = require('http');
 const Browser = require('zombie');
-
 const app = require('../../app.js');
 const admin = config.get('admin');
 const port = 3333;
+const mathGenerator = require('../../public/js/mathGenerator');
 
 // Zombie.js documentation can be found at: https://www.npmjs.com/package/zombie
 
 async function auth(browser) {
-    // Load login page
-    await browser.visit('/users/login');
+	// Load login page
+	await browser.visit('/users/login');
 
-    // Fill in login information and login
-    browser.fill('email', admin.email);
-    browser.fill('password', admin.password);
-    await browser.pressButton('#btnLogin');
+	// Fill in login information and login
+	browser.fill('email', admin.email);
+
+	browser.fill('password', admin.password);
+	await browser.pressButton('#btnLogin');
+}
+
+async function generateSomeQuestionaires(dbController) {
+	const data1 = mathGenerator.generateQuestionnaire(randomStr(), 100, 10, 1, 4);
+	const data2 = mathGenerator.generateQuestionnaire(randomStr(), 100, 10, 1, 4);
+	const data3 = mathGenerator.generateQuestionnaire(randomStr(), 100, 10, 1, 4);
+	await dbController.addQuestionnaire(data1);
+	await dbController.addQuestionnaire(data2);
+	await dbController.addQuestionnaire(data3);
+}
+
+async function getAnId(dbController) {
+	const questionnaires = await dbController.getAllQuestionnaires();
+	const questionnaireRetrievedFromAll = questionnaires[0];
+	return questionnaireRetrievedFromAll._id;
+}
+
+function randomStr() {
+	return Math.random().toString(36).slice(2);
 }
 
 describe('Game: A+ protocol', function() {
-    let server;
-    let browser;
+	const db = require('../../models/db');
+	const dbController = require('../../controllers/db');
+	const Questionnaire = require('../../models/questionnaire');
+	let server;
+	let browser;
 
-    beforeEach(async function() {
-        server = http.createServer(app).listen(port);
-        Browser.localhost('bwa', port);
-        browser = new Browser();
+	beforeEach(async function() {
+		server = http.createServer(app).listen(port);
+		Browser.localhost('bwa', port);
+		browser = new Browser();
 
-        await auth(browser);
-        await browser.visit('/game/start');
-    });
+		await auth(browser);
 
-    afterEach(async function() {
-        server.close();
-    });
+		// Generate some questionaires to database
+		await generateSomeQuestionaires(dbController);
+		const id = await getAnId(dbController);
+		await browser.visit(`/games/${id}`);
+	});
 
-    it('must have a form with POST method', function() {
-        //http://zombie.js.org/#assertions
-        browser.assert.element('form[method="POST"]');
-        // browser.assert.attribute('form', 'method', 'post');
-    });
+	afterEach(async function() {
+		server.close();
+	});
 
-    it('must have a form with submit button', function() {
-        browser.assert.element('form button[type="submit"]');
-    });
+	it('must have a form with POST method', function() {
+		//http://zombie.js.org/#assertions
+		browser.assert.element('form[method="POST"]');
+		// browser.assert.attribute('form', 'method', 'post');
+	});
 
-    it('the submit button must have id "grade"', function() {
-        browser.assert.element('#grade');
-        browser.assert.element('button#grade');
-    });
+	it('must have a form with submit button', function() {
+		browser.assert.element('form button[type="submit"]');
+	});
+
+	// TODO: this test currently fails due to unknown reason
+	it('the submit button must have id "grade"', function() {
+		console.log(browser.document.documentElement.innerHTML);
+		browser.assert.element('#grade');
+		browser.assert.element('button#grade');
+	});
 });
