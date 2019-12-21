@@ -11,7 +11,7 @@ const expect = chai.expect;
 // const assert = require('assert');
 const config = require('config');
 
-const mathGenerator = require('../../controllers/mathGenerator');
+const mathGenerator = require('../../public/js/mathGenerator');
 
 describe('Database functionalities', function() {
     describe('db connection', function() {
