@@ -82,21 +82,20 @@ for high-school students, especially for the domains of mathematics and computer
 
 ## Game
 First, you have to login. Please register an account if you don't have one yet.
-
+ ![Log in please](/screenshots/login.png)
 From the homepage, click on "Who wants to be a millionaire" to access the game.
-
+ ![Logged in as admin](/screenshots/logged_in.png)
 You can choose to start the game rightaway, or to read the rules first.
-
+ ![Choose to play or read rules](/screenshots/game.png)
 The game is similar to the famous television show "Who wants to be a millionnaire", with a few differences. The student will answer a randomly-generated multiple-choice questions one-by-one, from a questionnaire of his/her choice. Each question will be randomly picked from all questions of the questionnaire, with 4 options to choose from - they are in turn randomly picked from all of the question's options.
-
+ ![Play the game](/screenshots/play.png)
 During one gameplay, the student have 2 "helps": 
   **50/50** - remove 50% of the answers, 
   **Skip** - skip the current question
-
 Each of these helps can only be used once in each game.
-
+ ![Question in game](/screenshots/question.png)
 The game **will not stop** until the player press "Grade". After pressing the button, the player's answers will be graded, The results will then be displayed. The "maximum points" in this case is the total number of points worth from all the questions generated and displayed.
-
+ ![Graded](/screenshots/grade.png)
 ## Management view
 
 The management view enables the admin/teacher to perform the 4 CRUD operations: Create, Read, Update and Delete. To access this view, first, you need to login as an admin/teacher.
