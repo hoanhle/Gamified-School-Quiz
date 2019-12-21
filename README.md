@@ -82,13 +82,13 @@ for high-school students, especially for the domains of mathematics and computer
 
 ## Game
 First, you have to login. Please register an account if you don't have one yet.
- ![Log in please](/screenshots/login.png)
+ ![Log in please](/screenshots/login.png) { width: 400px; }
 From the homepage, click on "Who wants to be a millionaire" to access the game.
- ![Logged in as admin](/screenshots/logged_in.png)
+ ![Logged in as admin](/screenshots/logged_in.png) { width: 400px; }
 You can choose to start the game rightaway, or to read the rules first.
- ![Choose to play or read rules](/screenshots/game.png)
+ ![Choose to play or read rules](/screenshots/game.png) { width: 400px; }
 The game is similar to the famous television show "Who wants to be a millionnaire", with a few differences. The student will answer a randomly-generated multiple-choice questions one-by-one, from a questionnaire of his/her choice. Each question will be randomly picked from all questions of the questionnaire, with 4 options to choose from - they are in turn randomly picked from all of the question's options.
- ![Play the game](/screenshots/play.png)
+ ![Play the game](/screenshots/play.png) { width: 400px; }
 During one gameplay, the student have 2 "helps": 
   **50/50** - remove 50% of the answers, 
   **Skip** - skip the current question
