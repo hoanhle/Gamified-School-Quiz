@@ -6,15 +6,21 @@ const gameController = require('../controllers/game');
 const auth = require('../middleware/auth');
 
 // Show start game menu
-router.get('/', auth.ensureAuthenticated, gameController.showStartGame);
+router.get('/startMenu', auth.ensureAuthenticated, gameController.showStartGame);
 
 // Instruction rules page
 router.get('/rules', auth.ensureAuthenticated, gameController.showRules);
 
 // Choose questionaire to start
-router.get('/choose', auth.ensureAuthenticated, gameController.showQuestionaires);
+router.get('/', auth.ensureAuthenticated, gameController.showQuestionaires);
 
-// Help button clicked
-router.post('/start', auth.ensureAuthenticated, gameController.handleSubmit);
+// Delete user (for admins only)
+router
+	.route('/:id([a-f0-9]{24})')
+	.all(
+		auth.ensureAdmin // only admins can delete users
+	)
+	.get(gameController.startGame)
+	.post(gameController.handleSubmit);
 
 module.exports = router;

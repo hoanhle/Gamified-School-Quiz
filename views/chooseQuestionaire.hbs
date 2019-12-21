@@ -7,7 +7,7 @@
                 <p>
                     Choose one of the questionaire options below to start the game!
                 </p>
-                <form method="POST" action="/game/start">
+                <form method="GET">
                     {{>questionaire_option_listing questionaires=this.questionaires}}
                 </form>
             </div>

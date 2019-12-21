@@ -41,6 +41,10 @@ module.exports = {
 		return chooseOptions;
 	},
 
+	/**
+     * Reduce half of the current questionOptions
+     * @param {Object} questionOptions current available questionOptions
+     */
 	async reduceHalfOption(questionOptions) {
 		const options = [ ...questionOptions ];
 		const chooseOptions = [];

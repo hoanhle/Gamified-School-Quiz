@@ -39,7 +39,7 @@ module.exports = {
      * @param {Object} response is express response object
      */
 	async startGame(request, response) {
-		const chooseQuestionaire = request.body.questionaire;
+		const chooseQuestionaire = request.params.id;
 		const randomQuestion = await Game.generateRandomQuestion(chooseQuestionaire);
 		const title = randomQuestion.title;
 		const options = await Game.generateOptions(randomQuestion);
@@ -52,9 +52,11 @@ module.exports = {
 		request.session.helpOption1 = true;
 		request.session.helpOption2 = true;
 		request.session.options = options;
+		request.session.title = title;
 
 		// Render view
 		response.render('gameView', {
+			id: request.params.id,
 			title: title,
 			options: options,
 			points: request.session.points,
@@ -87,9 +89,11 @@ module.exports = {
 		// Update cookies
 		request.session.maxPoint = randomQuestion.maxPoints;
 		request.session.options = options;
+		request.session.title = title;
 
 		// Render view
 		response.render('gameView', {
+			id: request.params.id,
 			title: title,
 			options: options,
 			points: request.session.points,
@@ -111,7 +115,10 @@ module.exports = {
 			const options = await Game.generateOptions(randomQuestion);
 			request.session.helpOption2 = false;
 			request.session.options = options;
+			request.session.title = title;
+
 			response.render('gameView', {
+				id: request.params.id,
 				title: title,
 				options: options,
 				points: request.session.points,
@@ -121,7 +128,9 @@ module.exports = {
 		} else if (helpOption == 'half') {
 			const options = await Game.reduceHalfOption(request.session.options);
 			request.session.helpOption1 = false;
+
 			response.render('gameView', {
+				id: request.params.id,
 				title: request.session.title,
 				options: options,
 				points: request.session.points,
@@ -154,8 +163,6 @@ module.exports = {
 	async handleSubmit(request, response) {
 		if (request.body.option) {
 			module.exports.gradeAnswer(request, response);
-		} else if (request.body.questionaire) {
-			module.exports.startGame(request, response);
 		} else if (request.body.helpOption) {
 			module.exports.helpClicked(request, response);
 		} else {
