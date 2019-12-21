@@ -36,7 +36,7 @@ for high-school students, especially for the domains of mathematics and computer
 │   ├── js                          --> for javascript
 │   │   ├── db.js                   --> 
 │   │   ├── game.js                 -->   
-│   │   └── hello.js                --> 
+│   │   └── mathGenerator.js        --> 
 │   └── css                         --> for styles
 ├── routes                          --> a dir for router modules
 │   ├── game.js                     --> 
@@ -84,10 +84,9 @@ for high-school students, especially for the domains of mathematics and computer
 
 The game is similar to the famous television show "Who wants to be a millionnaire". The student will answer multiple-choice questions one-by-one, from a questionnaire of his/her choice. The game will end as soon as the student answers a question incorrectly, or when the student answers correctly all the questions.
 
-During one gameplay, the student have 3 "helps": 
+During one gameplay, the student have 2 "helps": 
   **50/50** - remove 50% of the answers, 
-  **2x** - double the points gained when answers correctly
-  **Hint** - show a hint related to the question, if available. Each help can only be used on during each gameplay.
+  **Skip** - skip the current question
 
 After the game ended, a pop-up window will appear, prompting the user to submit for grading. When clicking "Submit", the result of the game will be sent to the A+ system.
 
