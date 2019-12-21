@@ -104,7 +104,7 @@ Each of these helps can only be used once in each game.
 <p align="center">
     <img src="https://course-gitlab.tuni.fi/tie-23516-bwa-2019/65/raw/master/screenshots/question.png" width="800" />
 </p>
-The game *will not stop* until the player press "Grade". After pressing the button, the player's answers will be graded, The results will then be displayed. The "maximum points" in this case is the total number of points worth from all the questions generated and displayed.
+The game **will not stop** until the player press "Grade". After pressing the button, the player's answers will be graded, The results will then be displayed. The "maximum points" in this case is the total number of points worth from all the questions generated and displayed.
 
 ## Management view
 
