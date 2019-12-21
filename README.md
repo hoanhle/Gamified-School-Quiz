@@ -83,12 +83,10 @@ for high-school students, especially for the domains of mathematics and computer
 ## Game
 First, you have to login. Please register an account if you don't have one yet.
 <p align="middle">
-    <img src="https://course-gitlab.tuni.fi/tie-23516-bwa-2019/65/raw/master/screenshots/login.png" width="400" />
+    <img align="middle" src="https://course-gitlab.tuni.fi/tie-23516-bwa-2019/65/raw/master/screenshots/login.png" width="400" />
 </p>
 From the homepage, click on "Who wants to be a millionaire" to access the game.
-<p align="middle">
-    <img src="https://course-gitlab.tuni.fi/tie-23516-bwa-2019/65/raw/master/screenshots/logged_in.png" width="400" />
-</p>
+    <img align="middle" src="https://course-gitlab.tuni.fi/tie-23516-bwa-2019/65/raw/master/screenshots/logged_in.png" width="400" />
 You can choose to start the game rightaway, or to read the rules first.
 <p align="middle">
     <img src="https://course-gitlab.tuni.fi/tie-23516-bwa-2019/65/raw/master/screenshots/game.png" width="400" />
@@ -102,7 +100,7 @@ During one gameplay, the student have 2 "helps":
   **Skip** - skip the current question
 Each of these helps can only be used once in each game.
 <p align="middle">
-    <img src="https://course-gitlab.tuni.fi/tie-23516-bwa-2019/65/raw/master/screenshots/question.png" width="400" />
+    <img src="https://course-gitlab.tuni.fi/tie-23516-bwa-2019/65/raw/master/screenshots/question.png" width="800" />
 </p>
 The game *will not stop* until the player press "Grade". After pressing the button, the player's answers will be graded, The results will then be displayed. The "maximum points" in this case is the total number of points worth from all the questions generated and displayed.
 
