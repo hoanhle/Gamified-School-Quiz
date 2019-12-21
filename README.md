@@ -24,29 +24,58 @@ for high-school students, especially for the domains of mathematics and computer
 ├── index.js                        --> bwa app
 ├── package.json                    --> app info and dependencies
 ├── controllers                     --> controllers (handle e.g. routing)
-│   ├──  ...                        -->   ...
-│   └── hello.js                    --> the same as "minimal viable grader"
+│   ├── db.js                       --> 
+│   ├── game.js                     -->   
+│   ├── hello.js                    --> the same as "minimal viable grader"
+│   ├── managementView.js           --> 
+│   └── user.js                     --> 
 ├── models                          --> models that reflect the db schemes
 │                                       and take care of storing data
 ├── public                          --> location for public (static) files
 │   ├── img                         --> for images
 │   ├── js                          --> for javascript
+│   │   ├── db.js                   --> 
+│   │   ├── game.js                 -->   
+│   │   └── hello.js                --> 
 │   └── css                         --> for styles
 ├── routes                          --> a dir for router modules
+│   ├── game.js                     --> 
 │   ├── hello.js                    --> / (root) router
-│   ├──  ...                        -->   ...
+│   ├── managementView.js           -->   ...
+│   ├── questionnaire.js            -->   ...
 │   └── users.js                    --> /users router
 ├── views                           --> views - visible parts
+│   ├── chooseQuestionnaire.hbs     --> 
+│   ├── confirmation_message.hbs    --> 
+│   ├── endGame.hbs                 --> 
 │   ├── error.hbs                   --> error view
+│   ├── game.hbs                    --> 
+│   ├── gameView.hbs                --> 
+│   ├── hello-graded.hbs            --> 
 │   ├── hello.hbs                   --> main view - "minimal viable grader"
 │   ├── layouts                     --> layouts - handlebar concept
-│   │   └── layout.hbs              --> layout view, "template" to be rendered
-│   └── partials                    --> smaller handlebar components to be included in views
+│   │   └── default.hbs             --> layout view, "template" to be rendered
+│   ├── managementView.hbs          --> 
+│   ├── partials                    --> smaller handlebar components to be included in views
+│   ├── rules.hbs                   --> 
+│   └── user                        --> 
 └── test                            --> tests
 │   ├── assignment                  --> unit tests written by the group
-│   │   └── dbFunctionalities.js    --> test CRUD operations on questionnaires
+│   │   ├── dbFunctionalities.testjs--> test database communications CRUD functions
+│   │   └── management.test.js      -->  
 │   ├── integration                 --> integration tests
-└── └── models                      --> unit tests for models
+│   │   ├── game.test.js            --> 
+│   │   ├── hello.reply.test.js     -->  
+│   │   ├── hello.test.js           -->
+│   │   ├── security.test.js        -->  
+│   │   └── users.test.js           --> 
+│   ├── mocha.opts                  --> 
+│   ├── models                      --> unit tests for models
+│   │   ├── db.test.js              -->  
+│   │   ├── hello.test.js           --> 
+│   │   ├── questionnaire.test.js   -->  
+│   │   └── user.test.js            --> 
+└── └── setup.test.js               --> 
 
 
 ```
