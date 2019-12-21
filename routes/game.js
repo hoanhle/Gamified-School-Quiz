@@ -16,11 +16,11 @@ router.get('/', auth.ensureAuthenticated, gameController.showQuestionaires);
 
 // Delete user (for admins only)
 router
-	.route('/:id([a-f0-9]{24})')
-	.all(
-		auth.ensureAdmin // only admins can delete users
-	)
-	.get(gameController.startGame)
-	.post(gameController.handleSubmit);
+    .route('/:id([a-f0-9]{24})')
+    .all(
+        auth.ensureAdmin // only admins can delete users
+    )
+    .get(gameController.startGame)
+    .post(gameController.handleSubmit);
 
 module.exports = router;
