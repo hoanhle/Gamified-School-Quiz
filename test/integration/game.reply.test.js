@@ -1,16 +1,18 @@
 /* eslint-disable no-console */
 'use strict';
 
+// Zombie.js documentation can be found at: https://www.npmjs.com/package/zombie
+
 require('dotenv').config();
+const assert = require('assert');
 const config = require('config');
 const http = require('http');
 const Browser = require('zombie');
+
 const app = require('../../app.js');
 const admin = config.get('admin');
 const port = 3333;
 const mathGenerator = require('../../public/js/mathGenerator');
-
-// Zombie.js documentation can be found at: https://www.npmjs.com/package/zombie
 
 async function auth(browser) {
 	// Load login page
@@ -18,7 +20,6 @@ async function auth(browser) {
 
 	// Fill in login information and login
 	browser.fill('email', admin.email);
-
 	browser.fill('password', admin.password);
 	await browser.pressButton('#btnLogin');
 }
@@ -42,7 +43,7 @@ function randomStr() {
 	return Math.random().toString(36).slice(2);
 }
 
-describe('Game: A+ protocol', function() {
+describe('Game reply: A+ protocol', function() {
 	const db = require('../../models/db');
 	const dbController = require('../../controllers/db');
 	const Questionnaire = require('../../models/questionnaire');
@@ -60,27 +61,46 @@ describe('Game: A+ protocol', function() {
 		await generateSomeQuestionaires(dbController);
 		const id = await getAnId(dbController);
 		await browser.visit(`/games/${id}`);
-		console.log(1);
+		console.log(browser.document.documentElement.innerHTML);
+		await browser.pressButton('#grade');
 	});
 
-	afterEach(async function() {
+	afterEach(function() {
 		server.close();
 	});
 
-	it('must have a form with POST method', function() {
-		//http://zombie.js.org/#assertions
-		browser.assert.elements('form[method="POST"]', { atLeast: 1 });
-		// browser.assert.attribute('form', 'method', 'post');
+	it('must have meta field "status" in head', function() {
+		assert.equal(browser.document.head.querySelectorAll('[name=status]').length, 1);
 	});
 
-	it('must have a form with submit button', function() {
-		browser.assert.elements('form button[type="submit"]', { atLeast: 1 });
+	it('should have meta field "max_points" in head', function() {
+		assert.equal(browser.document.head.querySelectorAll('[name=max_points]').length, 1);
 	});
 
-	// TODO: this test currently fails due to unknown reason
-	it('the submit button must have id "grade"', function() {
-		console.log(browser.document.documentElement.innerHTML);
-		browser.assert.element('#grade');
-		browser.assert.element('button#grade');
+	it('must have meta field "points" in head', function() {
+		assert.equal(browser.document.head.querySelectorAll('[name=points]').length, 1);
+	});
+
+	it('meta field "points" in head must be less than or equal to max_points', function() {
+		const pointsElem = browser.document.head.querySelector('[name=points]');
+		const points = parseInt(pointsElem.getAttribute('content'));
+		const maxPointsElem = browser.document.head.querySelector('[name=max_points]');
+		const maxPoints = parseInt(maxPointsElem.getAttribute('content'));
+
+		assert(points <= maxPoints, 'head meta points must be less or equal to max_points');
+	});
+
+	it('should have meta field "DC.Description" in head', function() {
+		// Where does this field come from? Or more specifically
+		// where does the value/description come from?
+		// (Not strictly related to testing but still...)
+		assert.equal(browser.document.head.querySelectorAll('[name="DC.Description"]').length, 1);
+	});
+
+	it('should have meta field "DC.Title" in head', function() {
+		// Where does this field come from? Or more specifically
+		// where does the value/title come from? (Is this the question title?)
+		// (Not strictly related to testing but still...)
+		assert.equal(browser.document.head.querySelectorAll('[name="DC.Title"]').length, 1);
 	});
 });
