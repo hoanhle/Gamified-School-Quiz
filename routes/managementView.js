@@ -14,7 +14,7 @@ router.get('/questionaire', auth.ensureTeacher, mngController.showQuestionaire);
 // For questionaire
 router.get('/add', auth.ensureTeacher, mngController.add);
 // TODO proper add
-router.post('/add', auth.ensureTeacher, mngController.add);
+router.post('/add', auth.ensureTeacher, mngController.processAdd);
 router.post('/edit/:id([a-f0-9]{24})', auth.ensureTeacher, mngController.edit);
 router
     .route('/delete/:id([a-f0-9]{24})')

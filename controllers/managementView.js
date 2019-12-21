@@ -1,7 +1,7 @@
 'use strict';
 
 const managementView= require('../models/managementView');
-const db = require('../controllers/db')
+const db = require('../controllers/db');
 const url = require('url');
 
 module.exports = {
@@ -14,8 +14,8 @@ module.exports = {
      * @param {Object} response is express response object
      */
     async showManagementView(request, response) {
-      let questionaires = await db.getAllQuestionnaires();
-      response.render('managementView', {questionaires: questionaires, questionaire: false});
+        const questionaires = await db.getAllQuestionnaires();
+        response.render('managementView', {questionaires: questionaires, questionaire: false});
     },
   
 
@@ -94,13 +94,22 @@ module.exports = {
      * Add a new questionaire.  
      * @param {Object} request is express request object
      * @param {Object} response is express response object
-     * TODO 
      */
     async add(request, response){
-      request.flash('successMessage', 'Questionaire added successfully.');
       response.redirect('/management');
     },
 
+    async processAdd(request, response){
+      try {
+        let questionaire = createQuestionaire(request.body);
+        await db.addQuestionnaire(questionaire);
+        request.flash('successMessage', 'Questionnaire added successfully.');
+        response.redirect('back');
+      } catch(err) {
+        request.flash('errorMessage', `${err.message}`);
+        response.redirect('back');
+      }
+    },
 
     //=====================================================================================
     //            Question management
@@ -109,21 +118,17 @@ module.exports = {
      * Add a question to the currently active questionaire. 
      * @param {Object} request is express request object
      * @param {Object} response is express response object
-     * TODO Doesn't work when giving two answers with the same value but
-     * one of them is true and the other isn't.
      */
     async addQuestion(request, response){
       if (check(request.body)) {
-        console.log(request.body);
         let options = createArrayFromBody(request.body);
-        console.log(options);
         if (options){
           try {
             await db.addQuestion(request.params.id, request.body.Question, options, options.length);
             request.flash('successMessage', 'Question was added successfully.');
             return response.redirect('back');
           } catch (err){
-            request.flash('errorMessage', 'Incorrect question format');
+            request.flash('errorMessage', `${err.message}`);
             return response.redirect('back');
           }
         } else {
@@ -160,8 +165,6 @@ module.exports = {
      */
     async deleteQuestion (request,response){
       try {
-        console.log(request.params.id);
-        console.log(request.params.id_questionaire);
         await db.deleteQuestion(request.params.id_questionaire, request.params.id);
         request.flash('successMessage', 'Successfully delete question');
         return response.redirect('back');
@@ -207,7 +210,6 @@ function check(answers) {
 /**
   Creates an array from the body of the request that holds the options
   Assumes: that check has been node to the body.
-  // TODO validitation if we can't catch the mongoose validation error'
 */
 
 function createArrayFromBody(body) {
@@ -231,4 +233,21 @@ function createArrayFromBody(body) {
   } else {
     return false;  
   }
+}
+
+
+function createQuestionaire(body){
+  let options = createArrayFromBody(body);
+  let questionaire = {
+    title:  body.q_title,
+    submissions: 1,
+    questions: [
+      {
+        title: body.Question,
+        maxPoints: body.points,  
+        options: options 
+      }
+    ]
+  };
+  return questionaire;
 }
