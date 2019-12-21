@@ -1,3 +1,6 @@
+/* eslint-disable no-console */
+'use strict';
+
 /**
  * Generate a count without calculator questionnaire
  * @params {String} - questionnaireTitle: title of the questionnaire
@@ -17,7 +20,7 @@ function generateQuestionnaire(
     data.title = questionnaireTitle;
     data.submissions = submissions;
     data.questions = [];
-    results = [];
+    const results = [];
 
     while (data.questions.length < questionsNum) {
         const endResult = getRandomInt(100);

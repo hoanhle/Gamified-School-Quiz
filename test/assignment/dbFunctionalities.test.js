@@ -11,7 +11,7 @@ const expect = chai.expect;
 // const assert = require('assert');
 const config = require('config');
 
-const mathGenerator = require('../../controllers/mathGenerator');
+const mathGenerator = require('../../public/js/mathGenerator');
 
 describe('Database functionalities', function() {
     describe('db connection', function() {
@@ -22,7 +22,7 @@ describe('Database functionalities', function() {
 
         before(async function() {
             const dbConfig = config.get('mongo');
-            console.log(dbConfig)
+            console.log(dbConfig);
             // connect to database
             db.connectDB(dbConfig);
             await dbController.deleteAllQuestionnaires();
@@ -163,13 +163,13 @@ describe('Database functionalities', function() {
             const data = mathGenerator.generateQuestionnaire(questionnaireTitle, 100, 10, 1, 4);
             await dbController.addQuestionnaire(data);
 
-            let questionnaires = await dbController.getAllQuestionnaires();
-            let questionnaireRetrievedFromAll = questionnaires[0];
+            const questionnaires = await dbController.getAllQuestionnaires();
+            const questionnaireRetrievedFromAll = questionnaires[0];
             const questionnaireId = questionnaireRetrievedFromAll._id;
             const question = questionnaireRetrievedFromAll.questions[0];
             const questionId = question._id;
 
-            const newTitle = "New question title";
+            const newTitle = 'New question title';
             const newMaxPoints = 10;
             await dbController.updateQuestion(questionnaireId, questionId, newTitle, question.options, newMaxPoints);
 
@@ -194,6 +194,5 @@ describe('Database functionalities', function() {
 });
 
 function randomStr() { 
-    const rnd = Math.random().toString(36).slice(2); 
-    return rnd;
+    return Math.random().toString(36).slice(2); 
 }

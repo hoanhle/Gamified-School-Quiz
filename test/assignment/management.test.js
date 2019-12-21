@@ -12,7 +12,6 @@ const Browser = require('zombie');
 
 const app = require('../../app.js');
 const admin = config.get('admin');
-console.log(admin)
 const port = 3333;
 
 const Questionnaire = require('../../models/questionnaire');
@@ -43,7 +42,7 @@ describe('Management view', function() {
         // it means that this is the time when you cannot login as admin.
         // Run the test again to get the true error.
         await auth(browser);
-        await browser.visit(mngmentUrl)
+        await browser.visit(mngmentUrl);
     });
 
     afterEach(function() {
@@ -52,25 +51,25 @@ describe('Management view', function() {
 
     // Go to /management to create a new questionnaire
     it('C: create operation available', async function(){
-    	// FIll in the form to create a new questionnaire
-	    browser.fill('q_title', 'Questionnaire title');
-	    browser.fill('Question', 'Question title');
-	    browser.fill('points', 10);
-	    browser.fill('options[1][option]', 'Option 1');
-	    browser.check('options[1][correctness]')
-	    browser.fill('options[2][option]', 'Option 2');
-	    browser.fill('options[3][option]', 'Option 3');
-	    browser.fill('options[4][option]', 'Option 4');
-	    // TODO: the button to add question needs an id, e.g. btnAdd
-	    // or a name, other wise this will fail with error AssertionError [ERR_ASSERTION]: No BUTTON '#btnAdd'
-	    await browser.pressButton('#btnAdd');
+        // FIll in the form to create a new questionnaire
+        browser.fill('q_title', 'Questionnaire title');
+        browser.fill('Question', 'Question title');
+        browser.fill('points', 10);
+        browser.fill('options[1][option]', 'Option 1');
+        browser.check('options[1][correctness]');
+        browser.fill('options[2][option]', 'Option 2');
+        browser.fill('options[3][option]', 'Option 3');
+        browser.fill('options[4][option]', 'Option 4');
+        // TODO: the button to add question needs an id, e.g. btnAdd
+        // or a name, other wise this will fail with error AssertionError [ERR_ASSERTION]: No BUTTON '#btnAdd'
+        await browser.pressButton('#btnAdd');
 
-	    browser.assert.success();
+        browser.assert.success();
 
         // check if the question we just added exist in the database
         // I don't use controllers/db.js because the functions there use id, and we don't know
         // questionnaire id beforehand
-        const questionnaire = await Questionnaire.findOne({ title: 'Questionnaire title' }).exec();
+        const questionnaire = await Questionnaire.findOne({ title: 'Questionnaire title' });
         expect(questionnaire).to.exist;
     });
 
