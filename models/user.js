@@ -108,8 +108,7 @@ const userSchema = new Schema({
             if (!password || password.length === 0) return password;
             // transparently encrypt password when setting it using:
             // setter must be synchronous or errors will happen
-            const hashedPass = bcrypt.hashSync(password, 10);
-            return hashedPass;
+            return bcrypt.hashSync(password, 10);
         }
     },
     role: {
@@ -124,33 +123,24 @@ const userSchema = new Schema({
 userSchema.virtual('isAdmin').get(function() {
     // eslint-disable-next-line no-invalid-this
     // the helper function should return either true of false
-    if (this.role === 'admin'){
-        return true;
-    } else {
-        return false;
-    }
+    if (this.role === 'admin') return true;
+    return false;
 });
 
 userSchema.virtual('isTeacher').get(function() {
     // eslint-disable-next-line no-invalid-this
     // Note that admin can be anything
     // the helper function should return either true of false
-    if (this.role === 'teacher' || this.role === 'admin') {
-        return true;
-    } else {
-        return false;
-    }
+    if (this.role === 'teacher' || this.role === 'admin') return true;
+    return false;
 });
 
 userSchema.virtual('isStudent').get(function() {
     // eslint-disable-next-line no-invalid-this
     //Note that admin can be anything
     // the helper function should return either true of false
-    if (this.role === 'student' || this.role === 'admin') {
-        return true;
-    } else {
-        return false;
-    }
+    if (this.role === 'student' || this.role === 'admin') return true;
+    return false;
 });
 
 userSchema.statics.getAvailableRoles = function() {
