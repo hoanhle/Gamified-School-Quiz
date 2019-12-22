@@ -48,17 +48,9 @@
             </div>
         {{/each}}
         </div>
-        <div class="row btn-toolbar">
-            <div class="btn-group">
-                <button type="Submit" id="save" class="btn btn-primary h-100">Save</button>
-            </div>
-                <div class="btn-group">
-            </div>
-                <button type="Reset" id="clear" class="btn btn-primary h-100">Clear Changes</button>
-            <div class="btn-group">
-                <input id="add" type="button" value="+" onclick="addAnswer();"  class="btn btn-primary h-100"/>
-            </div>
+            <button type="Submit" id="save" class="btn btn-primary h-100">Save</button>
+            <button type="Reset" id="clear" class="btn btn-primary h-100">Clear Changes</button>
+            <input id="add" type="button" value="+" onclick="addAnswer();"  class="btn btn-primary h-100"/>
             <a id="cancel" href="/management/questionaire?id={{q_id}}" class="btn btn-primary h-100">Cancel</a>
-        </div>
     </form>
 </div>

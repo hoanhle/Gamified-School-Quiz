@@ -97,6 +97,14 @@ textarea {
         background-color:#ECECEC;
         border: 2px solid #D7D5D5;
 }
+#list_buttons{
+        margin-left: 0px;
+}
+
+.link {
+        font-size: 140%;
+        color: black;
+}
 
 .editing_view {
 	float: right;
