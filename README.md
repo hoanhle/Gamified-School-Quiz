@@ -24,7 +24,7 @@ for high-school students, especially for the domains of mathematics and computer
 ├── index.js                        --> bwa app
 ├── package.json                    --> app info and dependencies
 ├── controllers                     --> controllers (handle e.g. routing)
-│   ├── db.js                       --> functions to directly communicate with db to perform CRUD
+│   ├── db.js                       --> communicate with db to perform CRUD
 │   ├── game.js                     --> controls the game functionalities & routing
 │   ├── hello.js                    --> the same as "minimal viable grader"
 │   ├── managementView.js           --> controls the management view functionalities
@@ -61,7 +61,7 @@ for high-school students, especially for the domains of mathematics and computer
 │   ├── assignment                  --> unit tests written by the group
 │   │   ├── dbFunctionalities.testjs--> test database communications CRUD functions
 │   │   ├── game.test.js            --> 
-│   │   └── management.test.js      --> test CRUD functions in management view
+│   │   └── management.test.js      --> test CRUD operations in management view
 │   ├── integration                 --> integration tests
 │   │   ├── hello.reply.test.js     --> test Hello A+ protocol
 │   │   ├── hello.test.js           --> test Hello view requirement
