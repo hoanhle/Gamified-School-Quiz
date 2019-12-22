@@ -1,7 +1,7 @@
 'use strict';
 
 const db = require('../controllers/db');
-const root ='root';
+const root ='/management';
 
 module.exports = {
     //=====================================================================================
@@ -143,18 +143,53 @@ module.exports = {
      * Edit an existing question. 
      * @param {Object} request is express request object
      * @param {Object} response is express response object
-     * TODO
      */
     async editQuestion(request, response){
         if (check(request.body)) {
-            request.flash('successMessage', 'Edit saved');
-            return response.redirect('back');
+            try {
+                const questionaires = await db.getAllQuestionnaires();
+                const questionaire= await db.getQuestionnaire(request.params.questionaire);
+                const question = await db.getQuestion(request.params.questionaire, request.params.question); 
+                response.render('managementView',  
+                    {
+                        questionaires: questionaires,
+                        question: question,
+                        q_id: questionaire._id
+                    });
+            } catch (err){
+                request.flash('errorMessage', `${err.message}`);
+                return response.redirect('back');
+            }
         } else {
             request.flash('errorMessage', 'Invalid format for question');
             return response.redirect('back');
         }
     },
 
+    /**
+     * Do the action for saving the edited question 
+     * @param {Object} request is express request object
+     * @param {Object} response is express response object
+     */
+    async processEditQuestion(request, response){
+        try {
+            const options = createArrayFromBody(request.body);
+            await db.updateQuestion(
+                request.params.questionaire,
+                request.params.question,
+                request.body.Question,
+                options,
+                request.body.points
+            );
+            request.flash('successMessage', 'Question edited successfully.');
+            response.redirect(root);
+        } catch  (err){
+            request.flash('errorMessage', `${err.message}`);
+            return response.redirect('back');
+        }
+    },
+
+    
     /**
      * Delete an existing question. 
      * @param {Object} request is express request object

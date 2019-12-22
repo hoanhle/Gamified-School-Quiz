@@ -20,7 +20,7 @@ function addAnswer(){
     const checkDiv= document.createElement('div');
   
 
-    const n = fakes.children.length / 2 +2;
+    const n = fakes.children.length / 3 + 1;
     // Setting ans
     ans.id = n;
     ans.name = `options[${ n }][option]`;

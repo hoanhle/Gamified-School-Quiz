@@ -31,6 +31,8 @@
 <div class="editing_view" class="container">
     {{#if questionaire}}
         {{>editView name=questionaire.title questions=questionaire.questions q_id=questionaire._id}}
+    {{else if question}}
+        {{>editPage question=question q_id=q_id}}
     {{else}}
   <h4> Here you can create a new questionnaire's and add the first question. </h4>
   <ul id="instructions" align="left">
