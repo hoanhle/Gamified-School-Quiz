@@ -76,6 +76,19 @@ module.exports = {
         }
     },
     /**
+     * Get q qeustion from an existing questionnaire
+     * @params {String} questionnaireId: id of the existing questionnaire
+     *         {String} questionId: id of the question to be retrieved.
+     */
+    async getQuestion(questionnaireId, questionId) {
+        try {
+            const questionnaire = await module.exports.getQuestionnaire(questionnaireId);
+            return questionnaire.questions.id(questionId);
+        } catch(err) {
+            db.handleCriticalError(err);
+        }
+    },
+    /**
      * Add a question to an existing questionnaire
      * @params {String} questionnaireId: id of the existing questionnaire
      *         {String} questionTitle: title of the question to be added
