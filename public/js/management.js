@@ -57,3 +57,40 @@ function toggleTitleEdit(){
         form.style.display = 'none';
     }
 }
+
+function search() {
+/*
+// Declare variables
+    let input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById('search');
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("questionaires_ul");
+    li = ul.getElementsByTagName('li');
+
+    // Loop through all list items, and hide those who don't match the search query
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("a")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+*/
+
+    var input = document.getElementById('search');
+    var filter = input.value.toUpperCase();
+    var titles = document.getElementsByClassName('top_li')
+    var value, a, i, j, li;
+
+    for (i = 0; i < titles.length; i++){
+        li = titles[i];
+        name = titles[i].getElementsByTagName('a')[0].innerText;
+        if (name.toUpperCase().search(filter) > -1) {
+            li.style.display = "";
+        } else {
+            li.style.display = "none"; 
+        }
+    }
+}

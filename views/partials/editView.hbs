@@ -5,7 +5,7 @@
   </div>
 
   <div class="col-1">
-    <button id="title_editable" onclick="toggleTitleEdit()">
+    <button id="title_editable"  class="btn btn-primary h-100"onclick="toggleTitleEdit()">
       <i class="lni-pencil"></i>
     </button>
   </div>
@@ -16,7 +16,7 @@
     <form id="edit_title" method="POST" style="display:none" action="/management/edit/{{q_id}}"> 
       <label for="title"> New title:</label>
       <input type="text" id="title" name="title">
-      <button type="submit"><i class="lni-save"></i></button>
+      <button type="submit" class="btn btn-primary h-100"><i class="lni-save"></i></button>
     </form>
   </div>
 </div>
@@ -103,9 +103,9 @@
     </div>
 
     <div class="row">
-        <button type="Submit">Add question </button>
-        <button type="Reset">Clear </button>
-        <input id="add" type="button" value="+" onclick="addAnswer();" />
+        <button type="Submit" class="btn btn-primary h-100">Add question </button>
+        <button type="Reset" class="btn btn-primary h-100">Clear </button>
+        <input id="add" type="button" value="+" onclick="addAnswer();" class="btn btn-primary h-100" />
     </div>
 
 </form>

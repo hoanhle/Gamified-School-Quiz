@@ -1,10 +1,10 @@
-<li><a href="#" onclick="toggle({{value}});" >{{name}}</a>
+<li class="top_li"><a href="#" onclick="toggle({{value}});" >{{name}}</a>
     <form action="/management/questionaire" method="GET">
         <input type="hidden" name="id" value="{{id}}"/> 
-        <button type="submit"><i class="lni-pencil"></i></a></button>
+        <button type="submit" class="btn btn-primary h-100"><i class="lni-pencil"></i></a></button>
     </form>
     <form action="/management/delete/{{id}}">
-        <button type="submit"><i class="lni-trash"></i></a></button>
+        <button type="submit" class="btn btn-primary h-100"><i class="lni-trash"></i></a></button>
     </form>
     <ul class="submenu">
         {{#each questions}}
