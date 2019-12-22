@@ -1,3 +1,6 @@
+/*
+    A function to toggle the visibility of questions in the aside bar.
+*/
 function toggle(n) {
     const menus = document.getElementsByClassName('submenu');
     for (let i=0;i<menus.length;i++){
@@ -9,7 +12,10 @@ function toggle(n) {
     } 
 }
 
-
+/*
+    A function that creates new options in the 
+    webpage forms.
+*/
 function addAnswer(){
     const fakes = document.getElementById('fake_ans');
     const div = document.createElement('div');
@@ -58,36 +64,28 @@ function toggleTitleEdit(){
     }
 }
 
-function search() {
 /*
-// Declare variables
-    let input, filter, ul, li, a, i, txtValue;
-    input = document.getElementById('search');
-    filter = input.value.toUpperCase();
-    ul = document.getElementById("questionaires_ul");
-    li = ul.getElementsByTagName('li');
-
-    // Loop through all list items, and hide those who don't match the search query
-    for (i = 0; i < li.length; i++) {
-        a = li[i].getElementsByTagName("a")[0];
-        txtValue = a.textContent || a.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            li[i].style.display = "";
-        } else {
-            li[i].style.display = "none";
-        }
-    }
+    A simple search function for searching both questions
+    and questionnaires.
 */
-
-    var input = document.getElementById('search');
-    var filter = input.value.toUpperCase();
-    var titles = document.getElementsByClassName('top_li')
-    var value, a, i, j, li;
+function search() {
+    const input = document.getElementById('search');
+    const filter = input.value.toUpperCase();
+    const titles = document.getElementsByClassName('top_li')
+    let value, a, i, j, li, question, found;
 
     for (i = 0; i < titles.length; i++){
         li = titles[i];
         name = titles[i].getElementsByTagName('a')[0].innerText;
-        if (name.toUpperCase().search(filter) > -1) {
+        questions = titles[i].getElementsByTagName('li');
+        found = false;
+        for(j = 0; j < questions.length; j++){
+            question = questions[j].textContent;
+            if(question.toUpperCase().search(filter) > -1){
+                found = true;  
+            }
+        }
+        if (name.toUpperCase().search(filter) > -1 || found) {
             li.style.display = "";
         } else {
             li.style.display = "none"; 
