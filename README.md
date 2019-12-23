@@ -37,7 +37,7 @@ for high-school students, especially for the domains of mathematics and computer
 │   │   ├── management.js           --> dynamically builds the management view UI based on data
 │   │   └── mathGenerator.js        --> generate random math questionnaire
 │   └── css                         --> for styles
-│─ routes                          --> a dir for router modules
+│─ routes                           --> a dir for router modules
 │   ├── game.js                     --> handle game routing
 │   ├── hello.js                    --> / (root) router
 │   ├── managementView.js           --> handle management view routing
@@ -64,7 +64,7 @@ for high-school students, especially for the domains of mathematics and computer
 │   │   ├── dbFunctionalities.testjs--> test database communications CRUD functions
 │   │   ├── game.test.js            --> test Game A+ protocol
 │   │   ├── game.reply.test.js      --> test Game grading A+ protocol
-│   │   └── management.test.js      --> test CRUD operations in management view
+│   │   └── management.integration.test.js      --> integration test for CRUD operations in management view
 │   ├── integration                 --> integration tests
 │   │   ├── hello.reply.test.js     --> test Hello A+ protocol
 │   │   ├── hello.test.js           --> test Hello view requirement
@@ -104,7 +104,7 @@ The management view enables the admin/teacher to perform the 4 CRUD operations: 
 
 From the main window of the management view, you can create a new questionnaire, by filling in the required information in the form. The sidebar lists all existing questionnaires. Clicking on a questionnaire's name will show you the questions' titles in that questionnaire. You can update each questionnaire (by clicking on the pencil icon) or delete it (by clicking on the trash icon).
  ![Management main view](/screenshots/mana_main.png)
-If you decide to edit a questionnaire, the main window will be updated. The new window will let you add a new question to the questionnaire by filling in a form.
+If you decide to edit a questionnaire, the main window will be updated. The new window will let you add a new question to the questionnaire by filling in a form, as well as the questionnaire title by clicking on the pencil icon next to the current title.
  ![Questionnaire edit](/screenshots/questionnaire_edit.png)
 Below that form, you can see a list of all questions in that questionnaire, all options of each question will be listed, as well as the question's maximum points and options' hints. To delete or update a question, click on the trash can icon or the pencil icon, respectively. This is how the editing window for a question looks like:
  ![Question edit](/screenshots/question_edit.png)
