@@ -1,6 +1,7 @@
 
 <div class="form-group">
     <form id="edit_form" method="POST" action="/management/question/edit/{{q_id}}/{{question._id}}">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
         <div class="row">
             <div class="col">
                 <label for="Question">Question: </label>

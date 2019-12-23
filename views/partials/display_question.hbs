@@ -7,6 +7,7 @@
 
         <div class="col-1">
             <form  method="POST" action="/management/question/delete/{{id}}/{{question._id}}"> 
+                <input type="hidden" name="_csrf" value="{{csrfToken}}">
                 <button type="submit" class="btn btn-primary h-100"> <i class="lni-trash"></i></button>
             </form>
         </div>

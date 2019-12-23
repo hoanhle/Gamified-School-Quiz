@@ -16,7 +16,7 @@
             {{#if questionaires}}
                 {{#each questionaires}}
                     {{#if this.title}}
-                        {{>questionaire_listing value=@index name=this.title questions=this.questions id=this._id}}
+                        {{>questionaire_listing value=@index name=this.title questions=this.questions id=this._id csrfToken=csrfToken}}
                     {{/if}}    
                 {{/each}}
             {{else}} 
@@ -30,9 +30,9 @@
 
 <div class="editing_view" class="container">
     {{#if questionaire}}
-        {{>editView name=questionaire.title questions=questionaire.questions q_id=questionaire._id}}
+        {{>editView name=questionaire.title questions=questionaire.questions q_id=questionaire._id csrfToken=csrfToken}}
     {{else if question}}
-        {{>editPage question=question q_id=q_id}}
+        {{>editPage question=question q_id=q_id csrfToken=csrfToken}}
     {{else}}
   <h4> Here you can create a new questionnaire's and add the first question. </h4>
   <ul id="instructions" align="left">
@@ -49,6 +49,7 @@
   </ul>
 
   <form id="edit_form" method="POST" action="/management/add">
+    <input type="hidden" name="_csrf" value="{{csrfToken}}">
     <div class="row">
       <div class="col">
         <label for="q_title"> Questionnaire title: </label>

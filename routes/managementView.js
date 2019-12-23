@@ -8,14 +8,40 @@ const csurf = require('csurf');
 const csrfProtection = csurf({ cookie: false });
 
 // For displaying the page
-router.get('/', auth.ensureTeacher, mngController.showManagementView);
-router.get('/questionaire', auth.ensureTeacher, mngController.showQuestionaire);
+router
+    .route('/')
+    .all (
+        auth.ensureTeacher,
+        csrfProtection
+    )
+    .get(mngController.showManagementView);
+
+router
+    .route('/questionaire')
+    .all(
+        auth.ensureTeacher,
+        csrfProtection
+    )
+    .get(mngController.showQuestionaire);
 
 // For questionaire
-router.get('/add', auth.ensureTeacher, mngController.add);
-// TODO proper add
-router.post('/add', auth.ensureTeacher, mngController.processAdd);
-router.post('/edit/:id([a-f0-9]{24})', auth.ensureTeacher, mngController.edit);
+router
+    .route('/add')
+    .all(
+        auth.ensureTeacher,
+        csrfProtection
+    )
+    .get(mngController.add)
+    .post(mngController.processAdd);
+    
+router
+    .route('/edit/:id([a-f0-9]{24})')
+    .all(
+        auth.ensureTeacher,
+        csrfProtection
+    )
+    .post(mngController.edit);
+
 router
     .route('/delete/:id([a-f0-9]{24})')
     .all(
@@ -27,10 +53,30 @@ router
 
 
 // For questions
-router.post('/question/add/:id([a-f0-9]{24})', auth.ensureTeacher, mngController.addQuestion);
+router
+    .route('/question/add/:id([a-f0-9]{24})')
+    .all(
+        auth.ensureTeacher,
+        csrfProtection
+    ) 
+    .post(mngController.addQuestion);
 // For editing questions.
-router.post('/question/edit/:questionaire([a-f0-9]{24})/:question([a-f0-9]{24})', auth.ensureTeacher, mngController.processEditQuestion);
-router.get('/question/edit/:questionaire([a-f0-9]{24})/:question([a-f0-9]{24})', auth.ensureTeacher, mngController.editQuestion);
+
+router
+    .route('/question/edit/:questionaire([a-f0-9]{24})/:question([a-f0-9]{24})')
+    .all(
+        auth.ensureTeacher,
+        csrfProtection 
+    )
+    .post(mngController.processEditQuestion)
+    .get(mngController.editQuestion);
 // First id is for the questionnaire and the second is for the question
-router.post('/question/delete/:id_questionaire([a-f0-9]{24})/:id([a-f0-9]{24})', auth.ensureTeacher, mngController.deleteQuestion);
+router.route('/question/delete/:id_questionaire([a-f0-9]{24})/:id([a-f0-9]{24})')
+    .all(
+        auth.ensureTeacher,
+        csrfProtection
+    )
+    .post(mngController.deleteQuestion);
+
+
 module.exports = router;

@@ -14,7 +14,11 @@ module.exports = {
      */
     async showManagementView(request, response) {
         const questionaires = await db.getAllQuestionnaires();
-        response.render('managementView', {questionaires: questionaires, questionaire: false});
+        response.render('managementView', {
+            csrfToken: request.csrfToken(),
+            questionaires: questionaires, 
+            questionaire: false}
+        );
     },
   
 
@@ -29,6 +33,7 @@ module.exports = {
             const questionaires = await db.getAllQuestionnaires();
             response.render('managementView', 
                 {
+                    csrfToken: request.csrfToken(),
                     questionaires: questionaires,
                     questionaire: questionaire
                 });
@@ -48,7 +53,7 @@ module.exports = {
         if(checkId(request.params.id)){
             const questionaire = await db.getQuestionnaire(request.params.id); 
             response.render('confirmation_message', {
-                token: request.csrfToken(),
+                csrfToken: request.csrfToken(),
                 id: questionaire.id,
                 name: questionaire.title
             });
@@ -94,7 +99,7 @@ module.exports = {
      * @param {Object} response is express response object
      */
     async add(request, response){
-        response.redirect(root);
+        await module.exports.showManagementView(request, response);
     },
 
     async processAdd(request, response){
@@ -154,7 +159,8 @@ module.exports = {
                     {
                         questionaires: questionaires,
                         question: question,
-                        q_id: questionaire._id
+                        q_id: questionaire._id,
+                        csrfToken: request.csrfToken(),
                     });
             } catch (err){
                 request.flash('errorMessage', `${err.message}`);

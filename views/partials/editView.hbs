@@ -12,89 +12,90 @@
 </div>
 
 <div class="row">
-  <div class="col-md-auto">
-    <form id="edit_title" method="POST" style="display:none" action="/management/edit/{{q_id}}"> 
-      <label for="title"> New title:</label>
-      <input type="text" id="title" name="title">
-      <button type="submit" class="btn btn-primary h-100"><i class="lni-save"></i></button>
-    </form>
-  </div>
+    <div class="col-md-auto">
+        <form id="edit_title" method="POST" style="display:none" action="/management/edit/{{q_id}}"> 
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+            <label for="title"> New title:</label>
+            <input type="text" id="title" name="title">
+            <button type="submit" class="btn btn-primary h-100"><i class="lni-save"></i></button>
+        </form>
+    </div>
 </div>
 
 <div class="form-group">
 <form id="edit_form" method="POST" action="/management/question/add/{{q_id}}">
+    <input type="hidden" name="_csrf" value="{{csrfToken}}">
     <div class="row">
         <div class="col">
-          <label for="Question">Question: </label>
-          <input type="text" id="Question" name="Question" required>
+            <label for="Question">Question: </label>
+            <input type="text" id="Question" name="Question" required>
         </div>
     </div>
 
     <div class="row">
         <div class="col">
-          <label for="points">Points:</label>
-          <input type="number" id="points" name="points" required>
+            <label for="points">Points:</label>
+            <input type="number" id="points" name="points" required>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <label>Answer</label>
         </div>
 
+        <div class="col-sm-4">
+            <label>Hint(optional) </label>
+        </div>
 
-    </div>
-    <div class="row">
-      <div class="col-sm-4">
-        <label>Answer</label>
-      </div>
-
-      <div class="col-sm-4">
-        <label>Hint(optional) </label>
-      </div>
-
-      <div class="col-sm-4">
-        <label>Corrrect </label>
-      </div>
+        <div class="col-sm-4">
+            <label>Corrrect </label>
+        </div>
     </div>
 
     <div class="row" id="fake_ans">
         <div class="col-sm-5">
-          <input type="text" id="1" name="options[1][option]" required>
+            <input type="text" id="1" name="options[1][option]" required>
         </div>
         
         <div class="col-sm-5">
-          <input type="text" id="hint1" name="options[1][hint]"> 
+            <input type="text" id="hint1" name="options[1][hint]"> 
         </div>
 
         <div class="col-sm">
-          <input type="checkbox" name="options[1][correctness]">
+            <input type="checkbox" name="options[1][correctness]">
         </div>
 
         <div class="col-sm-5">
-          <input type="text" id="2" name="options[2][option]" required> 
+            <input type="text" id="2" name="options[2][option]" required> 
         </div>
 
         <div class="col-sm-5">
-          <input type="text" id="hint2" name="options[2][hint]"> 
+            <input type="text" id="hint2" name="options[2][hint]"> 
         </div>
 
         <div class="col-sm">
-          <input type="checkbox" name="options[2][correctness]">
+            <input type="checkbox" name="options[2][correctness]">
         </div>
 
         <div class="col-sm-5">
-          <input type="text" id="3" name="options[3][option]" required> 
+            <input type="text" id="3" name="options[3][option]" required> 
         </div>
 
         <div class="col-sm-5">
-          <input type="text" id="hint3" name="options[3][hint]"> 
+            <input type="text" id="hint3" name="options[3][hint]"> 
         </div>
 
         <div class="col-sm">
-          <input type="checkbox" name="options[3][correctness]">
+            <input type="checkbox" name="options[3][correctness]">
         </div>
 
         <div class="col-sm-5">
-          <input type="text" id="4" name="options[4][option]" required> 
+            <input type="text" id="4" name="options[4][option]" required> 
         </div>
 
         <div class="col-sm-5">
-          <input type="text" id="hint4" name="options[4][hint]"> 
+            <input type="text" id="hint4" name="options[4][hint]"> 
         </div>
 
         <div class="col-sm">
@@ -111,7 +112,7 @@
 <div class="container">
     {{#if questions}}
         {{#each questions}}
-            {{>display_question question=this id=../q_id}} 
+            {{>display_question question=this id=../q_id csrfToken=../csrfToken}} 
         {{/each}}
     {{else}}
         <h3> Empty! Go make some questions </h3>

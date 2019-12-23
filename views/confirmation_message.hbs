@@ -6,7 +6,7 @@
 
         <div class="card-footer">
             <form method="POST" action="/management/delete/{{id}}">
-                <input type="hidden" name="_csrf" value="{{token}}">
+                <input type="hidden" name="_csrf" value="{{csrfToken}}">
                 <button type="submit" class="btn btn-primary">Remove</button>
             </form>
 
