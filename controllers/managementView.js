@@ -160,7 +160,7 @@ module.exports = {
                         questionaires: questionaires,
                         question: question,
                         q_id: questionaire._id,
-                        csrfToken: request.csrfToken(),
+                        csrfToken: request.csrfToken()
                     });
             } catch (err){
                 request.flash('errorMessage', `${err.message}`);
