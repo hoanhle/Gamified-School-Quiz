@@ -100,6 +100,7 @@ The game is similar to the famous television show "Who wants to be a millionnair
 During one gameplay, the student have 2 "helps": 
   **50/50** - remove 50% of the answers, 
   **Skip** - skip the current question
+  **Double points** - double the maxpoint for current question
 Each of these helps can only be used once in each game.
  ![Question in game](/screenshots/question.png)
 The game **will not stop** until the player press "Grade". After pressing the button, the player's answers will be graded, The results will then be displayed. The "maximum points" in this case is the total number of points worth from all the questions generated and displayed.
