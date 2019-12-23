@@ -60,7 +60,7 @@ describe('Millionnaire game: A+ protocol', function() {
         const userData = { ...admin, role: 'admin' };
         const user = new User(userData);
         await user.save();
-    })
+    });
 
     beforeEach(async function() {
         // Connect to sever and browser

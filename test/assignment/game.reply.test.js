@@ -53,30 +53,30 @@ describe('Millionnaire game reply: A+ protocol', function() {
 
     before(async function() {
     // Delete all current questionaires
-    const dbConfig = config.get('mongo');
-    db.connectDB(dbConfig);
-    await dbController.deleteAllQuestionnaires();
+        const dbConfig = config.get('mongo');
+        db.connectDB(dbConfig);
+        await dbController.deleteAllQuestionnaires();
 
-    // remove all users from the database and re-create admin user
-    await User.deleteMany({});
+        // remove all users from the database and re-create admin user
+        await User.deleteMany({});
 
-    const userData = { ...admin, role: 'admin' };
-    const user = new User(userData);
-    await user.save();
+        const userData = { ...admin, role: 'admin' };
+        const user = new User(userData);
+        await user.save();
     });
 
     beforeEach(async function() {
     // Connect to sever and browser
-    server = http.createServer(app).listen(port);
-    Browser.localhost('bwa', port);
-    browser = new Browser();
-    // console.log('A+ protocol defined in https://github.com/Aalto-LeTech/a-plus/blob/master/doc/GRADERS.md');
-    await auth(browser);
+        server = http.createServer(app).listen(port);
+        Browser.localhost('bwa', port);
+        browser = new Browser();
+        // console.log('A+ protocol defined in https://github.com/Aalto-LeTech/a-plus/blob/master/doc/GRADERS.md');
+        await auth(browser);
 
-    // Generate some questionaires to database
-    await generateSomeQuestionaires();
-    const id = await getAnId();
-    await browser.visit(`/games/${id}`);
+        // Generate some questionaires to database
+        await generateSomeQuestionaires();
+        const id = await getAnId();
+        await browser.visit(`/games/${id}`);
         await browser.pressButton('#grade');
     });
 
