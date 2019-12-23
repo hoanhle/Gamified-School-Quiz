@@ -1,6 +1,5 @@
 'use strict';
 
-const Questionnaire = require('../models/questionnaire');
 const db = require('../controllers/db');
 
 module.exports = {
