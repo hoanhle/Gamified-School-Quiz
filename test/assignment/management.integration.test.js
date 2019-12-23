@@ -29,7 +29,7 @@ async function auth(browser) {
     await browser.pressButton('#btnLogin');
 }
 
-describe('Management view', function() {
+describe('Management Questionaire CRUD', function() {
     let server;
     let browser;
 
@@ -60,9 +60,7 @@ describe('Management view', function() {
         browser.fill('options[2][option]', 'Option 2');
         browser.fill('options[3][option]', 'Option 3');
         browser.fill('options[4][option]', 'Option 4');
-        // TODO: the button to add question needs an id, e.g. btnAdd
-        // or a name, other wise this will fail with error AssertionError [ERR_ASSERTION]: No BUTTON '#btnAdd'
-        await browser.pressButton('#btnAdd');
+        await browser.pressButton('#btnAddQuestionnaire');
 
         browser.assert.success();
 
