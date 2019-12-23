@@ -64,6 +64,7 @@ for high-school students, especially for the domains of mathematics and computer
 │   │   ├── dbFunctionalities.testjs--> test database communications CRUD functions
 │   │   ├── game.test.js            --> test Game A+ protocol
 │   │   ├── game.reply.test.js      --> test Game grading A+ protocol
+│   │   ├── game.reply.test.js      --> test Game functionalities (generate questions, etc.)
 │   │   └── management.integration.test.js      --> integration test for CRUD operations in management view
 │   ├── integration                 --> integration tests
 │   │   ├── hello.reply.test.js     --> test Hello A+ protocol
