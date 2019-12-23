@@ -13,6 +13,10 @@ const app = require('../../app.js');
 const admin = config.get('admin');
 const port = 3333;
 const mathGenerator = require('../../public/js/mathGenerator');
+const User = require('../../models/user');
+const db = require('../../models/db');
+const dbController = require('../../controllers/db');
+
 
 async function auth(browser) {
 	// Load login page
@@ -44,8 +48,6 @@ function randomStr() {
 }
 
 describe('Game reply: A+ protocol', function() {
-	const db = require('../../models/db');
-	const dbController = require('../../controllers/db');
 	let server;
 	let browser;
 
@@ -53,6 +55,19 @@ describe('Game reply: A+ protocol', function() {
 		const dbConfig = config.get('mongo');
 		db.connectDB(dbConfig);
 		await dbController.deleteAllQuestionnaires();
+
+        try {
+            // remove all users from the database and re-create admin user
+            await User.deleteMany({});
+
+            const userData = { ...admin, role: 'admin' };
+            const user = new User(userData);
+            await user.save();
+        } catch (err) {
+            // eslint-disable-next-line no-console
+            console.log(err);
+            throw err;
+        }
 
 		server = http.createServer(app).listen(port);
 		Browser.localhost('bwa', port);

@@ -9,6 +9,10 @@ const app = require('../../app.js');
 const admin = config.get('admin');
 const port = 3333;
 const mathGenerator = require('../../public/js/mathGenerator');
+const db = require('../../models/db');
+const dbController = require('../../controllers/db');
+const User = require('../../models/user');
+
 
 // Zombie.js documentation can be found at: https://www.npmjs.com/package/zombie
 
@@ -23,7 +27,7 @@ async function auth(browser) {
 	await browser.pressButton('#btnLogin');
 }
 
-async function generateSomeQuestionaires(dbController) {
+async function generateSomeQuestionaires() {
 	const data1 = mathGenerator.generateQuestionnaire(randomStr(), 100, 10, 1, 4);
 	const data2 = mathGenerator.generateQuestionnaire(randomStr(), 100, 10, 1, 4);
 	const data3 = mathGenerator.generateQuestionnaire(randomStr(), 100, 10, 1, 4);
@@ -32,7 +36,7 @@ async function generateSomeQuestionaires(dbController) {
 	await dbController.addQuestionnaire(data3);
 }
 
-async function getAnId(dbController) {
+async function getAnId() {
 	const questionnaires = await dbController.getAllQuestionnaires();
 	const questionnaireRetrievedFromAll = questionnaires[0];
 	return questionnaireRetrievedFromAll._id;
@@ -43,8 +47,6 @@ function randomStr() {
 }
 
 describe('Game: A+ protocol', function() {
-	const db = require('../../models/db');
-	const dbController = require('../../controllers/db');
 	let server;
 	let browser;
 
@@ -54,6 +56,19 @@ describe('Game: A+ protocol', function() {
 		db.connectDB(dbConfig);
 		await dbController.deleteAllQuestionnaires();
 
+        try {
+            // remove all users from the database and re-create admin user
+            await User.deleteMany({});
+
+            const userData = { ...admin, role: 'admin' };
+            const user = new User(userData);
+            await user.save();
+        } catch (err) {
+            // eslint-disable-next-line no-console
+            console.log(err);
+            throw err;
+        }
+
 		// Connect to sever and browser
 		server = http.createServer(app).listen(port);
 		Browser.localhost('bwa', port);
@@ -62,8 +77,8 @@ describe('Game: A+ protocol', function() {
 		await auth(browser);
 
 		// Generate some questionaires to database
-		await generateSomeQuestionaires(dbController);
-		const id = await getAnId(dbController);
+		await generateSomeQuestionaires();
+		const id = await getAnId();
 		await browser.visit(`/games/${id}`);
 	});
 
