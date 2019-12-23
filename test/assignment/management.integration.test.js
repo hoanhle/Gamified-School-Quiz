@@ -92,8 +92,9 @@ describe('Management Questionnaire CRUD', function() {
     });
     it('U: update operation available', async function(){ 
         // Check that pressing the button takes you to another page and the title is there
-        browser.assert.elements('.visitQuestionaire', 1);
-        await browser.pressButton('.visitQuestionaire');
+        const visit = '.visitQuestionaire';
+        browser.assert.elements(visit, 1);
+        await browser.pressButton(visit);
         browser.assert.success();
         // For some reason exact match is not found so we use partial.
         browser.assert.evaluate('document.getElementsByTagName("h2")[0].textContent.search("Questionnaire") !== -1');
