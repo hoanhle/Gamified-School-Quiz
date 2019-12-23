@@ -25,6 +25,15 @@
                     Skip
                 </button>
                 {{/if}}
+                {{#if this.helpOption3}}
+                <button type="submit" name="helpOption" value="double" class="btn col-md-12 btn-outline-success">
+                    Double points
+                </button>
+                {{else}}
+                <button type="submit" name="helpOption" value="double" class="btn col-md-12 btn-outline-success" disabled>
+                    Double points
+                </button>
+                {{/if}}
             </form>
         </div>
     </div>

@@ -50,7 +50,8 @@ module.exports = {
 		request.session.points = 0;
 		request.session.maxPoints = 0;
 		request.session.helpOption1 = true;
-		request.session.helpOption2 = true;
+        request.session.helpOption2 = true;
+        request.session.helpOption3 = true;
 		request.session.options = options;
 		request.session.title = title;
 
@@ -62,7 +63,8 @@ module.exports = {
 			points: request.session.points,
 			maxPoints: request.session.maxPoints,
 			helpOption1: request.session.helpOption1,
-			helpOption2: request.session.helpOption2
+            helpOption2: request.session.helpOption2,
+            helpOption3: request.session.helpOption3
 		});
 	},
 
@@ -100,7 +102,8 @@ module.exports = {
 			points: request.session.points,
 			maxPoints: request.session.maxPoints,
 			helpOption1: request.session.helpOption1,
-			helpOption2: request.session.helpOption2
+            helpOption2: request.session.helpOption2,
+            helpOption3: request.session.helpOption3
 		});
 	},
 
@@ -126,7 +129,8 @@ module.exports = {
 				points: request.session.points,
 				maxPoints: request.session.maxPoints,
 				helpOption1: request.session.helpOption1,
-				helpOption2: request.session.helpOption2
+                helpOption2: request.session.helpOption2,
+                helpOption3: request.session.helpOption3
 			});
 		} else if (helpOption == 'half') {
 			const options = await Game.reduceHalfOption(request.session.options);
@@ -139,9 +143,24 @@ module.exports = {
 				points: request.session.points,
 				maxPoints: request.session.maxPoints,
 				helpOption1: request.session.helpOption1,
-				helpOption2: request.session.helpOption2
+                helpOption2: request.session.helpOption2,
+                helpOption3: request.session.helpOption3
 			});
-		}
+		} else if (helpOption == 'double') {
+            request.session.maxPoint += request.session.maxPoint;
+            request.session.maxPoints +=  request.session.maxPoint;
+            request.session.helpOption3 = false;
+            response.render('game/gameView', {
+                id: request.params.id,
+                title: request.session.title,
+                options: request.session.options,
+                points: request.session.points,
+                maxPoints: request.session.maxPoints,
+                helpOption1: request.session.helpOption1,
+                helpOption2: request.session.helpOption2,
+                helpOption3: request.session.helpOption3
+            });
+        }
 	},
 
 	/**
