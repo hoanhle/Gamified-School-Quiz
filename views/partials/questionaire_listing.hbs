@@ -1,12 +1,12 @@
 <li class="top_li">
     <a href="#" onclick="toggle({{value}});" class="link">{{name}}</a>
-    <div class="row" id="list_buttons">
+    <div class="row list_buttons">
         <form action="/management/questionaire" method="GET">
             <input type="hidden" name="id" value="{{id}}"/> 
-            <button type="submit" class="btn btn-primary h-100"><i class="lni-pencil"></i></a></button>
+            <button type="submit"  class="btn btn-primary h-100 visitQuestionaire"><i class="lni-pencil"></i></button>
         </form>
         <form action="/management/delete/{{id}}">
-            <button type="submit" class="btn btn-primary h-100"><i class="lni-trash"></i></a></button>
+            <button type="submit" class="btn btn-primary h-100 deleteQuestionaire"><i class="lni-trash"></i></button>
         </form>
     </div>
     <ul class="submenu">

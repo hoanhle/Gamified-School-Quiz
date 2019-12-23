@@ -4,8 +4,7 @@
 	width: 675px;
 	padding: 5px;
 	margin: 15px auto;
-}
-
+} 
 #container {
 	display: flex;
 	flex-flow: row wrap;
@@ -97,7 +96,7 @@ textarea {
         background-color:#ECECEC;
         border: 2px solid #D7D5D5;
 }
-#list_buttons{
+.list_buttons{
         margin-left: 0px;
 }
 
@@ -161,7 +160,7 @@ textarea {
 	padding-left: 5px;
 }
 
-#display_question div [class="col-sm"] {
+.display_question div [class="col-sm"] {
 	padding: 5px 5px 5px 5px;
 	float: left;
 	margin: 0 auto;
