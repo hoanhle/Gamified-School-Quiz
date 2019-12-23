@@ -60,6 +60,7 @@ module.exports = {
 			title: title,
 			options: options,
 			points: request.session.points,
+			maxPoints: request.session.maxPoints,
 			helpOption1: request.session.helpOption1,
 			helpOption2: request.session.helpOption2
 		});
@@ -97,6 +98,7 @@ module.exports = {
 			title: title,
 			options: options,
 			points: request.session.points,
+			maxPoints: request.session.maxPoints,
 			helpOption1: request.session.helpOption1,
 			helpOption2: request.session.helpOption2
 		});
@@ -122,6 +124,7 @@ module.exports = {
 				title: title,
 				options: options,
 				points: request.session.points,
+				maxPoints: request.session.maxPoints,
 				helpOption1: request.session.helpOption1,
 				helpOption2: request.session.helpOption2
 			});
@@ -134,6 +137,7 @@ module.exports = {
 				title: request.session.title,
 				options: options,
 				points: request.session.points,
+				maxPoints: request.session.maxPoints,
 				helpOption1: request.session.helpOption1,
 				helpOption2: request.session.helpOption2
 			});
@@ -146,15 +150,15 @@ module.exports = {
      * @param {Object} response is express response object
      */
 	async gradeGame(request, response) {
-		if (request.session.maxPoints == null) {
-			request.session.maxPoints = 0;
+		let maxPoints = '0';
+		if (request.session.maxPoints != '0') {
+			maxPoints = request.session.maxPoints;
 		}
-		console.log(request.session.maxPoints);
 		response.render('game/endGame', {
 			points: request.session.points,
-			maxPoints: request.session.maxPoints,
 			status: 'graded',
-			description: 'minimal viable grader in the express framework',
+			maxPoints: maxPoints,
+			description: 'grader in express framework',
 			title: 'A+ greetings'
 		});
 	},
