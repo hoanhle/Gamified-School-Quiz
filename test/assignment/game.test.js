@@ -19,10 +19,8 @@ const User = require('../../models/user');
 async function auth(browser) {
 	// Load login page
 	await browser.visit('/users/login');
-
 	// Fill in login information and login
 	browser.fill('email', admin.email);
-
 	browser.fill('password', admin.password);
 	await browser.pressButton('#btnLogin');
 }
@@ -56,18 +54,12 @@ describe('Game: A+ protocol', function() {
 		db.connectDB(dbConfig);
 		await dbController.deleteAllQuestionnaires();
 
-        try {
-            // remove all users from the database and re-create admin user
-            await User.deleteMany({});
+        // remove all users from the database and re-create admin user
+        await User.deleteMany({});
 
-            const userData = { ...admin, role: 'admin' };
-            const user = new User(userData);
-            await user.save();
-        } catch (err) {
-            // eslint-disable-next-line no-console
-            console.log(err);
-            throw err;
-        }
+        const userData = { ...admin, role: 'admin' };
+        const user = new User(userData);
+        await user.save();
 
 		// Connect to sever and browser
 		server = http.createServer(app).listen(port);

@@ -28,7 +28,7 @@ async function auth(browser) {
 	await browser.pressButton('#btnLogin');
 }
 
-async function generateSomeQuestionaires(dbController) {
+async function generateSomeQuestionaires() {
 	const data1 = mathGenerator.generateQuestionnaire(randomStr(), 100, 10, 1, 4);
 	const data2 = mathGenerator.generateQuestionnaire(randomStr(), 100, 10, 1, 4);
 	const data3 = mathGenerator.generateQuestionnaire(randomStr(), 100, 10, 1, 4);
@@ -37,7 +37,7 @@ async function generateSomeQuestionaires(dbController) {
 	await dbController.addQuestionnaire(data3);
 }
 
-async function getAnId(dbController) {
+async function getAnId() {
 	const questionnaires = await dbController.getAllQuestionnaires();
 	const questionnaireRetrievedFromAll = questionnaires[0];
 	return questionnaireRetrievedFromAll._id;
@@ -52,33 +52,29 @@ describe('Game reply: A+ protocol', function() {
 	let browser;
 
 	beforeEach(async function() {
-		const dbConfig = config.get('mongo');
-		db.connectDB(dbConfig);
-		await dbController.deleteAllQuestionnaires();
+        // Delete all current questionaires
+        const dbConfig = config.get('mongo');
+        db.connectDB(dbConfig);
+        await dbController.deleteAllQuestionnaires();
 
-        try {
-            // remove all users from the database and re-create admin user
-            await User.deleteMany({});
+        // remove all users from the database and re-create admin user
+        await User.deleteMany({});
 
-            const userData = { ...admin, role: 'admin' };
-            const user = new User(userData);
-            await user.save();
-        } catch (err) {
-            // eslint-disable-next-line no-console
-            console.log(err);
-            throw err;
-        }
+        const userData = { ...admin, role: 'admin' };
+        const user = new User(userData);
+        await user.save();
 
-		server = http.createServer(app).listen(port);
-		Browser.localhost('bwa', port);
-		browser = new Browser();
-		// console.log('A+ protocol defined in https://github.com/Aalto-LeTech/a-plus/blob/master/doc/GRADERS.md');
-		// await auth(browser);
+        // Connect to sever and browser
+        server = http.createServer(app).listen(port);
+        Browser.localhost('bwa', port);
+        browser = new Browser();
+        // console.log('A+ protocol defined in https://github.com/Aalto-LeTech/a-plus/blob/master/doc/GRADERS.md');
+        await auth(browser);
 
-		// Generate some questionaires to database
-		await generateSomeQuestionaires(dbController);
-		const id = await getAnId(dbController);
-		await browser.visit(`/games/${id}`);
+        // Generate some questionaires to database
+        await generateSomeQuestionaires();
+        const id = await getAnId();
+        await browser.visit(`/games/${id}`);
 		await browser.pressButton('#grade');
 	});
 
