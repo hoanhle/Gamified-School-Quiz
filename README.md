@@ -43,6 +43,12 @@ for high-school students, especially for the domains of mathematics and computer
 │   ├── managementView.js           --> handle management view routing
 │   └── users.js                    --> /users router
 │── views                           --> views - visible parts
+│   ├── game                        --> game related views
+│   │   └── chooseQuestionaire.hbs  --> view to choose questionaire to start the Game
+│   │   └── endGame.hbs             --> view when player click grade button
+│   │   └── game.hbs                --> the startmenu view of game
+│   │   └── gameView.hbs            --> main game view (where users can play)
+│   │   └── rules.hbs               --> view showing instruction how to play the game
 │   ├── confirmation_message.hbs    --> 
 │   ├── error.hbs                   --> error view
 │   ├── hello-graded.hbs            --> show graded response view
@@ -51,13 +57,13 @@ for high-school students, especially for the domains of mathematics and computer
 │   │   └── default.hbs             --> layout view, "template" to be rendered
 │   ├── managementView.hbs          --> management view layout
 │   ├── partials                    --> smaller handlebar components to be included in views
-│   ├── rules.hbs                   --> 
 │   ├── user                        --> views related to users
 │   └── game                        --> views related to the game
 └── test                            --> tests
 │   ├── assignment                  --> unit tests written by the group
 │   │   ├── dbFunctionalities.testjs--> test database communications CRUD functions
-│   │   ├── game.test.js            --> 
+│   │   ├── game.test.js            --> test Game A+ protocol
+│   │   ├── game.reply.test.js      --> test Game grading A+ protocol
 │   │   └── management.test.js      --> test CRUD operations in management view
 │   ├── integration                 --> integration tests
 │   │   ├── hello.reply.test.js     --> test Hello A+ protocol
@@ -67,6 +73,7 @@ for high-school students, especially for the domains of mathematics and computer
 │   ├── mocha.opts                  --> 
 │   ├── models                      --> unit tests for models
 │   │   ├── db.test.js              --> test database connection
+│   │   ├── game.test.js            --> test game model
 │   │   ├── hello.test.js           --> test hello model
 │   │   ├── questionnaire.test.js   --> test questionnaire model
 │   │   └── user.test.js            --> test user model
