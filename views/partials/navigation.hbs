@@ -9,17 +9,12 @@
             <a class="nav-link" href="/games/startMenu">Who wants to be a milionaire</a>
         </li>
         {{/if}}
-        {{#if @root.isTeacher}}
-        <li class="nav-item">
-            <a class="nav-link" href="/questionnaires">Exercises</a>
-        </li>
-        {{/if}}
         {{#if @root.isAdmin}}
         <li class="nav-item">
             <a class="nav-link" href="/users"><i class="fas fa-users"></i>Users</a>
         </li>
         {{/if}}
-        {{#if @root.isAdmin}}
+        {{#if @root.isTeacher}}
         <li class="nav-item">
             <a class="nav-link" href="/management">Management</a>
         </li>
