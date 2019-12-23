@@ -8,7 +8,6 @@ const assert = require('assert');
 const config = require('config');
 const http = require('http');
 const Browser = require('zombie');
-
 const app = require('../../app.js');
 const admin = config.get('admin');
 const port = 3333;
