@@ -85,9 +85,136 @@ describe('Management Questionnaire CRUD', function() {
         expect(questionnaire).to.exist;
     });
 
-    it('R: read operation available');
+    it('R: read operation available', async function(){
+        // Check that the title exists
+        browser.assert.elements('.link', 1, 'q_title');
+        browser.assert.evaluate('document.getElementsByClassName("link")[0].text === "Questionnaire title"');
+    });
+    it('U: update operation available', async function(){ 
+        // Check that pressing the button takes you to another page and the title is there
+        browser.assert.elements('.visitQuestionaire', 1);
+        await browser.pressButton('.visitQuestionaire');
+        browser.assert.success();
+        // For some reason exact match is not found so we use partial.
+        browser.assert.evaluate('document.getElementsByTagName("h2")[0].textContent.search("Questionnaire") !== -1');
+        
+    });
 
-    it('U: update operation available');
+    it('D: delete operation available', async function() {
+        // Check that deleting a question removes the question.
+        browser.assert.elements('.lni-trash', 1);
+        await browser.pressButton('.deleteQuestionaire');
+        browser.assert.success();
+        
+        await browser.pressButton('.removeBtn');
+        browser.assert.success();
+     
+        const questionaires = await Questionnaire.find({});
+        expect(questionaires).to.exist;
 
-    it('D: delete operation available');
+        browser.assert.elements('.lni-trash', 0);
+    });
+});
+
+describe('Management Question CRUD', function() {
+    let server;
+    let browser;
+
+    before(async function() {
+        // Delete all current questionaires
+        const dbConfig = config.get('mongo');
+        db.connectDB(dbConfig);
+        await dbController.deleteAllQuestionnaires();
+        
+        // Add a questionaire
+        const questionnaire = {
+            title: 'Count without a calculator',
+            submissions: 1,
+            questions: [
+                {
+                    title: 'Select the calculations that result in 40',
+                    maxPoints: 10,
+                    options: [
+                        {
+                            option: '25 + 15',
+                            correctness: true
+                        },
+                        {
+                            option: '10 + 25',
+                            correctness: false
+                        }
+                    ]
+                },
+                {
+                    title: 'Select the calculations that result in 50',
+                    maxPoints: 10,
+                    options: [
+                        {
+                            option: '25 + 25',
+                            correctness: true
+                        },
+                        {
+                            option: '10 + 25',
+                            correctness: false
+                        }
+                    ]
+                }
+            ]
+        };
+        await Questionnaire.create(questionnaire);
+    
+
+        // remove all users from the database and re-create admin user
+        await User.deleteMany({});
+
+        const userData = { ...admin, role: 'admin' };
+        const user = new User(userData);
+        await user.save();
+        
+    });
+
+    beforeEach(async function() {
+        server = http.createServer(app).listen(port);
+        Browser.localhost('bwa', port);
+        browser = new Browser();
+        await auth(browser);
+        await browser.visit(mngmentUrl);
+        await browser.pressButton('.visitQuestionaire');
+        browser.assert.success();
+        
+    });
+
+    afterEach(function() {
+        server.close();
+    });
+
+    
+    it('C: create operation available', async function() {
+        // Got to a questionaire and fill the form and submit it.
+        browser.fill('Question', 'Question title');
+        browser.fill('points', 10);
+        browser.fill('options[1][option]', 'Option 1');
+        browser.check('options[1][correctness]');
+        browser.fill('options[2][option]', 'Option 2');
+        browser.fill('options[3][option]', 'Option 3');
+        browser.fill('options[4][option]', 'Option 4');
+        await browser.pressButton('.btnAddQuestion');
+        browser.assert.success();
+        const questionaires = await Questionnaire.find({});
+        expect(questionaires[0].questions[2]).to.exist;
+    
+    });
+    it('R: Read operation available', async function() {
+        // Check that the title of the question is rendered on the page. 
+        browser.assert.evaluate('document.getElementsByTagName("h3")[2].textContent.search("Question title") !== -1');
+    });
+    it('U: Update operation available', async function() {
+        browser.assert.elements('.questionEdit', 3);
+    });
+    it('D: delete operation available', async function() {
+        await browser.pressButton('.questionDelete');
+        browser.assert.success();
+        const questionaires = await Questionnaire.find({});
+        expect(questionaires[0].questions[2]).to.be.undefined;
+    });
 });
