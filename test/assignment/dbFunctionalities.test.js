@@ -174,6 +174,27 @@ describe('Database functionalities', function() {
 
         });
 
+        it('must be able to read one question from an existing questionnaire', async function() {
+            const questionnaireTitle = randomStr();
+            const data = mathGenerator.generateQuestionnaire(questionnaireTitle, 100, 10, 1, 4);
+            await dbController.addQuestionnaire(data);
+
+            const questionnaires = await dbController.getAllQuestionnaires();
+            const questionnaireRetrievedFromAll = questionnaires[0];
+            const questionRetrievedFromAll = questionnaireRetrievedFromAll.questions[0];
+            const questionnaireId = questionnaireRetrievedFromAll._id;
+            const questionId = questionRetrievedFromAll._id;
+
+            const question = await dbController.getQuestion(questionnaireId, questionId);
+
+            await dbController.deleteAllQuestionnaires();
+
+            expect(questionRetrievedFromAll).to.exist;
+            expect(question).to.exist;
+            expect(question.title).to.deep.equal(questionRetrievedFromAll.title);
+
+        });
+
         it('must be able to update one question from an existing questionnaire', async function() {
             const questionnaireTitle = randomStr();
             const data = mathGenerator.generateQuestionnaire(questionnaireTitle, 100, 10, 1, 4);

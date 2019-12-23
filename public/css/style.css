@@ -87,41 +87,50 @@ textarea {
 .submenu {
 	display: none;
 	overflow: auto;
-	white-space: nowrap;
+	white-space: wrap;
 }
 
 #questionaires {
 	float: left;
 	width: 25%;
-	border: 1px solid blue;
 	height: 100%;
+        background-color:#ECECEC;
+        border: 2px solid #D7D5D5;
+}
+#list_buttons{
+        margin-left: 0px;
+}
+
+.link {
+        font-size: 140%;
+        color: black;
 }
 
 .editing_view {
 	float: right;
 	height: 80%;
-	text-align: center;
+	text-align: left;
 	width: 75%;
-	border: 1px solid red;
-	height: 93vh;
+	height: 89vh;
 	overflow-y: auto;
 	overflow-x: hidden;
+        background-color:#ECECEC;
+        border: 2px solid #D7D5D5;
 }
 
 .questionaires.ul {
 	height: 85vh;
 	width: 100%;
 	overflow-y: auto;
-	list-style-type: none;
-	border: 2px solid green;
+	list-style-type: circle;
 	margin: 0;
 	padding: 0;
 }
 
 .questionaires.li {
-	white-space: nowrap;
-	list-style-type: none;
-	overflow: auto;
+	white-space: wrap;
+	list-style-type: circle;
+	overflow: hidden;
 	margin: 0;
 	padding: 0;
 }
@@ -140,7 +149,6 @@ textarea {
 
 #edit_form {
 	float: none;
-	border: 2px solid pink;
 	padding: 10px 10px 10px 30px;
 }
 

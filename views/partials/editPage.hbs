@@ -1,0 +1,56 @@
+
+<div class="form-group">
+    <form id="edit_form" method="POST" action="/management/question/edit/{{q_id}}/{{question._id}}">
+        <div class="row">
+            <div class="col">
+                <label for="Question">Question: </label>
+                <input type="text" value="{{question.title}}" id="Question" name="Question" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label for="points">Points:</label>
+                <input type="number" value="{{question.maxPoints}}" id="points" name="points" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4">
+                <label>Answer</label>
+            </div>
+
+            <div class="col-sm-4">
+                <label>Hint(optional) </label>
+            </div>
+
+            <div class="col-sm-4">
+                <label>Corrrect </label>
+            </div>
+        </div>
+
+        <div class="row" id="fake_ans">
+        {{#each question.options}}
+            <div class="col-sm-5">
+                <input type="text" value="{{this.option}}" id="{{@index}}" name="options[{{@index}}][option]" required>
+            </div>
+
+            <div class="col-sm-5">
+                <input type="text" value="{{this.hint}}" id="hint{{@index}}" name="options[{{@index}}][hint]"> 
+            </div>
+
+            <div class="col-sm">
+                {{#if this.correctness}} 
+                <input type="checkbox" name="options[{{@index}}][correctness]" checked>
+                {{else}}
+                <input type="checkbox" name="options[{{@index}}][correctness]">
+                {{/if}}
+            </div>
+        {{/each}}
+        </div>
+            <button type="Submit" id="save" class="btn btn-primary h-100">Save</button>
+            <button type="Reset" id="clear" class="btn btn-primary h-100">Clear Changes</button>
+            <input id="add" type="button" value="+" onclick="addAnswer();"  class="btn btn-primary h-100"/>
+            <a id="cancel" href="/management/questionaire?id={{q_id}}" class="btn btn-primary h-100">Cancel</a>
+    </form>
+</div>

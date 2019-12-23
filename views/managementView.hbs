@@ -6,13 +6,13 @@
 <aside class="questionaires" id="questionaires"> 
     <div class="container">
         <div class="row">
-            <input type="text" class="questionaires_search" placeholder="Search...">
+            <input type="text" id="search" class="questionaires_search" placeholder="Search..." onkeyup="search()">
             <form action="/management/add" method="GET" id="questionaires_add"> 
-              <button type="submit" ><i class="lni-plus"></i> </button>
+              <button type="submit"  class="btn btn-primary h-100"><i class="lni-plus"></i> </button>
             </form>
         </div>
         <div class="row">
-            <ul class="questionaires ul">
+            <ul class="questionaires ul" id="questionaires_ul">
             {{#if questionaires}}
                 {{#each questionaires}}
                     {{#if this.title}}
@@ -31,6 +31,8 @@
 <div class="editing_view" class="container">
     {{#if questionaire}}
         {{>editView name=questionaire.title questions=questionaire.questions q_id=questionaire._id}}
+    {{else if question}}
+        {{>editPage question=question q_id=q_id}}
     {{else}}
   <h4> Here you can create a new questionnaire's and add the first question. </h4>
   <ul id="instructions" align="left">
@@ -128,9 +130,9 @@
     </div>
 
     <div class="row">
-        <button type="Submit">Add question </button>
-        <button type="Reset">Clear </button>
-        <input id="add" type="button" value="+" onclick="addAnswer();" />
+        <button type="Submit" class="btn btn-primary h-100">Add question </button>
+        <button type="Reset" class="btn btn-primary h-100">Clear </button>
+        <input id="add" type="button" value="+" onclick="addAnswer();"  class="btn btn-primary h-100"/>
     </div>
   </form>
     {{/if}}
