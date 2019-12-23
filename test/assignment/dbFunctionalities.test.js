@@ -14,7 +14,7 @@ const config = require('config');
 const mathGenerator = require('../../public/js/mathGenerator');
 
 describe('Database functionalities', function() {
-    describe('db connection', function() {
+    describe('CRUD operations', function() {
 
         const db = require('../../models/db');
         const dbController = require('../../controllers/db');

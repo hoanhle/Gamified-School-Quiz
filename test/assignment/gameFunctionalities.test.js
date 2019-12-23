@@ -30,14 +30,14 @@ describe('Game', function() {
 	const dbController = require('../../controllers/db');
 	const Questionnaire = require('../../models/questionnaire');
 
-	before(async function() {
-		const dbConfig = config.get('mongo');
-		console.log(dbConfig);
-		// connect to database
-		db.connectDB(dbConfig);
-		await dbController.deleteAllQuestionnaires();
-		await generateSomeQuestionaires(dbController);
-	});
+	// before(async function() {
+	// 	const dbConfig = config.get('mongo');
+	// 	console.log(dbConfig);
+	// 	// connect to database
+	// 	db.connectDB(dbConfig);
+	// 	await dbController.deleteAllQuestionnaires();
+	// 	await generateSomeQuestionaires(dbController);
+	// });
 
 	describe('generateRandomQuestion()', function() {
 		it('must be able to generate a random question', async function() {
