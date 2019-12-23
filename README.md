@@ -43,12 +43,8 @@ for high-school students, especially for the domains of mathematics and computer
 │   ├── managementView.js           --> handle management view routing
 │   └── users.js                    --> /users router
 │── views                           --> views - visible parts
-│   ├── chooseQuestionnaire.hbs     --> 
 │   ├── confirmation_message.hbs    --> 
-│   ├── endGame.hbs                 --> 
 │   ├── error.hbs                   --> error view
-│   ├── game.hbs                    --> 
-│   ├── gameView.hbs                --> 
 │   ├── hello-graded.hbs            --> show graded response view
 │   ├── hello.hbs                   --> main view - "minimal viable grader"
 │   ├── layouts                     --> layouts - handlebar concept
@@ -56,7 +52,8 @@ for high-school students, especially for the domains of mathematics and computer
 │   ├── managementView.hbs          --> management view layout
 │   ├── partials                    --> smaller handlebar components to be included in views
 │   ├── rules.hbs                   --> 
-│   └── user                        --> views related to users
+│   ├── user                        --> views related to users
+│   └── game                        --> views related to the game
 └── test                            --> tests
 │   ├── assignment                  --> unit tests written by the group
 │   │   ├── dbFunctionalities.testjs--> test database communications CRUD functions
