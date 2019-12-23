@@ -37,7 +37,7 @@ for high-school students, especially for the domains of mathematics and computer
 │   │   ├── management.js           --> dynamically builds the management view UI based on data
 │   │   └── mathGenerator.js        --> generate random math questionnaire
 │   └── css                         --> for styles
-│─ routes                           --> a dir for router modules
+│─ routes                          --> a dir for router modules
 │   ├── game.js                     --> handle game routing
 │   ├── hello.js                    --> / (root) router
 │   ├── managementView.js           --> handle management view routing
@@ -49,14 +49,19 @@ for high-school students, especially for the domains of mathematics and computer
 │   │   └── game.hbs                --> the startmenu view of game
 │   │   └── gameView.hbs            --> main game view (where users can play)
 │   │   └── rules.hbs               --> view showing instruction how to play the game
-│   ├── confirmation_message.hbs    --> 
+│   ├── partials                    --> Management partials are on the partials folder descriped below.
+│   │   └── editView.hbs            --> The right side of the page is called the editView holds forms etc. 
+│   │   └── editPage.hbs            --> Defines the html when we are editing an existing question. 
+│   │   └── display_question.hbs    --> defines how individual questions are shown in the editview 
+│   │   └── question_listing.hbs    --> Html for aside panel li elements. 
+│   │   └── questionaire_listing.hbs--> Defines the html for the aside element questionnaires. 
+│   ├── confirmation_message.hbs    --> shows a confirmation messsage before allowing the removal of a questionaire
 │   ├── error.hbs                   --> error view
 │   ├── hello-graded.hbs            --> show graded response view
 │   ├── hello.hbs                   --> main view - "minimal viable grader"
 │   ├── layouts                     --> layouts - handlebar concept
 │   │   └── default.hbs             --> layout view, "template" to be rendered
-│   ├── managementView.hbs          --> management view layout
-│   ├── partials                    --> smaller handlebar components to be included in views
+│   ├── managementView.hbs          --> management view layout with aside bar and editView or editPage
 │   ├── user                        --> views related to users
 │   └── game                        --> views related to the game
 └── test                            --> tests
@@ -248,8 +253,6 @@ The project code aims to follow a consistent coding conventions
 ensured by using the _eslint_ code validation tool. The primary purpose of the tool is to ensure that the project code follows more or less the generally accepted style of appropriate conventions, and that the code avoids known vulnerabilities and / or risky coding practices. In addition, the tool aims to standardize the appearance of code of all programmers involved in the project so that all code is easy to read and maintainable for non-original coders as well.
 
 English is recommended for naming functions and variables and commenting on code. Git commit messages should also be written in English, but this is neither required nor monitored.
-
-##Code style
 
 The _eslint_ tool used is configured to require certain stylistic considerations that can reasonably be considered as opinion issues and may not necessarily be true or false. The intention is not to initiate any debate on the subject or upset anyone's mind, but to strive for uniformity in the appearance of the code, with no other motives.
 
