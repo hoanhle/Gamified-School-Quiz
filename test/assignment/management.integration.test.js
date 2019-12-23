@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+/* eslint-disable no-unused-expressions */
 'use strict';
 
 require('dotenv').config();
@@ -13,8 +14,11 @@ const Browser = require('zombie');
 const app = require('../../app.js');
 const admin = config.get('admin');
 const port = 3333;
+const db = require('../../models/db');
+const dbController = require('../../controllers/db');
 
 const Questionnaire = require('../../models/questionnaire');
+const User = require('../../models/user');
 
 const loginUrl = '/users/login';
 const mngmentUrl = '/management';
@@ -29,18 +33,28 @@ async function auth(browser) {
     await browser.pressButton('#btnLogin');
 }
 
-describe('Management Questionaire CRUD', function() {
+describe('Management Questionnaire CRUD', function() {
     let server;
     let browser;
+
+    before(async function() {
+        // Delete all current questionaires
+        const dbConfig = config.get('mongo');
+        db.connectDB(dbConfig);
+        await dbController.deleteAllQuestionnaires();
+
+        // remove all users from the database and re-create admin user
+        await User.deleteMany({});
+
+        const userData = { ...admin, role: 'admin' };
+        const user = new User(userData);
+        await user.save();
+    });
 
     beforeEach(async function() {
         server = http.createServer(app).listen(port);
         Browser.localhost('bwa', port);
         browser = new Browser();
-        // WARNING: So the course is fucked up again, this time you can only login as admin every other time
-        // so when you try to run the first test, if the error is AssertionError [ERR_ASSERTION]: No INPUT matching 'q_title'
-        // it means that this is the time when you cannot login as admin.
-        // Run the test again to get the true error.
         await auth(browser);
         await browser.visit(mngmentUrl);
     });
